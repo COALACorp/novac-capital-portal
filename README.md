@@ -8,6 +8,7 @@ A web portal for Novac Capital company
 ## Specifications
 - Typescript + WSC
 - React based
+- React Router for client side routing
 
 ## Available Scripts
 
