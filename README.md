@@ -9,6 +9,8 @@ A web portal for Novac Capital company
 - Typescript + WSC
 - React based
 - React Router for client side routing
+- Material UI
+- Firebase for Sign In & Sign Up functionality
 
 ## Available Scripts
 
