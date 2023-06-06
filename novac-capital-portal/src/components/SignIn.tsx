@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -60,6 +60,11 @@ function SignIn() {
         };
         signIn(authData);
     };
+
+    useEffect(() => {
+        if (auth.currentUser)
+            navigate("/portal");
+    }, []);
 
     return (
         <Container component="main" maxWidth="xs">

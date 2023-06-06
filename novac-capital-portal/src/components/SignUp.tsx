@@ -10,7 +10,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Alert from '@mui/material/Alert';
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { User, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 
 import { auth } from "../utils/firebase";
 import Copyright from "./Copyright";
@@ -31,13 +31,30 @@ function SignUp() {
     const navigate = useNavigate();
     const [error, setError] = useState<Error>();
 
+    const sendVerification = async (user: User) => {
+        await sendEmailVerification(user)
+            .then(() => {
+                // Email verification sent!
+                console.log("Verification emil sent");
+                navigate("/signin");
+            })
+            .catch(e => {
+                const errorState: ErrorData = {
+                    code: e.code,
+                    message: e.message,
+                };
+                console.log("Error:", errorState);
+                setError(errorState);
+            });
+    };
+
     const signUp = async (authData: SignUpData) => {
         await createUserWithEmailAndPassword(auth, authData.email, authData.password)
             .then(userCredential => {
                 // Signed In
                 const user = userCredential.user;
                 console.log("User:", user);
-                navigate("/signin");
+                sendVerification(user);
             })
             .catch(e => {
                 const errorState: ErrorData = {
