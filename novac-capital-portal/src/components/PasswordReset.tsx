@@ -70,7 +70,7 @@ function PasswordReset() {
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    Reset password
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
                 <TextField
@@ -95,7 +95,7 @@ function PasswordReset() {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
-                        Send Recovery Email
+                        Send Reset Email
                     </Button>
                     <Grid container>
                         <Grid item xs>
