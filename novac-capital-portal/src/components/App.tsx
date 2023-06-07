@@ -6,6 +6,7 @@ import { auth } from "../utils/firebase";
 import Home from "./Home";
 import SignIn from "./SignIn";
 import SignUp from "./SignUp";
+import PasswordReset from "./PasswordReset";
 import Portal from "./Portal";
 
 const router = createBrowserRouter([
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
     {
         path: "/signup",
         element: <SignUp />,
+    },
+    {
+        path: "/reset",
+        element: <PasswordReset />,
     },
     {
         path: "/portal",

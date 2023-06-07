@@ -12,14 +12,13 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Alert from '@mui/material/Alert';
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { sendPasswordResetEmail } from "firebase/auth";
 
 import { auth } from "../utils/firebase";
 import Copyright from "./Copyright";
 
-type SignInData = {
+type PasswordResetData = {
     email: string,
-    password: string,
 };
 
 type ErrorData = {
@@ -29,17 +28,16 @@ type ErrorData = {
 
 type Error = ErrorData|null;
 
-function SignIn() {
+function PasswordReset() {
     const navigate = useNavigate();
     const [error, setError] = useState<Error>();
 
-    const signIn = async (authData: SignInData) => {
-        signInWithEmailAndPassword(auth, authData.email, authData.password)
-            .then(userCredential => {
-                // Signed In
-                const user = userCredential.user;
-                console.log("User:", user);
-                navigate("/portal");
+    const passwordReset = (authData: PasswordResetData) => {
+        sendPasswordResetEmail(auth, authData.email)
+            .then(() => {
+                // Password reset email sent!
+                console.log("Reset email sent");
+                navigate("/signin");
             })
             .catch(e => {
                 const errorState: ErrorData = {
@@ -49,22 +47,16 @@ function SignIn() {
                 console.log("Error:", errorState);
                 setError(errorState);
             });
-    };
+    }
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        const authData: SignInData = {
+        const authData: PasswordResetData = {
             email: data.get("email")?.toString() ?? "",
-            password: data.get("password")?.toString() ?? "",
         };
-        signIn(authData);
+        passwordReset(authData);
     };
-
-    useEffect(() => {
-        if (auth.currentUser)
-            navigate("/portal");
-    }, []);
 
     return (
         <Container component="main" maxWidth="xs">
@@ -94,20 +86,6 @@ function SignIn() {
                         autoComplete="email"
                         autoFocus
                     />
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="password"
-                        name="password"
-                        label="Password"
-                        type="password"
-                        autoComplete="current-password"
-                    />
-                    <FormControlLabel
-                        control={<Checkbox value="remember" color="primary" />}
-                        label="Remember me"
-                    />
                     {error && (
                         <Alert variant="outlined" severity="error">
                             {error.code} - {error.message}
@@ -119,12 +97,12 @@ function SignIn() {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
-                        Sign In
+                        Send Recovery Email
                     </Button>
                     <Grid container>
                         <Grid item xs>
-                            <Link href="#" variant="body2" onClick={() => navigate("/reset")}>
-                                Forgot password?
+                            <Link href="#" variant="body2" onClick={() => navigate("/signin")}>
+                                Sign In
                             </Link>
                         </Grid>
                         <Grid item>
@@ -140,4 +118,4 @@ function SignIn() {
     );
 }
 
-export default SignIn;
+export default PasswordReset;
