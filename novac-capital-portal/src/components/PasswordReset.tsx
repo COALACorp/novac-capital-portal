@@ -15,6 +15,8 @@ import { sendPasswordResetEmail } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import Copyright from "./Copyright";
 
+import logoUri from "/logo.png";
+
 type PasswordResetData = {
     email: string,
 };
@@ -66,11 +68,20 @@ function PasswordReset() {
                     alignItems: "center",
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                <Avatar
+                    sx={{
+                        width: "5rem",
+                        height: "5rem",
+                        m: 1,
+                        bgcolor: "secondary.main"
+                    }}
+                    src={logoUri}
+                    alt="Novac Capital logo"
+                >
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Reset password
+                    Restablecer Contraseña
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
                 <TextField
@@ -79,7 +90,7 @@ function PasswordReset() {
                         fullWidth
                         id="email"
                         name="email"
-                        label="Email Address"
+                        label="Correo electrónico"
                         type="email"
                         autoComplete="email"
                         autoFocus
@@ -95,17 +106,17 @@ function PasswordReset() {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
-                        Send Reset Email
+                        Enviar correo de restablecimiento
                     </Button>
                     <Grid container>
                         <Grid item xs>
                             <Link href="#" variant="body2" onClick={() => navigate("/signin")}>
-                                Sign In
+                                Inicia sesión
                             </Link>
                         </Grid>
                         <Grid item>
                             <Link href="#" variant="body2" onClick={() => navigate("/signup")}>
-                                {"Don't have an account? Sign Up"}
+                                ¿No tienes cuenta? Regístrate
                             </Link>
                         </Grid>
                     </Grid>

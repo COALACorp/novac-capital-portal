@@ -16,6 +16,8 @@ import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 
 import { auth, googleProvider } from "../utils/firebase";
 import Copyright from "./Copyright";
 
+import logoUri from "/logo.png";
+
 type SignInData = {
     email: string,
     password: string,
@@ -100,11 +102,20 @@ function SignIn() {
                     alignItems: "center",
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                <Avatar
+                    sx={{
+                        width: "5rem",
+                        height: "5rem",
+                        m: 1,
+                        bgcolor: "secondary.main"
+                    }}
+                    src={logoUri}
+                    alt="Novac Capital logo"
+                >
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign in
+                    Iniciar Sesión
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
                 <TextField
@@ -113,7 +124,7 @@ function SignIn() {
                         fullWidth
                         id="email"
                         name="email"
-                        label="Email Address"
+                        label="Correo electrónico"
                         type="email"
                         autoComplete="email"
                         autoFocus
@@ -124,7 +135,7 @@ function SignIn() {
                         fullWidth
                         id="password"
                         name="password"
-                        label="Password"
+                        label="Contraseña"
                         type="password"
                         autoComplete="current-password"
                     />
@@ -139,7 +150,7 @@ function SignIn() {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
-                        Sign In
+                        Ingresar
                     </Button>
                     <Button
                         fullWidth
@@ -148,17 +159,17 @@ function SignIn() {
                         startIcon={<GoogleIcon />}
                         onClick={handleGoogleSignIn}
                     >
-                        Sign In with Google
+                        Ingresar con Google
                     </Button>
                     <Grid container>
                         <Grid item xs>
                             <Link href="#" variant="body2" onClick={() => navigate("/reset")}>
-                                Forgot password?
+                                ¿Olvidaste tu contraseña?
                             </Link>
                         </Grid>
                         <Grid item>
                             <Link href="#" variant="body2" onClick={() => navigate("/signup")}>
-                                {"Don't have an account? Sign Up"}
+                                ¿No tienes cuenta? Regístrate
                             </Link>
                         </Grid>
                     </Grid>

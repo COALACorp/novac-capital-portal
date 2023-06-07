@@ -15,6 +15,8 @@ import { User, createUserWithEmailAndPassword, sendEmailVerification } from "fir
 import { auth } from "../utils/firebase";
 import Copyright from "./Copyright";
 
+import logoUri from "/logo.png";
+
 type SignUpData = {
     email: string,
     password: string,
@@ -88,11 +90,20 @@ function SignUp() {
                     alignItems: "center",
                 }}
             >
-                <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
+                <Avatar
+                    sx={{
+                        width: "5rem",
+                        height: "5rem",
+                        m: 1,
+                        bgcolor: "secondary.main"
+                    }}
+                    src={logoUri}
+                    alt="Novac Capital logo"
+                >
                     <LockOutlinedIcon />
                 </Avatar>
                 <Typography component="h1" variant="h5">
-                    Sign up
+                    Registrarse
                 </Typography>
                 <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
                     <TextField
@@ -101,7 +112,7 @@ function SignUp() {
                         fullWidth
                         id="email"
                         name="email"
-                        label="Email Address"
+                        label="Correo electrónico"
                         type="email"
                         autoComplete="email"
                         autoFocus
@@ -112,7 +123,7 @@ function SignUp() {
                         fullWidth
                         id="password"
                         name="password"
-                        label="Password"
+                        label="Contraseña"
                         type="password"
                         autoComplete="current-password"
                     />
@@ -127,12 +138,12 @@ function SignUp() {
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
                     >
-                        Sign Up
+                        Registrarse
                     </Button>
                     <Grid container justifyContent="flex-end">
                         <Grid item>
                             <Link href="#" variant="body2" onClick={() => navigate("/signin")}>
-                                Already have an account? Sign in
+                                ¿Ya tienes cuenta? Inicia sesión
                             </Link>
                         </Grid>
                     </Grid>
