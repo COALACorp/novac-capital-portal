@@ -10,9 +10,10 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Alert from '@mui/material/Alert';
-import { signInWithEmailAndPassword } from "firebase/auth";
+import GoogleIcon from '@mui/icons-material/Google';
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
-import { auth } from "../utils/firebase";
+import { auth, googleProvider } from "../utils/firebase";
 import Copyright from "./Copyright";
 
 type SignInData = {
@@ -30,6 +31,31 @@ type Error = ErrorData|null;
 function SignIn() {
     const navigate = useNavigate();
     const [error, setError] = useState<Error>();
+
+    const handleGoogleSignIn = () => {
+        signInWithPopup(auth, googleProvider)
+            .then(result => {
+                // This gives you a Google Access Token. You can use it to access the Google API.   
+                const credential = GoogleAuthProvider.credentialFromResult(result);
+                const token = credential?.accessToken;
+                // The signed-in user info.
+                const user = result.user;
+                console.log("Credential:", credential);
+                console.log("Token:", token);
+                console.log("User:", user);
+                navigate("/portal");
+            })
+            .catch(e => {
+                const errorState = {
+                    code: e.code,
+                    message: e.message,
+                    email: e.customData.email,
+                    credential: GoogleAuthProvider.credentialFromError(e),
+                };
+                console.log("Error:", errorState);
+                setError(errorState);
+            });
+    };
 
     const signIn = async (authData: SignInData) => {
         signInWithEmailAndPassword(auth, authData.email, authData.password)
@@ -114,6 +140,15 @@ function SignIn() {
                         sx={{ mt: 3, mb: 2 }}
                     >
                         Sign In
+                    </Button>
+                    <Button
+                        fullWidth
+                        variant="outlined"
+                        sx={{ mt: 1, mb: 3 }}
+                        startIcon={<GoogleIcon />}
+                        onClick={handleGoogleSignIn}
+                    >
+                        Sign In with Google
                     </Button>
                     <Grid container>
                         <Grid item xs>
