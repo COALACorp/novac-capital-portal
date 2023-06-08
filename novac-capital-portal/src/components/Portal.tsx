@@ -16,7 +16,7 @@ function Portal() {
             .catch(error => {
                 console.log("Error on sign out:", error);
             });
-    }
+    };
 
     return (
         <>

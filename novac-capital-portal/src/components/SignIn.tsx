@@ -9,8 +9,8 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Alert from '@mui/material/Alert';
-import GoogleIcon from '@mui/icons-material/Google';
+import Alert from "@mui/material/Alert";
+import GoogleIcon from "@mui/icons-material/Google";
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
 import { auth, googleProvider } from "../utils/firebase";

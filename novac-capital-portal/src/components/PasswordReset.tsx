@@ -9,7 +9,7 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
 import { sendPasswordResetEmail } from "firebase/auth";
 
 import { auth } from "../utils/firebase";
@@ -47,7 +47,7 @@ function PasswordReset() {
                 console.log("Error:", errorState);
                 setError(errorState);
             });
-    }
+    };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
