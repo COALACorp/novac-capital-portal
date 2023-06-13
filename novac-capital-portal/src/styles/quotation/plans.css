@@ -1,0 +1,123 @@
+#plans-container {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+#plans-collection-heading {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#plans-collection {
+
+}
+
+.plan-card {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    border: 1px solid #BDBDBD;
+    border-radius: 10px;
+}
+
+.plan-avatar {
+    width: 94px;
+    height: 94px;
+    padding: 10px;
+    background-color: #F6F8FC;
+    border-radius: 10px;
+    color: #828282;
+    font-size: 36px;
+    line-height: 54px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.plan-heading {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.plan-heading-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.plan-heading-title {
+    color: #26323D;
+    font-size: 20px;
+    line-height: 30px;
+}
+
+.plan-heading-info-values {
+    color: #4F4F4F;
+    font-size: 16px;
+    line-height: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.plan-content {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+
+.plan-property {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.lease-total {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.lease-total-title {
+    color: #26323D;
+    font-size: 16px;
+    line-height: 24px;
+}
+
+.lease-total-values {
+    color: #4F4F4F;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.plan-expenses {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.expenses-list {
+    color: #4F4F4F;
+    font-size: 14px;
+    line-height: 21px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.expenses-total {
+    padding: 4px 20px;
+    background-color: #F2F2F2;
+    border-radius: 50px;
+    color: #4F4F4F;
+    font-size: 14px;
+    line-height: 21px;
+}

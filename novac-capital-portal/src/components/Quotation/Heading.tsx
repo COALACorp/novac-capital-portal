@@ -1,6 +1,6 @@
 import Stack from "@mui/material/Stack";
 
-import "../../styles/quotation.css";
+import "../../styles/quotation/quotation.css";
 
 function Heading() {
     return (

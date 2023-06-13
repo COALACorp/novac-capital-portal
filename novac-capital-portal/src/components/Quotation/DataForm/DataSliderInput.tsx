@@ -2,8 +2,6 @@ import { useState, useEffect } from "react";
 import Stack from "@mui/material/Stack";
 import Slider from "@mui/material/Slider";
 
-import "../../../styles/quotation.css";
-
 type MarkType = {
     value: number,
     label: string,

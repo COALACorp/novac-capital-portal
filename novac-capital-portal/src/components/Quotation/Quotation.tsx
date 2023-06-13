@@ -8,7 +8,7 @@ import Plans from "./Plans/Plans";
 
 import { auth } from "../../utils/firebase";
 
-import "../../styles/quotation.css";
+import "../../styles/quotation/quotation.css";
 
 function Quotation() {
     const navigate = useNavigate();
@@ -24,12 +24,13 @@ function Quotation() {
     }, [navigate]);
 
     return (
-        <Box id="quotation-container">
+        <Box id="quotation-container" className={formValues ? "plans" : "formdata"}>
             <Heading />
-            {formValues
+            {/* {formValues
                 ? <Plans />
                 : <DataForm onSubmit={handleSubmit} />
-            }
+            } */}
+            <Plans />
         </Box>
     );
 }

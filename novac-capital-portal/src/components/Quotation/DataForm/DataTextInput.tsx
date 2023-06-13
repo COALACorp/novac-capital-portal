@@ -1,8 +1,6 @@
 import Stack from "@mui/material/Stack";
 import OutlinedInput from "@mui/material/OutlinedInput";
 
-import "../../../styles/quotation.css";
-
 type DataTextInputProps = {
     label: string,
     placeholder?: string,

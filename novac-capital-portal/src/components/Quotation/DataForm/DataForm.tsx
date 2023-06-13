@@ -7,7 +7,7 @@ import DataTextInput from "./DataTextInput";
 import DataSliderInput from "./DataSliderInput";
 import DataSummary, { SummaryDataType } from "./DataSummary";
 
-import "../../../styles/quotation.css";
+import "../../../styles/quotation/dataform.css";
 
 const initialSummary: SummaryDataType[] = [
     {
@@ -93,7 +93,7 @@ function DataForm(props: DataFormProps) {
 
     useEffect(() => {
         const equipmentCost = formValues.amount ?? 0;
-        const advancePayment = equipmentCost * ((formValues.advancePayment ?? 5) / 100);
+        const advancePayment = Number((equipmentCost * ((formValues.advancePayment ?? 5) / 100)).toFixed(2));
         const totalLease = equipmentCost - advancePayment;
 
         const newSummary = [...summary];

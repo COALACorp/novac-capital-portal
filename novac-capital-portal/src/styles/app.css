@@ -7,3 +7,7 @@
     align-items: center;
     gap: 80px;
 }
+
+.strong {
+    font-weight: 600;
+}

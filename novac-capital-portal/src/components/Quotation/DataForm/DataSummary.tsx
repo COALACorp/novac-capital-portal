@@ -1,7 +1,5 @@
 import Box from "@mui/material/Box";
 
-import "../../../styles/quotation.css";
-
 type SummaryDataType = {
     label: string,
     value: string,
