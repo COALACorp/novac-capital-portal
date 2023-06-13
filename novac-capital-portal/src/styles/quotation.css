@@ -1,0 +1,87 @@
+.strong {
+    font-weight: 600;
+}
+
+#quotation-container {
+    width: 60%;
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 120px;
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
+}
+
+#quotation-header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+#quotation-header h1 {
+    color: #26323D;
+    text-align: center;
+    font-size: 32px;
+    line-height: 48px;
+}
+
+#quotation-header h2 {
+    color: #828282;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+}
+
+#quotation-data-form {
+    gap: 60px;
+}
+
+#quotation-data-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 60px;
+}
+
+.quotation-data-form-input-container {
+    gap: 16px;
+}
+
+#quotation-input-label {
+    color: #26323D;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 30px;
+}
+
+.quotation-data-form-input.MuiInputBase-root {
+    border-radius: 10px;
+}
+
+#quotation-data-form-summary {
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    background-color: #F6F6F6;
+    border-radius: 10px;
+}
+
+.quotation-data-form-summary-item {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    color: #828282;
+}
+
+.quotation-data-form-summary-item.strong {
+    color: #333333;
+}
+
+#quotation-data-form-submit {
+    height: 62px;
+    color: #FFFFFF;
+    background-color: #3454D0;
+    border-radius: 10px;
+}

@@ -22,6 +22,7 @@ function Portal() {
         <>
             <h1>This is the content window</h1>
             <button onClick={() => navigate("/")}>Home</button>
+            <button onClick={() => navigate("/quotation")}>Quotation</button>
             {auth.currentUser && <button onClick={handleSignOut}>Sign Out</button>}
         </>
     );

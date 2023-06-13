@@ -12,8 +12,8 @@ import Container from "@mui/material/Container";
 import Alert from "@mui/material/Alert";
 import { User, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 
-import { auth } from "../utils/firebase";
-import Copyright from "./Copyright";
+import { auth } from "../../utils/firebase";
+import Copyright from "../Copyright";
 
 import logoUri from "/logo.png";
 

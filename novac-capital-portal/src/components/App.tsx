@@ -1,13 +1,17 @@
 import { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { onAuthStateChanged } from "firebase/auth";
+import Box from "@mui/material/Box";
 
 import { auth } from "../utils/firebase";
 import Home from "./Home";
-import SignIn from "./SignIn";
-import SignUp from "./SignUp";
-import PasswordReset from "./PasswordReset";
+import SignIn from "./Authentication/SignIn";
+import SignUp from "./Authentication/SignUp";
+import PasswordReset from "./Authentication/PasswordReset";
 import Portal from "./Portal";
+import Quotation from "./Quotation/Quotation";
+
+import "../styles/app.css";
 
 const router = createBrowserRouter([
     {
@@ -30,6 +34,11 @@ const router = createBrowserRouter([
         path: "/portal",
         element: <Portal />,
     },
+    
+    {
+        path: "/quotation",
+        element: <Quotation />,
+    },
 ]);
 
 function App() {
@@ -47,7 +56,11 @@ function App() {
         });
     }, []);
 
-    return <RouterProvider router={router} />;
+    return (
+        <Box id="app-container">
+            <RouterProvider router={router} />
+        </Box>
+    );
 }
 
 export default App;
