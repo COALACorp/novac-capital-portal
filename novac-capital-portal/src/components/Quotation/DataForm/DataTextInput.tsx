@@ -7,6 +7,7 @@ type DataTextInputProps = {
     startAdornment?: string,
     name?: string,
     required?: boolean,
+    onChange?: React.ChangeEventHandler<HTMLInputElement|HTMLTextAreaElement>,
 };
 
 function DataTextInput(props: DataTextInputProps) {
@@ -20,6 +21,7 @@ function DataTextInput(props: DataTextInputProps) {
                 required={props.required}
                 fullWidth
                 name={props.name}
+                onChange={props.onChange}
             />
         </Stack>
     );

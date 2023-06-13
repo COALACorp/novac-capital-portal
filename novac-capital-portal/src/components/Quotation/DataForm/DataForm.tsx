@@ -42,7 +42,7 @@ const initialSummary: SummaryDataType[] = [
 
 type FormValuesType = {
     name?: string,
-    equipment?: string,
+    item?: string,
     amount?: number,
     advancePayment?: number,
 };
@@ -55,40 +55,35 @@ function DataForm(props: DataFormProps) {
     const formRef = useRef<HTMLFormElement>(null);
     const [formValues, setFormValues] = useState<FormValuesType>({});
     const [summary, setSummary] = useState<SummaryDataType[]>(initialSummary);
+    const [valid, setValid] = useState<boolean>(false);
 
     const generateForm = (event: React.FormEvent<HTMLFormElement>) => new FormData(event.currentTarget);
 
+    const generateFormValues = (data: FormData): FormValuesType => ({
+        ...formValues,
+        name: data.get("name")?.toString(),
+        item: data.get("item")?.toString(),
+        amount: Number(data.get("amount")),
+        advancePayment: Number(data.get("advancePayment")),
+    });
+
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const data = generateForm(event);
-        const newFormValues: FormValuesType = {
-            ...formValues,
-            name: data.get("name")?.toString(),
-            equipment: data.get("aquipment")?.toString(),
-            amount: Number(data.get("amount")),
-            advancePayment: Number(data.get("advancePayment")),
-        };
+        const newFormValues = generateFormValues(generateForm(event));
         props.onSubmit && props.onSubmit(newFormValues);
     };
 
     const handleFormChange = (event: React.FormEvent<HTMLFormElement>) => {
-        const data = generateForm(event);
-        const newFormValues: FormValuesType = {
-            ...formValues,
-            name: data.get("name")?.toString(),
-            equipment: data.get("aquipment")?.toString(),
-            amount: Number(data.get("amount")),
-            advancePayment: Number(data.get("advancePayment")),
-        };
+        const newFormValues = generateFormValues(generateForm(event));
         setFormValues(newFormValues);
     };
 
-    const handleSliderChange = (value: number) => {
-        const newFormValues: FormValuesType = {
-            ...formValues,
-            advancePayment: value,
-        };
+    const handleInputChange = (event: any) => {
+        console.log("Handle input change:", event.target.value);
+        const newFormValues: FormValuesType = { ...formValues };
+        newFormValues[event.target.name as keyof FormValuesType] = event.target.value,
         setFormValues(newFormValues);
+        console.log("Updated form values:", formValues);
     };
 
     useEffect(() => {
@@ -102,7 +97,18 @@ function DataForm(props: DataFormProps) {
         newSummary[2].value = "$" + totalLease;
 
         setSummary(newSummary);
-    }, [formValues.amount, formValues.advancePayment, summary]);
+    }, [formValues.amount, formValues.advancePayment]);
+
+    useEffect(() => {
+        console.log("Validated:", (formValues.name !== undefined && formValues.name.trim().length > 0), formValues.item !== undefined, (formValues.amount !== undefined && formValues.amount > 0));
+        const newValid = (
+            (formValues.name !== undefined && formValues.name.trim().length > 0)
+            && (formValues.item !== undefined && formValues.item.trim().length > 0)
+            && (formValues.amount !== undefined && formValues.amount > 0)
+        );
+        setValid(newValid);
+        console.log("Validated:", newValid);
+    }, [formValues.name, formValues.item, formValues.amount, formValues.advancePayment]);
 
     return (
         <Box
@@ -114,12 +120,12 @@ function DataForm(props: DataFormProps) {
         >
             <Stack id="quotation-data-form">
                 <DataTextInput label="Nombre del cliente" placeholder="Nombre del cliente" name="name" required />
-                <DataTextInput label="Nombre de equipo a cotizar" placeholder="Nombre de equipo a cotizar" name="equipment" required />
-                <DataTextInput label="Monto de equipo a cotizar" placeholder="Monto de equipo a cotizar" startAdornment="$" name="amount" required />
-                <DataSliderInput label="Anticipo" min={0} max={30} step={5} scale="%" defaultValue={5} showMarks name="advancePayment" onChange={handleSliderChange} />
+                <DataTextInput label="Nombre de equipo a cotizar" placeholder="Nombre de equipo a cotizar" name="item" required />
+                <DataTextInput label="Monto de equipo a cotizar" placeholder="Monto de equipo a cotizar" startAdornment={formValues.amount ? "$" : ""} name="amount" required />
+                <DataSliderInput label="Anticipo" min={0} max={30} step={5} scale="%" defaultValue={5} showMarks name="advancePayment" onChange={handleInputChange} />
                 <DataSummary data={summary} />
             </Stack>
-            <Button id="quotation-data-form-submit" type="submit">Cotizar</Button>
+            <Button id="quotation-data-form-submit" type="submit" disabled={!valid}>Cotizar</Button>
         </Box>
     );
 }

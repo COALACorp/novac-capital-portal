@@ -16,18 +16,13 @@ type DataSliderInputProps = {
     defaultValue?: number,
     showMarks?: boolean,
     name?: string,
-    onChange?: (value: number) => void,
+    onChange?: (event: Event) => void,
 };
 
 function DataSliderInput(props: DataSliderInputProps) {
     const [marks, setMarks] = useState<MarkType[]>([]);
 
     const valueText = (value: number) => (value + (props.scale || ""));
-
-    const handleChange = (event: Event, value: number|number[]) => {
-        if (typeof value === "number")
-            props.onChange && props.onChange(value);
-    };
 
     useEffect(() => {
         const newMarks: MarkType[] = [];
@@ -51,7 +46,7 @@ function DataSliderInput(props: DataSliderInputProps) {
                 step={null}
                 marks={marks}
                 name={props.name}
-                onChange={handleChange}
+                onChange={props.onChange}
             />
         </Stack>
     );

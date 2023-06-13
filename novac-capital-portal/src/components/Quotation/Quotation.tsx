@@ -19,18 +19,18 @@ function Quotation() {
     };
 
     useEffect(() => {
-        if(!auth)
-            navigate("/signin")
-    }, [navigate]);
+        if(!auth.currentUser)
+            navigate("/signin");
+    }, []);
 
     return (
         <Box id="quotation-container" className={formValues ? "plans" : "formdata"}>
             <Heading />
-            {/* {formValues
+            {formValues
                 ? <Plans />
                 : <DataForm onSubmit={handleSubmit} />
-            } */}
-            <Plans />
+            }
+            {/* <Plans /> */}
         </Box>
     );
 }

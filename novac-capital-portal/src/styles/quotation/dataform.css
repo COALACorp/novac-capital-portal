@@ -49,3 +49,7 @@
     background-color: #3454D0;
     border-radius: 10px;
 }
+
+#quotation-data-form-submit.Mui-disabled {
+    background-color: #C1CAF1;
+}
