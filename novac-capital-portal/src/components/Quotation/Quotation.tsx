@@ -17,7 +17,7 @@ function Quotation() {
     };
 
     useEffect(() => {
-        if(auth.currentUser)
+        if(!auth.currentUser)
             navigate("/signin");
     }, []);
 
