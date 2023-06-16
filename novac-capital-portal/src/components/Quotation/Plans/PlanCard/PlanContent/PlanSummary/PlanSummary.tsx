@@ -1,26 +1,26 @@
 import Box from "@mui/material/Box";
 
-import ExpensesList from "./ExpensesList";
-import ExpensesTotal from "./ExpensesTotal";
+import PlanExpenses from "../PlanExpenses/PlanExpenses";
 
-type PlanExpensesProps = {
+type PlanSummaryProps = {
     firstLastPartiality: number,
     administrative: number,
     advancePayment: number,
     totalExpenses: number,
 };
 
-function PlanExpenses(props: PlanExpensesProps) {
+function PlanSummary(props: PlanSummaryProps) {
     return (
-        <Box className="plan-expenses">
-            <ExpensesList
+        <Box className="plan-summary">
+            <p className="plan-summary-title strong">Resumen</p>
+            <PlanExpenses
                 firstLastPartiality={props.firstLastPartiality}
                 administrative={props.administrative}
                 advancePayment={props.advancePayment}
+                totalExpenses={props.totalExpenses}
             />
-            <ExpensesTotal totalExpenses={props.totalExpenses} />
         </Box>
     );
 }
 
-export default PlanExpenses;
+export default PlanSummary;

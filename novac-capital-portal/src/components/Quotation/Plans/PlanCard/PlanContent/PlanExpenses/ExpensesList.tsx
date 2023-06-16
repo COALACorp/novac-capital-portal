@@ -1,35 +1,25 @@
 import Box from "@mui/material/Box";
 
 type ExpensesListProps = {
-    administrative?: number,
-    folioVerification?: number,
-    openingCommission?: number,
-    creditBureau?: number,
-    equipmentInssurance?: string,
+    firstLastPartiality: number,
+    administrative: number,
+    advancePayment: number,
 };
 
 function ExpensesList(props: ExpensesListProps) {
     return (
         <Box className="expenses-list">
             <Box className="plan-property">
-                <p className="strong">Gastos Administrativos:</p>
-                <p>{props.administrative ?? "-"}</p>
+                <p className="strong">{"(-) Parcialidad Inicial y Última:"}</p>
+                <p>${props.firstLastPartiality.toLocaleString()}</p>
             </Box>
             <Box className="plan-property">
-                <p className="strong">Gastos por Verificacion de Folio:</p>
-                <p>{props.folioVerification ?? "-"}</p>
+                <p className="strong">{"(-) Gastos Administrativos:"}</p>
+                <p>${props.administrative.toLocaleString()}*</p>
             </Box>
             <Box className="plan-property">
-                <p className="strong">Comision por Apertura:</p>
-                <p>{props.openingCommission ?? "-"}</p>
-            </Box>
-            <Box className="plan-property">
-                <p className="strong">Buró de Crédito:</p>
-                <p>{props.creditBureau ?? "-"}</p>
-            </Box>
-            <Box className="plan-property">
-                <p className="strong">Seguro del equipo:</p>
-                <p>{props.equipmentInssurance ?? "-"}</p>
+                <p className="strong">{"(-) Anticipo:"}</p>
+                <p>${props.advancePayment.toLocaleString()}</p>
             </Box>
         </Box>
     );

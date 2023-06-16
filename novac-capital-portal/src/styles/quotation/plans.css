@@ -1,26 +1,73 @@
 #plans-container {
+    width: 80%;
+    padding: 60px 40px;
+    background-color: #FFFFFF;
+    border-radius: 20px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
     display: flex;
     flex-direction: column;
+    align-items: center;
+    gap: 120px;
+}
+
+#plans {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+}
+
+#plans-heading-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
     gap: 60px;
 }
 
 #plans-collection-heading {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 10px;
 }
 
 #plans-collection {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 30px;
+    flex-wrap: wrap;
+}
 
+@media only screen and (min-width: 992px) {
+    #plans-collection > * {
+        flex-basis: calc(50% - 15px);
+    }
+}
+
+.plan-card-container {
+    width: 100%;
 }
 
 .plan-card {
+    width: 100%;
     padding: 40px;
-    display: flex;
-    flex-direction: column;
-    gap: 50px;
     border: 1px solid #BDBDBD;
     border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 50px;
+}
+
+.plan-card:hover, .plan-card.selected {
+    border: 1.5px solid #2A45AB;
+    box-shadow: 2px 2px 20px rgba(52, 84, 208, 0.25);
 }
 
 .plan-avatar {
@@ -33,6 +80,7 @@
     font-size: 36px;
     line-height: 54px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
 }
@@ -40,12 +88,15 @@
 .plan-heading {
     display: flex;
     flex-direction: row;
+    align-items: center;
     gap: 20px;
 }
 
 .plan-heading-info {
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
     gap: 10px;
 }
 
@@ -53,6 +104,9 @@
     color: #26323D;
     font-size: 20px;
     line-height: 30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 .plan-heading-info-values {
@@ -61,46 +115,41 @@
     line-height: 24px;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 6px;
 }
 
 .plan-content {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 30px;
+}
+
+.plan-summary {
+    padding: 10px 0 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.plan-summary-title {
+    font-size: 16px;
+    line-height: 24px;
 }
 
 .plan-property {
     display: flex;
     flex-direction: row;
     gap: 20px;
-}
-
-.lease-total {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-}
-
-.lease-total-title {
-    color: #26323D;
-    font-size: 16px;
-    line-height: 24px;
-}
-
-.lease-total-values {
-    color: #4F4F4F;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 21px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    flex-grow: 1;
 }
 
 .plan-expenses {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 20px;
 }
 
@@ -110,7 +159,14 @@
     line-height: 21px;
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: 10px;
+}
+
+.expenses-total-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
 }
 
 .expenses-total {
@@ -120,4 +176,28 @@
     color: #4F4F4F;
     font-size: 14px;
     line-height: 21px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.plan-insurance {
+    color: #4F4F4F;
+    font-size: 14px;
+    line-height: 21px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#plans-submit {
+    width: 100%;
+    height: 62px;
+    color: #FFFFFF;
+    background-color: #3454D0;
+    border-radius: 10px;
+}
+
+#plans-submit.Mui-disabled {
+    background-color: #C1CAF1;
 }

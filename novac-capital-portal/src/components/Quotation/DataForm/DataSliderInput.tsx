@@ -40,8 +40,8 @@ function DataSliderInput(props: DataSliderInputProps) {
     }, [props.min, props.max, props.step, props.scale]);
 
     return (
-        <Stack className="quotation-data-form-input-container">
-            <p id="quotation-input-label">{props.label}</p>
+        <Stack className="data-form-input-container">
+            <p id="input-label">{props.label}</p>
             <Slider
                 aria-label={props.label}
                 defaultValue={props.defaultValue}

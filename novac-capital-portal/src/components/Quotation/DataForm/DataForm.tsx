@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
+import Heading from "../Heading";
 import DataTextInput from "./DataTextInput";
 import DataSliderInput from "./DataSliderInput";
 import DataSummary, { SummaryDataType } from "./DataSummary";
@@ -40,6 +41,13 @@ const initialSummary: SummaryDataType[] = [
     },
 ];
 
+type ValidatedFormValuesType = {
+    name: string,
+    item: string,
+    amount: number,
+    advancePayment: number,
+};
+
 type FormValuesType = {
     name?: string,
     item?: string,
@@ -48,7 +56,7 @@ type FormValuesType = {
 };
 
 type DataFormProps = {
-    onSubmit?: (formValues: FormValuesType) => void,
+    onSubmit?: (formValues: ValidatedFormValuesType) => void,
 };
 
 function DataForm(props: DataFormProps) {
@@ -63,16 +71,17 @@ function DataForm(props: DataFormProps) {
 
     const generateFormValues = (data: FormData): FormValuesType => ({
         ...formValues,
-        name: data.get("name")?.toString(),
-        item: data.get("item")?.toString(),
+        name: (data.get("name")?.toString() ?? ""),
+        item: (data.get("item")?.toString() ?? ""),
         amount: inputToNumber(data.get("amount")?.toString() ?? ""),
-        advancePayment: Number(data.get("advancePayment")),
+        advancePayment: inputToNumber(data.get("advancePayment")?.toString() ?? ""),
     });
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const newFormValues = generateFormValues(generateForm(event));
-        props.onSubmit && props.onSubmit(newFormValues);
+        if (newFormValues.name && newFormValues.item && newFormValues.amount && newFormValues.advancePayment)
+            props.onSubmit && props.onSubmit(newFormValues as ValidatedFormValuesType);
     };
 
     const handleFormChange = (event: React.FormEvent<HTMLFormElement>) => {
@@ -109,24 +118,27 @@ function DataForm(props: DataFormProps) {
     }, [formValues.name, formValues.item, formValues.amount, formValues.advancePayment]);
 
     return (
-        <Box
-            id="quotation-data-form-container"
-            component="form"
-            onSubmit={handleSubmit}
-            onChange={handleFormChange}
-            ref={formRef}
-        >
-            <Stack id="quotation-data-form">
-                <DataTextInput label="Nombre del cliente" placeholder="Nombre del cliente" name="name" required />
-                <DataTextInput label="Nombre de equipo a cotizar" placeholder="Nombre de equipo a cotizar" name="item" required />
-                <DataTextInput label="Monto de equipo a cotizar" placeholder="Monto de equipo a cotizar" preffix="$" name="amount" isNumber required />
-                <DataSliderInput label="Anticipo" min={0} max={30} step={5} scale="%" defaultValue={5} showMarks name="advancePayment" onChange={handleInputChange} />
-                <DataSummary data={summary} />
-            </Stack>
-            <Button id="quotation-data-form-submit" type="submit" disabled={!valid}>Cotizar</Button>
+        <Box id="data-form-container">
+            <Box
+                id="data-form"
+                component="form"
+                onSubmit={handleSubmit}
+                onChange={handleFormChange}
+                ref={formRef}
+            >
+                <Heading />
+                <Stack id="data-form-content">
+                    <DataTextInput label="Nombre del cliente" placeholder="Nombre del cliente" name="name" required />
+                    <DataTextInput label="Nombre de equipo a cotizar" placeholder="Nombre de equipo a cotizar" name="item" required />
+                    <DataTextInput label="Monto de equipo a cotizar" placeholder="Monto de equipo a cotizar" preffix="$" name="amount" isNumber required />
+                    <DataSliderInput label="Anticipo" min={0} max={30} step={5} scale="%" defaultValue={5} showMarks name="advancePayment" onChange={handleInputChange} />
+                    <DataSummary data={summary} />
+                </Stack>
+                <Button id="data-form-submit" type="submit" disabled={!valid}>Cotizar</Button>
+            </Box>
         </Box>
     );
 }
 
 export default DataForm;
-export type { FormValuesType };
+export type { FormValuesType, ValidatedFormValuesType };

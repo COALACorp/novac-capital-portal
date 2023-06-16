@@ -28,10 +28,10 @@ function DataTextInput(props: DataTextInputProps) {
     };
 
     return (
-        <Stack className="quotation-data-form-input-container">
-            <p id="quotation-input-label">{props.label}</p>
+        <Stack className="data-form-input-container">
+            <p id="input-label">{props.label}</p>
             <OutlinedInput
-                className="quotation-data-form-input"
+                className="data-form-input"
                 placeholder={props.placeholder}
                 required={props.required}
                 fullWidth
