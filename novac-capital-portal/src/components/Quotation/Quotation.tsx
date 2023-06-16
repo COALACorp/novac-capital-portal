@@ -8,16 +8,9 @@ import { auth } from "../../utils/firebase";
 
 import "../../styles/quotation/quotation.css";
 
-const testForm: ValidatedFormValuesType = {
-    name: "Test Name",
-    item: "Test equipment",
-    amount: 250000,
-    advancePayment: 10,
-};
-
 function Quotation() {
     const navigate = useNavigate();
-    const [formValues, setFormValues] = useState<ValidatedFormValuesType|null>(testForm);
+    const [formValues, setFormValues] = useState<ValidatedFormValuesType|null>();
 
     const handleSubmit = (values: ValidatedFormValuesType) => {
         setFormValues(values);

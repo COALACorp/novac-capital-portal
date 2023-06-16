@@ -6,10 +6,10 @@ import PlanContent from "./PlanContent/PlanContent";
 type PlanCardProps = {
     key: number,
     months: number,
-    equipment: number,
-    partialities: number,
+    taxedEquipment: number,
+    taxedPartialities: number,
     firstLastPartiality: number,
-    administrative: number,
+    administrativeExpenses: number,
     advancePayment: number,
     totalExpenses: number,
     insurance: string,
@@ -27,12 +27,12 @@ function PlanCard(props: PlanCardProps) {
             <Box className={"plan-card" + (props.selected ? " selected" : "")}>
                 <PlanHeading
                     months={props.months}
-                    equipment={props.equipment}
-                    partialities={props.partialities}
+                    taxedEquipment={props.taxedEquipment}
+                    taxedPartialities={props.taxedPartialities}
                 />
                 <PlanContent
                     firstLastPartiality={props.firstLastPartiality}
-                    administrative={props.administrative}
+                    administrativeExpenses={props.administrativeExpenses}
                     advancePayment={props.advancePayment}
                     totalExpenses={props.totalExpenses}
                     insurance={props.insurance}

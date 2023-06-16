@@ -3,20 +3,19 @@ import Box from "@mui/material/Box";
 
 import PlanCard from "./PlanCard/PlanCard";
 
-// type PlanType = {
-//     months: number,
-//     equipment: number,
-//     partialities: number,
-//     firstLastPartiality: number,
-//     administrative: number,
-//     advancePayment: number,
-//     totalExpenses: number,
-//     insurance: string,
-// };
+type PlanType = {
+    months: number,
+    taxedEquipment: number,
+    taxedPartialities: number,
+    firstLastPartiality: number,
+    administrativeExpenses: number,
+    advancePayment: number,
+    totalExpenses: number,
+    insurance: string,
+};
 
 type PlansCollectionProps = {
-    // plans: PlanType[],
-    plans: number[],
+    plans: PlanType[],
     onSelection?: (selection: number) => void,
 };
 
@@ -33,15 +32,15 @@ function PlansCollection(props: PlansCollectionProps) {
             {props.plans.map((plan, index) => (
                 <PlanCard
                     key={index}
-                    months={plan}
-                    equipment={1350000}
-                    partialities={126735}
-                    firstLastPartiality={111812.40}
-                    administrative={9800}
-                    advancePayment={55906.20}
-                    totalExpenses={184252.40}
-                    insurance={"Incluido"}
-                    selected={selection === plan}
+                    months={plan.months}
+                    taxedEquipment={plan.taxedEquipment}
+                    taxedPartialities={plan.taxedPartialities}
+                    firstLastPartiality={plan.firstLastPartiality}
+                    administrativeExpenses={plan.administrativeExpenses}
+                    advancePayment={plan.advancePayment}
+                    totalExpenses={plan.totalExpenses}
+                    insurance={plan.insurance}
+                    selected={selection === plan.months}
                     onClick={handleSelection}
                 />
             ))}
@@ -50,3 +49,4 @@ function PlansCollection(props: PlansCollectionProps) {
 }
 
 export default PlansCollection;
+export type { PlanType };

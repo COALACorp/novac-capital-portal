@@ -45,14 +45,14 @@ type ValidatedFormValuesType = {
     name: string,
     item: string,
     amount: number,
-    advancePayment: number,
+    advancePercentage: number,
 };
 
 type FormValuesType = {
     name?: string,
     item?: string,
     amount?: number,
-    advancePayment?: number,
+    advancePercentage?: number,
 };
 
 type DataFormProps = {
@@ -74,13 +74,13 @@ function DataForm(props: DataFormProps) {
         name: (data.get("name")?.toString() ?? ""),
         item: (data.get("item")?.toString() ?? ""),
         amount: inputToNumber(data.get("amount")?.toString() ?? ""),
-        advancePayment: inputToNumber(data.get("advancePayment")?.toString() ?? ""),
+        advancePercentage: inputToNumber(data.get("advancePercentage")?.toString() ?? ""),
     });
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const newFormValues = generateFormValues(generateForm(event));
-        if (newFormValues.name && newFormValues.item && newFormValues.amount && newFormValues.advancePayment)
+        if (newFormValues.name && newFormValues.item && newFormValues.amount && newFormValues.advancePercentage)
             props.onSubmit && props.onSubmit(newFormValues as ValidatedFormValuesType);
     };
 
@@ -97,16 +97,16 @@ function DataForm(props: DataFormProps) {
 
     useEffect(() => {
         const equipmentCost = formValues.amount ?? 0;
-        const advancePayment = Number((equipmentCost * ((formValues.advancePayment ?? 5) / 100)).toFixed(2));
-        const totalLease = equipmentCost - advancePayment;
+        const advancePercentage = Number((equipmentCost * ((formValues.advancePercentage ?? 5) / 100)).toFixed(2));
+        const totalLease = equipmentCost - advancePercentage;
 
         const newSummary = [...summary];
         newSummary[0].value = "$" + equipmentCost.toLocaleString();
-        newSummary[1].value = "$" + advancePayment.toLocaleString();
+        newSummary[1].value = "$" + advancePercentage.toLocaleString();
         newSummary[2].value = "$" + totalLease.toLocaleString();
 
         setSummary(newSummary);
-    }, [formValues.amount, formValues.advancePayment]);
+    }, [formValues.amount, formValues.advancePercentage]);
 
     useEffect(() => {
         const newValid = (
@@ -115,7 +115,7 @@ function DataForm(props: DataFormProps) {
             && (formValues.amount !== undefined && formValues.amount > 0)
         );
         setValid(newValid);
-    }, [formValues.name, formValues.item, formValues.amount, formValues.advancePayment]);
+    }, [formValues.name, formValues.item, formValues.amount, formValues.advancePercentage]);
 
     return (
         <Box id="data-form-container">
@@ -131,7 +131,7 @@ function DataForm(props: DataFormProps) {
                     <DataTextInput label="Nombre del cliente" placeholder="Nombre del cliente" name="name" required />
                     <DataTextInput label="Nombre de equipo a cotizar" placeholder="Nombre de equipo a cotizar" name="item" required />
                     <DataTextInput label="Monto de equipo a cotizar" placeholder="Monto de equipo a cotizar" preffix="$" name="amount" isNumber required />
-                    <DataSliderInput label="Anticipo" min={0} max={30} step={5} scale="%" defaultValue={5} showMarks name="advancePayment" onChange={handleInputChange} />
+                    <DataSliderInput label="Anticipo" min={0} max={30} step={5} scale="%" defaultValue={5} showMarks name="advancePercentage" onChange={handleInputChange} />
                     <DataSummary data={summary} />
                 </Stack>
                 <Button id="data-form-submit" type="submit" disabled={!valid}>Cotizar</Button>

@@ -10,7 +10,7 @@ function ExpensesTotal(props: ExpensesTotalProps) {
             <Box className="expenses-total">
                 <Box className="plan-property">
                     <p className="strong">TOTAL Desembolso Inicial:</p>
-                    <p>${props.totalExpenses}</p>
+                    <p>${props.totalExpenses.toLocaleString()}</p>
                 </Box>
             </Box>
         </Box>

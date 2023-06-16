@@ -5,7 +5,7 @@ import ExpensesTotal from "./ExpensesTotal";
 
 type PlanExpensesProps = {
     firstLastPartiality: number,
-    administrative: number,
+    administrativeExpenses: number,
     advancePayment: number,
     totalExpenses: number,
 };
@@ -15,7 +15,7 @@ function PlanExpenses(props: PlanExpensesProps) {
         <Box className="plan-expenses">
             <ExpensesList
                 firstLastPartiality={props.firstLastPartiality}
-                administrative={props.administrative}
+                administrativeExpenses={props.administrativeExpenses}
                 advancePayment={props.advancePayment}
             />
             <ExpensesTotal totalExpenses={props.totalExpenses} />

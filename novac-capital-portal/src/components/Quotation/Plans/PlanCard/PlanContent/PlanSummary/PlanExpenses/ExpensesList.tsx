@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 
 type ExpensesListProps = {
     firstLastPartiality: number,
-    administrative: number,
+    administrativeExpenses: number,
     advancePayment: number,
 };
 
@@ -15,7 +15,7 @@ function ExpensesList(props: ExpensesListProps) {
             </Box>
             <Box className="plan-property">
                 <p className="strong">{"(-) Gastos Administrativos:"}</p>
-                <p>${props.administrative.toLocaleString()}*</p>
+                <p>${props.administrativeExpenses.toLocaleString()}*</p>
             </Box>
             <Box className="plan-property">
                 <p className="strong">{"(-) Anticipo:"}</p>

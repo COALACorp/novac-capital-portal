@@ -5,7 +5,7 @@ import PlanInsurance from "./PlanInsurance";
 
 type PlanContentProps = {
     firstLastPartiality: number,
-    administrative: number,
+    administrativeExpenses: number,
     advancePayment: number,
     totalExpenses: number,
     insurance: string,
@@ -16,7 +16,7 @@ function PlanContent(props: PlanContentProps) {
         <Box className="plan-content">
             <PlanSummary
                 firstLastPartiality={props.firstLastPartiality}
-                administrative={props.administrative}
+                administrativeExpenses={props.administrativeExpenses}
                 advancePayment={props.advancePayment}
                 totalExpenses={props.totalExpenses}
             />
