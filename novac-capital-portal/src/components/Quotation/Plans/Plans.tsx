@@ -28,6 +28,7 @@ type PlansProps = {
 
 function Plans(props: PlansProps) {
     const [plans, setPlans] = useState<PlanType[]>([]);
+    const [selection, setSelection] = useState<number>();
 
     useEffect(() => {
         console.log("Loading plans");
@@ -63,9 +64,9 @@ function Plans(props: PlansProps) {
                 id="plans"
             >
                 <PlansHeading client={props.form.name} />
-                <PlansCollection plans={plans} onSelection={console.log} />
+                <PlansCollection plans={plans} onSelection={setSelection} />
             </Box>
-            <Button id="plans-submit">Continuar</Button>
+            <Button id="plans-submit" disabled={!selection}>Continuar</Button>
         </Box>
     );
 }
