@@ -65,7 +65,7 @@ function DataForm(props: DataFormProps) {
     const [summary, setSummary] = useState<SummaryDataType[]>(initialSummary);
     const [valid, setValid] = useState<boolean>(false);
 
-    const inputToNumber = (input: string): number => Number(Number(input.replace(/[^0-9]/g, "")).toFixed(2));
+    const inputToNumber = (input: string): number => Number(Number(input.replace(/[^\d.]/g, "")).toFixed(2));
 
     const generateForm = (event: React.FormEvent<HTMLFormElement>) => new FormData(event.currentTarget);
 
@@ -85,6 +85,8 @@ function DataForm(props: DataFormProps) {
     };
 
     const handleFormChange = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault();
+        console.log("Form:", generateForm(event).get("amount"));
         const newFormValues = generateFormValues(generateForm(event));
         setFormValues(newFormValues);
     };
@@ -100,7 +102,7 @@ function DataForm(props: DataFormProps) {
         const advancePercentage = Number((equipmentCost * ((formValues.advancePercentage ?? 5) / 100)).toFixed(2));
         const totalLease = equipmentCost - advancePercentage;
 
-        const newSummary = [...summary];
+        const newSummary = [ ...summary ];
         newSummary[0].value = "$" + equipmentCost.toLocaleString();
         newSummary[1].value = "$" + advancePercentage.toLocaleString();
         newSummary[2].value = "$" + totalLease.toLocaleString();

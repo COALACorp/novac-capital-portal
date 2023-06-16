@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
@@ -27,10 +28,16 @@ type PlansProps = {
 };
 
 function Plans(props: PlansProps) {
+    const navigate = useNavigate();
     const [plans, setPlans] = useState<PlanType[]>([]);
     const [selection, setSelection] = useState<number>();
 
+    const handleSubmit = () => {
+        navigate("/signin");
+    };
+
     useEffect(() => {
+        console.log("Form data:", props.form);
         console.log("Loading plans");
         const newPlans = clientSettings.plans.map((months): PlanType => {
             const taxedEquipment = props.form.amount;
@@ -66,7 +73,7 @@ function Plans(props: PlansProps) {
                 <PlansHeading client={props.form.name} />
                 <PlansCollection plans={plans} onSelection={setSelection} />
             </Box>
-            <Button id="plans-submit" disabled={!selection}>Continuar</Button>
+            <Button id="plans-submit" disabled={!selection} onClick={handleSubmit}>Continuar</Button>
         </Box>
     );
 }

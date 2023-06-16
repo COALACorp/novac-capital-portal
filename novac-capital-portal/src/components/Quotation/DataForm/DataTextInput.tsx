@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Stack from "@mui/material/Stack";
 import OutlinedInput from "@mui/material/OutlinedInput";
 
@@ -9,22 +9,24 @@ type DataTextInputProps = {
     isNumber?: boolean,
     name?: string,
     required?: boolean,
-    onChange?: (value: string) => void,
 };
 
 function DataTextInput(props: DataTextInputProps) {
     const [value, setValue] = useState("");
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
         let input = event.target.value;
         if (props.isNumber) {
-            input = input.replace(/[^0-9]/g, "");
-            const numberInput = Number(Number(input).toFixed(2));
-            const formattedValue = numberInput > 0 ? (props.preffix + numberInput.toLocaleString()) : "";
+            let formattedValue = input.replace(/[^\d.]/g, "");
+            formattedValue = formattedValue.match(/\d+(\.\d{0,2})?/)?.[0] ?? "";
+            formattedValue = formattedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            formattedValue = formattedValue.length > 0 ? (props.preffix + formattedValue) : "";
             input = formattedValue;
         }
+        if (inputRef.current)
+            inputRef.current.value = input;
         setValue(input);
-        props.onChange && props.onChange(input);
     };
 
     return (
@@ -35,10 +37,10 @@ function DataTextInput(props: DataTextInputProps) {
                 placeholder={props.placeholder}
                 required={props.required}
                 fullWidth
-                name={props.name}
                 value={value}
                 onChange={handleChange}
             />
+            <input name={props.name} readOnly hidden ref={inputRef}/>
         </Stack>
     );
 }
