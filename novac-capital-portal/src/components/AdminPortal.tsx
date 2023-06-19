@@ -1,7 +1,8 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 
-import { auth } from "../utils/firebase";
+import { auth, CheckAdmin } from "../utils/firebase";
 
 function AdminPortal() {
     const navigate = useNavigate();
@@ -17,6 +18,19 @@ function AdminPortal() {
                 console.log("Error on sign out:", error);
             });
     };
+
+    useEffect(() => {
+        const CheckPermission = async () => {
+            if (await CheckAdmin(auth))
+            console.log("User is admin");
+            else {
+                console.log("User is not admin");
+                navigate("/signin");
+            }
+        };
+        
+        CheckPermission();
+    }, []);
 
     return (
         <>
