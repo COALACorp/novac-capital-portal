@@ -17,6 +17,10 @@ import "../styles/app.css";
 const router = createBrowserRouter([
     {
         path: "/",
+        element: <Quotation />,
+    },
+    {
+        path: "/home",
         element: <Home />,
     },
     {

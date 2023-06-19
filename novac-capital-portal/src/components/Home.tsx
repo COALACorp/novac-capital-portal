@@ -22,6 +22,7 @@ function Home() {
         <>
             <h1>This is the home page</h1>
             <button onClick={console.log}>Update</button>
+            <button onClick={() => navigate("/")}>Quotation</button>
             <button onClick={() => navigate("/portal")}>Portal</button>
             <button onClick={() => navigate("/admin")}>Admin</button>
             {auth.currentUser
