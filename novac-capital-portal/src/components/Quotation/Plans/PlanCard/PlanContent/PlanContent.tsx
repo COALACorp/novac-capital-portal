@@ -4,11 +4,8 @@ import PlanSummary from "./PlanSummary/PlanSummary";
 import PlanInsurance from "./PlanInsurance";
 
 type PlanContentProps = {
-    initialCustomerExpenses: number,
-    firstLastPartiality: number,
-    signaturesRatification: number,
-    openingCommission: number,
     administrativeExpenses: number,
+    firstLastPartiality: number,
     advancePayment: number,
     totalExpenses: number,
     insurance: string,
@@ -18,10 +15,7 @@ function PlanContent(props: PlanContentProps) {
     return (
         <Box className="plan-content">
             <PlanSummary
-                initialCustomerExpenses={props.initialCustomerExpenses}
                 administrativeExpenses={props.administrativeExpenses}
-                signaturesRatification={props.signaturesRatification}
-                openingCommission={props.openingCommission}
                 firstLastPartiality={props.firstLastPartiality}
                 advancePayment={props.advancePayment}
                 totalExpenses={props.totalExpenses}

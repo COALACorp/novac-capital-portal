@@ -21,11 +21,11 @@ const clientSettings = {
         "48": 1.76,
         "60": 1.95,
     },
-	initialCustomerExpenses: null,
+	initialCustomerExpenses: 0,
 	administrative: 6843.11,
-	signaturesRatification: null,
+	signaturesRatification: 0,
 	folioVerification: 1108.83,
-	openingCommission: null,
+	openingCommission: 0,
 	creditBureau: 496.34,
 };
 
@@ -49,11 +49,16 @@ function Plans(props: PlansProps) {
             const taxedEquipment = props.form.amount;
             const totalRent = calcs.totalRent(taxedEquipment, props.form.advancePercentage, clientSettings.margin[months.toString() as keyof (typeof clientSettings.margin)])
             const taxedPartialities = calcs.taxedPartialities(totalRent, months)
-            const initialCustomerExpenses = 0;
             const firstLastPartiality = calcs.firstLastPartialities(taxedPartialities);
-            const signaturesRatification = 0;
-            const openingCommission = 0;
-            const administrativeExpenses = calcs.administrativeExpenses(clientSettings.administrative, clientSettings.folioVerification, clientSettings.creditBureau, clientSettings.iva);
+            const administrativeExpenses = calcs.administrativeExpenses(
+                clientSettings.initialCustomerExpenses,
+                clientSettings.administrative,
+                clientSettings.signaturesRatification,
+                clientSettings.folioVerification,
+                clientSettings.openingCommission,
+                clientSettings.creditBureau,
+                clientSettings.iva
+            );
             const advancePayment = calcs.advancePayment(taxedEquipment, props.form.advancePercentage);
             const totalExpenses = calcs.totalInitialExpense(firstLastPartiality, advancePayment, administrativeExpenses);
             const insurance = "Incluido";
@@ -62,10 +67,7 @@ function Plans(props: PlansProps) {
                 months,
                 taxedEquipment,
                 taxedPartialities,
-                initialCustomerExpenses,
                 firstLastPartiality,
-                signaturesRatification,
-                openingCommission,
                 administrativeExpenses,
                 advancePayment,
                 totalExpenses,

@@ -6,7 +6,22 @@ const calcs = {
     totalRent: (taxedEquipment: number, advancePercentage: number, margin: number) => Number((taxedEquipment * (1 - (advancePercentage / 100)) * margin).toFixed(2)),
     taxedPartialities: (totalRent: number, months: number) => Number((totalRent / months).toFixed(2)),
     firstLastPartialities: (taxedPartialities: number) => Number((taxedPartialities * 2).toFixed(2)),
-    administrativeExpenses: (administrativeExpenses: number, folioVerification: number, creditBureau: number, iva: number) => Number((addIVA(administrativeExpenses, iva) + addIVA(folioVerification, iva) + addIVA(creditBureau, iva)).toFixed(2)),
+    administrativeExpenses: (
+            initialCustomerExpenses: number,
+            administrative: number,
+            signaturesRatification: number,
+            folioVerification: number,
+            openingCommission: number,
+            creditBureau: number,
+            iva: number
+        ) => Number((
+            addIVA(initialCustomerExpenses, iva)
+            + addIVA(administrative, iva)
+            + addIVA(signaturesRatification, iva)
+            + addIVA(folioVerification, iva)
+            + addIVA(openingCommission, iva)
+            + addIVA(creditBureau, iva)
+        ).toFixed(2)),
     advancePayment: (taxedEquipment: number, advancePercentage: number) => Number((taxedEquipment * (advancePercentage / 100)).toFixed(2)),
     totalInitialExpense: (firstLastPartiality: number, advancePayment: number, administrativeExpenses: number) => Number((firstLastPartiality + advancePayment + administrativeExpenses).toFixed(2)),
 };
