@@ -48,6 +48,15 @@ function App() {
                 // User is signed in, see docs for a list of available properties
                 // https://firebase.google.com/docs/reference/js/firebase.User
                 const uid = user.uid;
+
+                // Check if user is admin
+                user.getIdTokenResult(true)
+                    .then(idTokenResult => {
+                        if (idTokenResult.claims.admin) {
+                            console.log("User is admin");
+                        }
+                    });
+                
                 console.log("User authenticated with UID:", uid);
             } else {
                 // User is signed out
