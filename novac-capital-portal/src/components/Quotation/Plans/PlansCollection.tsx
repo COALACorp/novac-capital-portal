@@ -7,7 +7,10 @@ type PlanType = {
     months: number,
     taxedEquipment: number,
     taxedPartialities: number,
+    initialCustomerExpenses: number,
     firstLastPartiality: number,
+    signaturesRatification: number,
+    openingCommission: number,
     administrativeExpenses: number,
     advancePayment: number,
     totalExpenses: number,
@@ -35,8 +38,11 @@ function PlansCollection(props: PlansCollectionProps) {
                     months={plan.months}
                     taxedEquipment={plan.taxedEquipment}
                     taxedPartialities={plan.taxedPartialities}
-                    firstLastPartiality={plan.firstLastPartiality}
+                    initialCustomerExpenses={plan.initialCustomerExpenses}
                     administrativeExpenses={plan.administrativeExpenses}
+                    signaturesRatification={plan.signaturesRatification}
+                    openingCommission={plan.openingCommission}
+                    firstLastPartiality={plan.firstLastPartiality}
                     advancePayment={plan.advancePayment}
                     totalExpenses={plan.totalExpenses}
                     insurance={plan.insurance}

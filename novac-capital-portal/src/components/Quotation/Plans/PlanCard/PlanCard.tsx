@@ -8,7 +8,10 @@ type PlanCardProps = {
     months: number,
     taxedEquipment: number,
     taxedPartialities: number,
+    initialCustomerExpenses: number,
     firstLastPartiality: number,
+    signaturesRatification: number,
+    openingCommission: number,
     administrativeExpenses: number,
     advancePayment: number,
     totalExpenses: number,
@@ -31,8 +34,11 @@ function PlanCard(props: PlanCardProps) {
                     taxedPartialities={props.taxedPartialities}
                 />
                 <PlanContent
-                    firstLastPartiality={props.firstLastPartiality}
+                    initialCustomerExpenses={props.initialCustomerExpenses}
                     administrativeExpenses={props.administrativeExpenses}
+                    signaturesRatification={props.signaturesRatification}
+                    openingCommission={props.openingCommission}
+                    firstLastPartiality={props.firstLastPartiality}
                     advancePayment={props.advancePayment}
                     totalExpenses={props.totalExpenses}
                     insurance={props.insurance}

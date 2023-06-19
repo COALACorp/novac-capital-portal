@@ -49,7 +49,10 @@ function Plans(props: PlansProps) {
             const taxedEquipment = props.form.amount;
             const totalRent = calcs.totalRent(taxedEquipment, props.form.advancePercentage, clientSettings.margin[months.toString() as keyof (typeof clientSettings.margin)])
             const taxedPartialities = calcs.taxedPartialities(totalRent, months)
+            const initialCustomerExpenses = 0;
             const firstLastPartiality = calcs.firstLastPartialities(taxedPartialities);
+            const signaturesRatification = 0;
+            const openingCommission = 0;
             const administrativeExpenses = calcs.administrativeExpenses(clientSettings.administrative, clientSettings.folioVerification, clientSettings.creditBureau, clientSettings.iva);
             const advancePayment = calcs.advancePayment(taxedEquipment, props.form.advancePercentage);
             const totalExpenses = calcs.totalInitialExpense(firstLastPartiality, advancePayment, administrativeExpenses);
@@ -59,7 +62,10 @@ function Plans(props: PlansProps) {
                 months,
                 taxedEquipment,
                 taxedPartialities,
+                initialCustomerExpenses,
                 firstLastPartiality,
+                signaturesRatification,
+                openingCommission,
                 administrativeExpenses,
                 advancePayment,
                 totalExpenses,
