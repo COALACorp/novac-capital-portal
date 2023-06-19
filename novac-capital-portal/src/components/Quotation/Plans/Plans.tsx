@@ -11,6 +11,7 @@ import PlansCollection, { PlanType } from "./PlansCollection";
 import "../../../styles/quotation/plans.css";
 
 const clientSettings = {
+    plans: [12, 18, 24, 36, 48, 60],
     iva: 1.16,
     margin: {
         "12": 1.19,
@@ -20,7 +21,12 @@ const clientSettings = {
         "48": 1.76,
         "60": 1.95,
     },
-    plans: [12, 18, 24, 36, 48, 60],
+	initialCustomerExpenses: null,
+	administrative: 6843.11,
+	signaturesRatification: null,
+	folioVerification: 1108.83,
+	openingCommission: null,
+	creditBureau: 496.34,
 };
 
 type PlansProps = {
@@ -44,23 +50,25 @@ function Plans(props: PlansProps) {
             const totalRent = calcs.totalRent(taxedEquipment, props.form.advancePercentage, clientSettings.margin[months.toString() as keyof (typeof clientSettings.margin)])
             const taxedPartialities = calcs.taxedPartialities(totalRent, months)
             const firstLastPartiality = calcs.firstLastPartialities(taxedPartialities);
-            const administrativeExpenses = 0;
+            const administrativeExpenses = calcs.administrativeExpenses(clientSettings.administrative, clientSettings.folioVerification, clientSettings.creditBureau, clientSettings.iva);
             const advancePayment = calcs.advancePayment(taxedEquipment, props.form.advancePercentage);
             const totalExpenses = calcs.totalInitialExpense(firstLastPartiality, advancePayment, administrativeExpenses);
             const insurance = "Incluido";
 
-            return (
-                {
-                    months,
-                    taxedEquipment,
-                    taxedPartialities,
-                    firstLastPartiality,
-                    administrativeExpenses,
-                    advancePayment,
-                    totalExpenses,
-                    insurance,
-                }
-            );
+            const planData = {
+                months,
+                taxedEquipment,
+                taxedPartialities,
+                firstLastPartiality,
+                administrativeExpenses,
+                advancePayment,
+                totalExpenses,
+                insurance,
+            };
+
+            console.log("Plan data:", planData);
+
+            return planData;
         });
         setPlans(newPlans);
     }, []);
