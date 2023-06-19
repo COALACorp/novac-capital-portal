@@ -3,7 +3,7 @@ import { signOut } from "firebase/auth";
 
 import { auth } from "../utils/firebase";
 
-function Home() {
+function AdminPortal() {
     const navigate = useNavigate();
 
     const handleSignOut = () => {
@@ -20,19 +20,13 @@ function Home() {
 
     return (
         <>
-            <h1>This is the home page</h1>
+            <h1>This is the admin portal window</h1>
+            <button onClick={() => navigate("/")}>Home</button>
             <button onClick={() => navigate("/portal")}>Portal</button>
-            {auth.currentUser
-                ? <button onClick={handleSignOut}>Sign Out</button>
-                : (
-                    <>
-                        <button onClick={() => navigate("/signin")}>Sign In</button>
-                        <button onClick={() => navigate("/signup")}>Sign Up</button>
-                    </>
-                )
-            }
+            <button onClick={() => navigate("/quotation")}>Quotation</button>
+            {auth.currentUser && <button onClick={handleSignOut}>Sign Out</button>}
         </>
     );
 }
 
-export default Home;
+export default AdminPortal;

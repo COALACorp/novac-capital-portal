@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Alert from "@mui/material/Alert";
 import GoogleIcon from "@mui/icons-material/Google";
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, User } from "firebase/auth";
 
 import { auth, googleProvider } from "../../utils/firebase";
 import Copyright from "../Copyright";
@@ -34,6 +34,16 @@ function SignIn() {
     const navigate = useNavigate();
     const [error, setError] = useState<Error>();
 
+    const handleSignedIn = async (user: User) => {
+        const idToken = await user.getIdTokenResult();
+        const admin = idToken.claims.admin;
+        console.log("Is admin:", admin);
+        if (admin)
+            navigate("/admin");
+        else
+            navigate("/portal");
+    };
+
     const handleGoogleSignIn = () => {
         signInWithPopup(auth, googleProvider)
             .then(result => {
@@ -45,7 +55,7 @@ function SignIn() {
                 console.log("Credential:", credential);
                 console.log("Token:", token);
                 console.log("User:", user);
-                navigate("/portal");
+                handleSignedIn(user);
             })
             .catch(e => {
                 const errorState = {
@@ -65,7 +75,7 @@ function SignIn() {
                 // Signed In
                 const user = userCredential.user;
                 console.log("User:", user);
-                navigate("/portal");
+                handleSignedIn(user);
             })
             .catch(e => {
                 const errorState: ErrorData = {
@@ -89,8 +99,8 @@ function SignIn() {
 
     useEffect(() => {
         if (auth.currentUser)
-            navigate("/portal");
-    }, []);
+            handleSignedIn(auth.currentUser);
+    }, [auth.currentUser]);
 
     return (
         <Container component="main" maxWidth="xs">

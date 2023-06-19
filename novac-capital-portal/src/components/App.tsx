@@ -10,6 +10,7 @@ import SignUp from "./Authentication/SignUp";
 import PasswordReset from "./Authentication/PasswordReset";
 import Portal from "./Portal";
 import Quotation from "./Quotation/Quotation";
+import AdminPortal from "./AdminPortal";
 
 import "../styles/app.css";
 
@@ -34,10 +35,13 @@ const router = createBrowserRouter([
         path: "/portal",
         element: <Portal />,
     },
-    
     {
         path: "/quotation",
         element: <Quotation />,
+    },
+    {
+        path: "/admin",
+        element: <AdminPortal />,
     },
 ]);
 
