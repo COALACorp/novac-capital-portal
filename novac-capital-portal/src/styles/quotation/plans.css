@@ -65,7 +65,11 @@
     gap: 50px;
 }
 
-.plan-card:hover, .plan-card.selected {
+.plan-card:hover {
+    box-shadow: 2px 2px 20px rgba(52, 84, 208, 0.25);
+}
+
+.plan-card.selected {
     border: 1.5px solid #2A45AB;
     box-shadow: 2px 2px 20px rgba(52, 84, 208, 0.25);
 }

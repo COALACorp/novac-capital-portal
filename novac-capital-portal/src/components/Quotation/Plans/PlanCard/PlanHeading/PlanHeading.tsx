@@ -15,8 +15,8 @@ function PlanHeading(props: PlanHeadingProps) {
             <Box className="plan-heading-info">
                 <p className="plan-heading-title strong">Plazo a {props.months} meses</p>
                 <Box className="plan-heading-info-values">
-                    <p><span className="strong">Valor Equipo c/IVA:</span> <b>${props.taxedEquipment.toLocaleString()}.</b></p>
-                    <p><span className="strong">Parcialidades c/IVA:</span> <b>${props.taxedPartialities.toLocaleString()}</b></p>
+                    <p>Valor Equipo c/IVA: ${props.taxedEquipment.toLocaleString()}</p>
+                    <p className="strong">Parcialidades c/IVA: ${props.taxedPartialities.toLocaleString()}</p>
                 </Box>
             </Box>
         </Box>

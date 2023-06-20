@@ -132,7 +132,7 @@ function DataForm(props: DataFormProps) {
                 <Stack id="data-form-content">
                     <DataTextInput label="Nombre del cliente" placeholder="Nombre del cliente" name="name" required />
                     <DataTextInput label="Nombre de equipo a cotizar" placeholder="Nombre de equipo a cotizar" name="item" required />
-                    <DataTextInput label="Monto de equipo a cotizar" placeholder="Monto de equipo a cotizar" preffix="$" name="amount" isNumber required />
+                    <DataTextInput label="Monto de equipo a cotizar" labelSuffix="(IVA incluido)" placeholder="Monto de equipo a cotizar" preffix="$" name="amount" isNumber required />
                     <DataSliderInput label="Anticipo" min={0} max={30} step={5} scale="%" defaultValue={5} showMarks name="advancePercentage" onChange={handleInputChange} />
                     <DataSummary data={summary} />
                 </Stack>

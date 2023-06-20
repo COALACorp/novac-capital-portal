@@ -4,6 +4,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 
 type DataTextInputProps = {
     label: string,
+    labelSuffix?: string,
     placeholder?: string,
     preffix?: string,
     isNumber?: boolean,
@@ -31,7 +32,7 @@ function DataTextInput(props: DataTextInputProps) {
 
     return (
         <Stack className="data-form-input-container">
-            <p id="input-label">{props.label}</p>
+            <p id="input-label"><span className="strong">{props.label}</span> <span className="light">{props.labelSuffix}</span></p>
             <OutlinedInput
                 className="data-form-input"
                 placeholder={props.placeholder}
