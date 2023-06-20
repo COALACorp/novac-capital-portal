@@ -1,5 +1,5 @@
 #data-form-container {
-    width: 60%;
+    width: 847px;
     padding: 60px 40px;
     display: flex;
     flex-direction: column;
@@ -63,4 +63,14 @@
 
 #data-form-submit.Mui-disabled {
     background-color: #C1CAF1;
+}
+
+@media only screen and (max-width: 850px) {
+    #data-form-container {
+        width: 95%;
+    }
+
+    .data-form-summary-item {
+        flex-direction: column;
+    }
 }

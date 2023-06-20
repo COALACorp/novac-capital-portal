@@ -1,5 +1,7 @@
 import Box from "@mui/material/Box";
 
+import ExpensesItem from "./ExpensesItem";
+
 type ExpensesListProps = {
     administrativeExpenses: number,
     firstLastPartiality: number,
@@ -9,18 +11,9 @@ type ExpensesListProps = {
 function ExpensesList(props: ExpensesListProps) {
     return (
         <Box className="expenses-list">
-            <Box className="plan-property">
-                <p className="strong">{"(-) Parcialidad Inicial y Última:"}</p>
-                <p>${props.firstLastPartiality.toLocaleString()}</p>
-            </Box>
-            <Box className="plan-property">
-                <p className="strong">{"(-) Gastos Administrativos:"}</p>
-                <p>${props.administrativeExpenses.toLocaleString()}*</p>
-            </Box>
-            <Box className="plan-property">
-                <p className="strong">{"(-) Anticipo:"}</p>
-                <p>${props.advancePayment.toLocaleString()}</p>
-            </Box>
+            <ExpensesItem name="Parcialidad Inicial y Última" amount={props.firstLastPartiality} />
+            <ExpensesItem name="Gastos Administrativos" amount={props.administrativeExpenses} />
+            <ExpensesItem name="Anticipo" amount={props.advancePayment} />
         </Box>
     );
 }

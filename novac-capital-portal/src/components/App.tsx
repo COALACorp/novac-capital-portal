@@ -4,6 +4,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import Box from "@mui/material/Box";
 
 import { auth, CheckAdmin } from "../utils/firebase";
+import Navbar from "./Navbar/Navbar";
 import Home from "./Home";
 import SignIn from "./Authentication/SignIn";
 import SignUp from "./Authentication/SignUp";
@@ -71,6 +72,7 @@ function App() {
 
     return (
         <Box id="app-container">
+            <Navbar />
             <RouterProvider router={router} />
         </Box>
     );

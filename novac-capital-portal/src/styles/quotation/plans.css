@@ -113,7 +113,7 @@
     align-items: center;
 }
 
-.plan-heading-info-values {
+.plan-heading-info-items {
     color: #4F4F4F;
     font-size: 16px;
     line-height: 24px;
@@ -204,4 +204,22 @@
 
 #plans-submit.Mui-disabled {
     background-color: #C1CAF1;
+}
+
+@media only screen and (max-width: 850px) {
+    #plans-container {
+        width: 95%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .plan-heading-item {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .plan-property {
+        flex-direction: column;
+        gap: unset;
+    }
 }
