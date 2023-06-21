@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 
-import { auth, CheckAdmin } from "../utils/firebase";
+import { auth, CheckAdmin } from "../utils/auth";
 
 function AdminPortal() {
     const navigate = useNavigate();

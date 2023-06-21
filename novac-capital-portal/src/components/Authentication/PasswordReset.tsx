@@ -12,7 +12,7 @@ import Container from "@mui/material/Container";
 import Alert from "@mui/material/Alert";
 import { sendPasswordResetEmail } from "firebase/auth";
 
-import { auth } from "../../utils/firebase";
+import { auth } from "../../utils/auth";
 import Copyright from "../Copyright";
 
 import logoUri from "/logo.png";

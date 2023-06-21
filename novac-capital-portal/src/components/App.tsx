@@ -3,14 +3,15 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { onAuthStateChanged } from "firebase/auth";
 import Box from "@mui/material/Box";
 
-import { auth, CheckAdmin } from "../utils/firebase";
+import { auth, CheckAdmin } from "../utils/auth";
 import Navbar from "./Navbar/Navbar";
+import Quotation from "./Quotation/Quotation";
 import Home from "./Home";
 import SignIn from "./Authentication/SignIn";
 import SignUp from "./Authentication/SignUp";
 import PasswordReset from "./Authentication/PasswordReset";
 import Portal from "./Portal";
-import Quotation from "./Quotation/Quotation";
+import FilesForm from "./FilesForm/FilesForm";
 import AdminPortal from "./AdminPortal";
 
 import "../styles/app.css";
@@ -41,8 +42,8 @@ const router = createBrowserRouter([
         element: <Portal />,
     },
     {
-        path: "/quotation",
-        element: <Quotation />,
+        path: "/files",
+        element: <FilesForm />,
     },
     {
         path: "/admin",
