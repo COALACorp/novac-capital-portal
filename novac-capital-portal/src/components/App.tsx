@@ -2,10 +2,9 @@ import { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { ref, child, get } from "firebase/database";
 import { onAuthStateChanged } from "firebase/auth";
-import Box from "@mui/material/Box";
 
 import { database, auth, CheckAdmin } from "../utils/firebase";
-import Navbar from "./Navbar/Navbar";
+import WindowContent from "./WindowContent";
 import Quotation from "./Quotation/Quotation";
 import Home from "./Home";
 import SignIn from "./Authentication/SignIn";
@@ -23,35 +22,67 @@ import "../styles/app.css";
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <Quotation />,
+        element: (
+            <WindowContent>
+                <Quotation />
+            </WindowContent>
+        ),
     },
     {
         path: "/home",
-        element: <Home />,
+        element: (
+            <WindowContent>
+                <Home />
+            </WindowContent>
+        ),
     },
     {
         path: "/signin",
-        element: <SignIn />,
+        element: (
+            <WindowContent>
+                <SignIn />
+            </WindowContent>
+        ),
     },
     {
         path: "/signup",
-        element: <SignUp />,
+        element: (
+            <WindowContent>
+                <SignUp />
+            </WindowContent>
+        ),
     },
     {
         path: "/reset",
-        element: <PasswordReset />,
+        element: (
+            <WindowContent>
+                <PasswordReset />
+            </WindowContent>
+        ),
     },
     {
         path: "/portal",
-        element: <Portal />,
+        element: (
+            <WindowContent>
+                <Portal />
+            </WindowContent>
+        ),
     },
     {
         path: "/files",
-        element: <FilesForm />,
+        element: (
+            <WindowContent>
+                <FilesForm />
+            </WindowContent>
+        ),
     },
     {
         path: "/admin",
-        element: <AdminPortal />,
+        element: (
+            <WindowContent>
+                <AdminPortal />
+            </WindowContent>
+        ),
     },
 ]);
 
@@ -59,16 +90,16 @@ function App() {
     const dispatch = useAppDispatch();
 
     const getClientConfig = () => {
-        console.log("Get client config");
+        console.log("Get client params");
         const dbRef = ref(database);
         get(child(dbRef, "clientConfig"))
             .then((snapshot) => {
                 if (snapshot.exists()) {
                     const params = snapshot.val() as ClientParams;
-                    console.log("Client config:", params);
+                    console.log("Client params:", params);
                     dispatch(setParams(params));
                 } else {
-                    console.log("No data available");
+                    console.log("No client params available");
                 }
             })
             .catch((error) => {
@@ -100,12 +131,7 @@ function App() {
         setOnAuthStateChange();
     }, []);
 
-    return (
-        <Box id="app-container">
-            <Navbar />
-            <RouterProvider router={router} />
-        </Box>
-    );
+    return <RouterProvider router={router} />;
 }
 
 export default App;
