@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
 import { ref, child, get } from "firebase/database";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, User } from "firebase/auth";
 
 import { database, auth, CheckAdmin } from "../utils/firebase";
 import WindowContent from "./WindowContent";
@@ -16,6 +16,7 @@ import AdminPortal from "./AdminPortal";
 
 import { useAppDispatch } from "../app/hooks";
 import { ClientParams, setParams } from "../features/params/paramsSlice";
+import { UserValue, setUser, resetUser } from "../features/user/userSlice";
 
 import "../styles/app.css";
 
@@ -112,16 +113,22 @@ function App() {
             if (user) {
                 // User is signed in, see docs for a list of available properties
                 // https://firebase.google.com/docs/reference/js/firebase.User
-                const uid = user.uid;
+                console.log("User authenticated with UID:", user.uid);
 
+                const authedUser: UserValue = {
+                    ...(user.toJSON() as User),
+                    admin: false,
+                };
                 // Check if user is admin
-                if (await CheckAdmin(auth))
+                if (await CheckAdmin()) {
+                    authedUser.admin = true;
                     console.log("User is admin");
-                
-                console.log("User authenticated with UID:", uid);
+                }
+                dispatch(setUser(authedUser));
             } else {
                 // User is signed out
                 console.log("User signed out");
+                dispatch(resetUser());
             }
         });
     };

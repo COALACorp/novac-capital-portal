@@ -11,10 +11,13 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Alert from "@mui/material/Alert";
 import GoogleIcon from "@mui/icons-material/Google";
-import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, User } from "firebase/auth";
+import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
-import { auth, googleProvider } from "../../utils/firebase";
+import { auth, googleProvider, CheckAdmin } from "../../utils/firebase";
 import Copyright from "../Copyright";
+
+import { useAppSelector } from "../../app/hooks";
+import { selectUser } from "../../features/user/userSlice";
 
 import logoUri from "/logo.png";
 
@@ -32,12 +35,16 @@ type Error = ErrorData|null;
 
 function SignIn() {
     const navigate = useNavigate();
+    const user = useAppSelector(selectUser);
     const [error, setError] = useState<Error>();
 
-    const handleSignedIn = async (user: User) => {
-        const idToken = await user.getIdTokenResult();
-        const admin = idToken.claims.admin;
-        console.log("Is admin:", admin);
+    const handleSignedIn = async () => {
+        let admin = false;
+        if (user)
+            admin = user.admin;
+        else
+            admin = await CheckAdmin();
+            
         if (admin)
             navigate("/admin");
         else
@@ -51,11 +58,11 @@ function SignIn() {
                 const credential = GoogleAuthProvider.credentialFromResult(result);
                 const token = credential?.accessToken;
                 // The signed-in user info.
-                const user = result.user;
+                const googleUser = result.user;
                 console.log("Credential:", credential);
                 console.log("Token:", token);
-                console.log("User:", user);
-                handleSignedIn(user);
+                console.log("User:", googleUser);
+                handleSignedIn();
             })
             .catch(e => {
                 const errorState = {
@@ -73,9 +80,8 @@ function SignIn() {
         signInWithEmailAndPassword(auth, authData.email, authData.password)
             .then(userCredential => {
                 // Signed In
-                const user = userCredential.user;
-                console.log("User:", user);
-                handleSignedIn(user);
+                console.log("User:", userCredential.user);
+                handleSignedIn();
             })
             .catch(e => {
                 const errorState: ErrorData = {
@@ -98,9 +104,9 @@ function SignIn() {
     };
 
     useEffect(() => {
-        if (auth.currentUser)
-            handleSignedIn(auth.currentUser);
-    }, [auth.currentUser]);
+        if (user)
+            handleSignedIn();
+    }, [user]);
 
     return (
         <Container component="main" maxWidth="xs">

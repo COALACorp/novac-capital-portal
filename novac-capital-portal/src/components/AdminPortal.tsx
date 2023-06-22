@@ -1,36 +1,27 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
 
-import { auth, CheckAdmin } from "../utils/firebase";
+import { SignOut } from "../utils/firebase";
+
+import { useAppSelector } from "../app/hooks";
+import { selectUser } from "../features/user/userSlice";
 
 function AdminPortal() {
     const navigate = useNavigate();
+    const user = useAppSelector(selectUser);
 
     const handleSignOut = () => {
-        signOut(auth)
-            .then(() => {
-                // Sign Out successfully
-                navigate("/");
-                console.log("Signed out successfully");
-            })
-            .catch(error => {
-                console.log("Error on sign out:", error);
-            });
+        SignOut(() => navigate("/"));
     };
 
     useEffect(() => {
-        const CheckPermission = async () => {
-            if (await CheckAdmin(auth))
+        if (user?.admin)
             console.log("User is admin");
-            else {
-                console.log("User is not admin");
-                navigate("/signin");
-            }
-        };
-        
-        CheckPermission();
-    }, []);
+        else {
+            console.log("User is not admin");
+            navigate("/signin");
+        }
+    }, [user?.admin]);
 
     return (
         <>
@@ -38,7 +29,7 @@ function AdminPortal() {
             <button onClick={() => navigate("/")}>Quotation</button>
             <button onClick={() => navigate("/home")}>Home</button>
             <button onClick={() => navigate("/portal")}>Portal</button>
-            {auth.currentUser && <button onClick={handleSignOut}>Sign Out</button>}
+            {user && <button onClick={handleSignOut}>Sign Out</button>}
         </>
     );
 }

@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
-import { Auth, getAuth, GoogleAuthProvider } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signOut } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -31,10 +31,22 @@ const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
 // Custom Functions
-const CheckAdmin = async (auth: Auth): Promise<boolean> => {
+const CheckAdmin = async (): Promise<boolean> => {
     const idToken = await auth.currentUser?.getIdTokenResult();
     return idToken?.claims.admin;
 };
 
+const SignOut = (callback?: () => void) => {
+    signOut(auth)
+        .then(() => {
+            // Sign Out successfully
+            console.log("Signed out successfully");
+            callback && callback();
+        })
+        .catch(error => {
+            console.log("Error on sign out:", error);
+        });
+};
+
 export default app;
-export { database, auth, googleProvider, CheckAdmin };
+export { database, auth, googleProvider, CheckAdmin, SignOut };

@@ -33,7 +33,7 @@ export const paramsSlice = createSlice({
     },
 });
 
+export default paramsSlice.reducer;
 export type { ClientParams };
 export const { setParams } = paramsSlice.actions;
 export const selectParams = (state: RootState) => state.params.value;
-export default paramsSlice.reducer;

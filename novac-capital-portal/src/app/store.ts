@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import paramsSlice from "../features/params/paramsSlice";
+import paramsReducer from "../features/params/paramsSlice";
+import userReducer from "../features/user/userSlice";
 
 const store = configureStore({
     reducer: {
-        params: paramsSlice,
+        params: paramsReducer,
+        user: userReducer,
     },
 });
 

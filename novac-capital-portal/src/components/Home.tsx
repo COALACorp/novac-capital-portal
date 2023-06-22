@@ -1,31 +1,25 @@
 import { useNavigate } from "react-router-dom";
-import { signOut } from "firebase/auth";
 
-import { auth } from "../utils/firebase";
+import { SignOut } from "../utils/firebase";
+
+import { useAppSelector } from "../app/hooks";
+import { selectUser } from "../features/user/userSlice";
 
 function Home() {
     const navigate = useNavigate();
+    const user = useAppSelector(selectUser);
 
     const handleSignOut = () => {
-        signOut(auth)
-            .then(() => {
-                // Sign Out successfully
-                navigate("/");
-                console.log("Signed out successfully");
-            })
-            .catch(error => {
-                console.log("Error on sign out:", error);
-            });
+        SignOut(() => navigate("/"));
     };
 
     return (
         <>
             <h1>This is the home page</h1>
-            <button onClick={console.log}>Update</button>
             <button onClick={() => navigate("/")}>Quotation</button>
             <button onClick={() => navigate("/portal")}>Portal</button>
             <button onClick={() => navigate("/admin")}>Admin</button>
-            {auth.currentUser
+            {user
                 ? <button onClick={handleSignOut}>Sign Out</button>
                 : (
                     <>
