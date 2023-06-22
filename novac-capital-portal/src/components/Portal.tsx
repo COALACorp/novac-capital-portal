@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 
-import { auth } from "../utils/auth";
+import { auth } from "../utils/firebase";
 
 function Portal() {
     const navigate = useNavigate();

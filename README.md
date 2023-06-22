@@ -11,6 +11,7 @@ A web portal for Novac Capital company
 - React Router for client side routing
 - Material UI
 - Firebase for Sign In & Sign Up functionality
+- Redux for global states management
 
 ## Available Scripts
 

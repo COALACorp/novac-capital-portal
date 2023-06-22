@@ -13,7 +13,7 @@ import Alert from "@mui/material/Alert";
 import GoogleIcon from "@mui/icons-material/Google";
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, User } from "firebase/auth";
 
-import { auth, googleProvider } from "../../utils/auth";
+import { auth, googleProvider } from "../../utils/firebase";
 import Copyright from "../Copyright";
 
 import logoUri from "/logo.png";

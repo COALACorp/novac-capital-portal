@@ -1,9 +1,10 @@
 import { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import { ref, child, get } from "firebase/database";
 import { onAuthStateChanged } from "firebase/auth";
 import Box from "@mui/material/Box";
 
-import { auth, CheckAdmin } from "../utils/auth";
+import { database, auth, CheckAdmin } from "../utils/firebase";
 import Navbar from "./Navbar/Navbar";
 import Quotation from "./Quotation/Quotation";
 import Home from "./Home";
@@ -13,6 +14,9 @@ import PasswordReset from "./Authentication/PasswordReset";
 import Portal from "./Portal";
 import FilesForm from "./FilesForm/FilesForm";
 import AdminPortal from "./AdminPortal";
+
+import { useAppDispatch } from "../app/hooks";
+import { ClientParams, setParams } from "../features/params/paramsSlice";
 
 import "../styles/app.css";
 
@@ -52,7 +56,27 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-    useEffect(() => {
+    const dispatch = useAppDispatch();
+
+    const getClientConfig = () => {
+        console.log("Get client config");
+        const dbRef = ref(database);
+        get(child(dbRef, "clientConfig"))
+            .then((snapshot) => {
+                if (snapshot.exists()) {
+                    const params = snapshot.val() as ClientParams;
+                    console.log("Client config:", params);
+                    dispatch(setParams(params));
+                } else {
+                    console.log("No data available");
+                }
+            })
+            .catch((error) => {
+                console.error(error);
+            });
+    };
+
+    const setOnAuthStateChange = () => {
         onAuthStateChanged(auth, async user => {
             if (user) {
                 // User is signed in, see docs for a list of available properties
@@ -69,6 +93,11 @@ function App() {
                 console.log("User signed out");
             }
         });
+    };
+
+    useEffect(() => {
+        getClientConfig();
+        setOnAuthStateChange();
     }, []);
 
     return (
