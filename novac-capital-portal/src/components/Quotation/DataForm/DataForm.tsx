@@ -3,7 +3,7 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
-import Heading from "../Heading";
+import FormHeading from "../../FormHeading";
 import DataTextInput from "./DataTextInput";
 import DataSliderInput from "./DataSliderInput";
 import DataSummary, { SummaryDataType } from "./DataSummary";
@@ -128,7 +128,7 @@ function DataForm(props: DataFormProps) {
                 onChange={handleFormChange}
                 ref={formRef}
             >
-                <Heading />
+                <FormHeading title="Cotiza tu arrendamiento" subtitle="This is a subtitle parsed to FormHeading" />
                 <Stack id="data-form-content">
                     <DataTextInput label="Nombre del cliente" placeholder="Nombre del cliente" name="name" required />
                     <DataTextInput label="Nombre de equipo a cotizar" placeholder="Nombre de equipo a cotizar" name="item" required />

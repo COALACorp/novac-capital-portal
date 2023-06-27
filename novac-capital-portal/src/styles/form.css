@@ -1,4 +1,4 @@
-#quotation-heading-container {
+#form-heading-container {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -6,21 +6,21 @@
     align-items: center;
 }
 
-#quotation-heading {
+#form-heading {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 6px;
 }
 
-#quotation-heading h1 {
+#form-heading h1 {
     color: #26323D;
     text-align: center;
     font-size: 32px;
     line-height: 48px;
 }
 
-#quotation-heading h2 {
+#form-heading h2 {
     color: #828282;
     text-align: center;
     font-size: 16px;
