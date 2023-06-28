@@ -1,6 +1,6 @@
 import Box from "@mui/material/Box";
 
-import FileInputAction, { Status } from "./FileInputAction";
+import FileInputAction, { Status } from "./FileInputAction/FileInputAction";
 
 type FileInputProps = {
     label: string,

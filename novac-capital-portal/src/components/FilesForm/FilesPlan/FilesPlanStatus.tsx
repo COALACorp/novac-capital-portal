@@ -22,7 +22,7 @@ const statusData: StatusData = {
         icon: <CheckCircleIcon className="status-indicator approved" />,
     },
     denied: {
-        label: "Denegado",
+        label: "Rechazado",
         icon: <CancelIcon className="status-indicator denied" />,
     },
 };
@@ -41,3 +41,4 @@ function FilesPlanStatus(props: FilesPlanStatusProps) {
 }
 
 export default FilesPlanStatus;
+export type { Status }

@@ -155,25 +155,43 @@
 
 .file-input-action {
     padding: 16px 20px;
-    color: #26323D !important;
+    color: #26323D;
     font-size: 20px;
-    text-decoration: none !important;
+    text-decoration: none;
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 20px;
     border-radius: 10px;
     border: 1px solid #BDBDBD;
+    cursor: pointer;
 }
 
 .file-input-action input {
     display: none;
 }
 
+.file-input-action.send-file {
+    color: #FFFFFF;
+    background-color: #3454D0;
+    border: 0;
+}
+
 .file-remove-action {
+    width: 350px;
+    padding: 10px;
+    text-align: center;
+    font-size: 20px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
+    gap: 15px;
+}
+
+.file-remove-action .file-input-action {
+    min-width: 70px;
+    font-size: 20px;
+    justify-content: center;
 }
 
 .status-indicator {
@@ -218,4 +236,10 @@
 
 #files-submit.Mui-disabled {
     background-color: #C1CAF1;
+}
+
+@media only screen and (max-width: 850px) {
+    #files-form-container {
+        margin: 0;
+    }
 }

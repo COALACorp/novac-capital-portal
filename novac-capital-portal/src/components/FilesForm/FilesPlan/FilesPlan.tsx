@@ -1,14 +1,15 @@
 import Box from "@mui/material/Box";
 
 import PlanAvatar from "./PlanAvatar";
-import FilesPlanStatus from "./FilesPlanStatus";
+import FilesPlanStatus, { Status } from "./FilesPlanStatus";
 
 type FilesPlanProps = {
     months: number,
     applicant: string,
     equipment: string,
     taxedEquipment: number,
-    // taxedPartialities: number,
+    taxedPartialities: number,
+    status: Status,
 };
 
 function FilesPlan(props: FilesPlanProps) {
@@ -23,9 +24,9 @@ function FilesPlan(props: FilesPlanProps) {
                 </Box>
             </Box>
             <Box id="files-plan-expenses">
-                <p className="plan-value"><span className="strong">Valor Equipo c/IVA:</span> ${props.taxedEquipment}</p>
-                {/* <p className="plan-value"><span className="strong">Parcialidades c/IVA:</span> ${props.taxedPartialities}</p> */}
-                <FilesPlanStatus />
+                <FilesPlanStatus status={props.status} />
+                <p className="plan-value"><span className="strong">Valor Equipo c/IVA:</span> ${props.taxedEquipment.toLocaleString()}</p>
+                <p className="plan-value strong">Parcialidades c/IVA: ${props.taxedPartialities.toLocaleString()}</p>
             </Box>
         </Box>
     );
