@@ -24,7 +24,7 @@ function FilesForm() {
                 <ApplicantRequirements />
                 <EndorsementRequirements />
             </Box>
-            <Button id="files-submit">Continuar</Button>
+            <Button id="files-submit">Enviar</Button>
         </Box>
     );
 }
