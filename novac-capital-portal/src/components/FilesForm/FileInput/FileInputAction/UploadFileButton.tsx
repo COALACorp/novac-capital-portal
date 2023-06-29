@@ -1,44 +1,22 @@
 import { useState, useEffect, ChangeEvent } from "react";
-import Box from "@mui/material/Box";
-
-import RemoveFileButton from "./RemoveFileButton";
 
 type UploadFileButtonProps = {
     name: string,
-    onChange?: (name: string, file: File) => void,
-    onUpload?: (name: string, file: File) => void,
+    onChange?: (file: File|undefined) => void,
 };
 
 function UploadFileButton(props: UploadFileButtonProps) {
     const [file, setFile] = useState<File>();
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        if (event.target.files)
-            setFile(event.target.files[0]);
+        setFile(event.target.files ? event.target.files[0] : undefined);
     };
 
-    const handleRemove = () => {
-        setFile(undefined);
-    };
-
-    const handleSend = () => {
-        if (file && props.onUpload)
-            props.onUpload(props.name, file);
-    };
-    
     useEffect(() => {
-        if (file && props.onChange)
-            props.onChange(props.name, file);
+        props.onChange && props.onChange(file);
     }, [file]);
 
-    return file ? (
-        <>
-            <RemoveFileButton file={file} onRemove={handleRemove} />
-            <Box className="file-input-action send-file" component="a" onClick={handleSend}>
-                <p>Enviar</p>
-            </Box>
-        </>
-    ) : (
+    return (
         <label className="file-input-action" htmlFor={"file-" + props.name}>
             <p>Subir</p>
             <svg width="15" height="20" viewBox="0 0 15 20" fill="none" xmlns="http://www.w3.org/2000/svg">

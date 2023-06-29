@@ -5,7 +5,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import CancelIcon from '@mui/icons-material/Cancel';
 import ErrorIcon from '@mui/icons-material/Error';
 
-import UploadFileButton from "./UploadFileButton";
+import UploadFileAction from "./UploadFileAction";
 
 type Status = "unknown"|"pending"|"approved"|"denied"|"error";
 
@@ -25,7 +25,7 @@ type FileInputActionProps = {
     name: string,
     templateUrl?: string,
     status?: Status,
-    onChange?: (name: string, value: File) => void,
+    onChange?: (name: string, value: File|undefined) => void,
 };
 
 function FileInputAction(props: FileInputActionProps) {
@@ -34,6 +34,11 @@ function FileInputAction(props: FileInputActionProps) {
     const handleSend = () => {
         console.log("Send clicked");
         setStatus("pending");
+    };
+
+    const handleRemove = () => {
+        console.log("Remove clicked");
+        setStatus("unknown");
     };
 
     return (
@@ -51,7 +56,7 @@ function FileInputAction(props: FileInputActionProps) {
                     </svg>
                 </a>
             )}
-            <UploadFileButton name={props.name} onChange={props.onChange} onUpload={handleSend} />
+            <UploadFileAction name={props.name} onChange={props.onChange} onUpload={handleSend} onRemove={handleRemove} />
             {statusIcons[status]}
         </Box>
     );
