@@ -12,8 +12,12 @@ function NavbarLinks() {
         <Box id="navbar-links">
             <a className="navbar-link strong" href="#" onClick={() => navigate("/")} >Inicio</a>
             {user
-                ? <a className="navbar-link" href="#" onClick={() => navigate("/portal")}>Portal</a>
-                : <a className="navbar-link" href="#" onClick={() => navigate("/signin")}>Log In</a>
+                ? (
+                    <>
+                        <a className="navbar-link" href="#" onClick={() => navigate("/home")}>Test</a>
+                        {user.admin && <a className="navbar-link" href="#" onClick={() => navigate("/admin")}>Admin</a>}
+                    </>
+                ) : <a className="navbar-link" href="#" onClick={() => navigate("/signin")}>Log In</a>
             }
         </Box>
     );

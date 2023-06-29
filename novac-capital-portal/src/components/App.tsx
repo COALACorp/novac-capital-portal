@@ -10,7 +10,6 @@ import Home from "./Home";
 import SignIn from "./Authentication/SignIn";
 import SignUp from "./Authentication/SignUp";
 import PasswordReset from "./Authentication/PasswordReset";
-import Portal from "./Portal";
 import FilesForm from "./FilesForm/FilesForm";
 import AdminPortal from "./AdminPortal";
 
@@ -58,14 +57,6 @@ const router = createBrowserRouter([
         element: (
             <WindowContent>
                 <PasswordReset />
-            </WindowContent>
-        ),
-    },
-    {
-        path: "/portal",
-        element: (
-            <WindowContent>
-                <Portal />
             </WindowContent>
         ),
     },

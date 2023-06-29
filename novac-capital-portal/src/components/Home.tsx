@@ -17,8 +17,7 @@ function Home() {
         <>
             <h1>This is the home page</h1>
             <button onClick={() => navigate("/")}>Quotation</button>
-            <button onClick={() => navigate("/portal")}>Portal</button>
-            <button onClick={() => navigate("/admin")}>Admin</button>
+            <button onClick={() => navigate("/files")}>Files Checklist</button>
             {user
                 ? <button onClick={handleSignOut}>Sign Out</button>
                 : (

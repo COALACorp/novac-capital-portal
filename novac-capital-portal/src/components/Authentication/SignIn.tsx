@@ -48,7 +48,7 @@ function SignIn() {
         if (admin)
             navigate("/admin");
         else
-            navigate("/portal");
+            navigate("/files");
     };
 
     const handleGoogleSignIn = () => {

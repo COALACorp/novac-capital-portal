@@ -27,8 +27,8 @@ function AdminPortal() {
         <>
             <h1>This is the admin portal window</h1>
             <button onClick={() => navigate("/")}>Quotation</button>
+            <button onClick={() => navigate("/files")}>Files Checklist</button>
             <button onClick={() => navigate("/home")}>Home</button>
-            <button onClick={() => navigate("/portal")}>Portal</button>
             {user && <button onClick={handleSignOut}>Sign Out</button>}
         </>
     );
