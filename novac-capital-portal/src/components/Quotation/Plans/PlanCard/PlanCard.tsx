@@ -4,7 +4,6 @@ import PlanHeading from "./PlanHeading/PlanHeading";
 import PlanContent from "./PlanContent/PlanContent";
 
 type PlanCardProps = {
-    key: number,
     months: number,
     taxedEquipment: number,
     taxedPartialities: number,
@@ -14,12 +13,12 @@ type PlanCardProps = {
     totalExpenses: number,
     insurance: string,
     selected?: boolean,
-    onClick?: (selection: number) => void,
+    onSelect?: (selection: number) => void,
 };
 
 function PlanCard(props: PlanCardProps) {
     const handleClick = () => {
-        props.onClick && props.onClick(props.months);
+        props.onSelect && props.onSelect(props.months);
     };
 
     return (

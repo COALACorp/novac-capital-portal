@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import WatchLaterIcon from '@mui/icons-material/WatchLater';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -28,8 +29,11 @@ type FileInputActionProps = {
 };
 
 function FileInputAction(props: FileInputActionProps) {
+    const [status, setStatus] = useState<Status>(props.status ?? "unknown");
+
     const handleSend = () => {
         console.log("Send clicked");
+        setStatus("pending");
     };
 
     return (
@@ -47,8 +51,8 @@ function FileInputAction(props: FileInputActionProps) {
                     </svg>
                 </a>
             )}
-            <UploadFileButton fileName={props.name} onChange={props.onChange} onUpload={handleSend} />
-            {statusIcons[props.status ?? "unknown"]}
+            <UploadFileButton name={props.name} onChange={props.onChange} onUpload={handleSend} />
+            {statusIcons[status]}
         </Box>
     );
 }

@@ -1,9 +1,11 @@
 #data-form-container {
-    width: 847px;
-    padding: 60px 40px;
+    width: 664px;
+    padding: 40px;
+    background-color: #FFF;
     display: flex;
     flex-direction: column;
-    background-color: #FFFFFF;
+    align-items: center;
+    gap: 30px;
     border-radius: 20px;
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.05);
 }
@@ -11,16 +13,16 @@
 #data-form {
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
-    gap: 60px;
+    align-items: flex-start;
+    gap: 40px;
 }
 
 #data-form-content {
+    width: 584px;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    align-self: stretch;
-    gap: 40px;
+    gap: 20px;
 }
 
 .data-form-input-container {
@@ -28,32 +30,41 @@
     flex-direction: column;
     align-items: flex-start;
     align-self: stretch;
-    gap: 16px;
+    gap: 12px;
 }
 
 #input-label {
     color: #26323D;
-    font-size: 20px;
-    line-height: 30px;
+    font-size: 18px;
+    line-height: normal;
 }
 
 .data-form-input.MuiInputBase-root {
     border-radius: 10px;
 }
 
+.data-form-input .MuiInputBase-input {
+    padding: 16px 20px;
+    color: #26323D;
+    font-size: 14px;
+    line-height: normal;
+}
+
 #data-form-summary {
     padding: 30px;
     display: flex;
+    background-color: #F6F6F6;
     flex-direction: column;
     align-items: flex-start;
     align-self: stretch;
     gap: 16px;
-    background-color: #F6F6F6;
     border-radius: 10px;
 }
 
 .data-form-summary-item {
     color: #828282;
+    font-size: 14px;
+    line-height: normal;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -62,12 +73,24 @@
 }
 
 .data-form-summary-item.strong {
-    color: #333333;
+    color: #333;
+}
+
+.data-form-summary-item-label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
 }
 
 #data-form-submit {
+    width: 584px;
     padding: 16px 10px;
-    color: #FFFFFF;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: none;
     background-color: #3454D0;
     border-radius: 10px;
 }
@@ -77,10 +100,6 @@
 }
 
 @media only screen and (max-width: 850px) {
-    #data-form-container {
-        width: 95%;
-    }
-
     .data-form-summary-item {
         flex-direction: column;
     }

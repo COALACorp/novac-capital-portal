@@ -1,29 +1,29 @@
 #form-heading-container {
-    width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    align-self: stretch;
+    gap: 120px;
 }
 
 #form-heading {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     gap: 6px;
 }
 
 #form-heading h1 {
     color: #26323D;
-    text-align: center;
     font-size: 32px;
-    line-height: 48px;
+    line-height: normal;
 }
 
 #form-heading h2 {
     color: #828282;
-    text-align: center;
     font-size: 16px;
     font-weight: 400;
-    line-height: 24px;
+    line-height: normal;
 }

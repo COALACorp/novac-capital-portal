@@ -16,7 +16,10 @@ function DataSummary(props: DataSummaryProps) {
         <Box id="data-form-summary">
             {props.data.map((item, index) => (
                 <Box key={index} className={"data-form-summary-item " + (item.strong && "strong")}>
-                    <p>{item.startIcon} {item.label}</p>
+                    <Box className="data-form-summary-item-label">
+                        {item.startIcon}
+                        <p>{item.label}</p>
+                    </Box>
                     <p>{item.value}</p>
                 </Box>
             ))}

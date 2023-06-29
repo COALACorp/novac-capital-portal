@@ -6,7 +6,7 @@ type PlanHeadingItemProps = {
 
 function PlanHeadingItem(props: PlanHeadingItemProps) {
     return (
-        <p className={"plan-heading-item" + (props.bold ? " strong" : "")}>
+        <p className={props.bold ? "strong" : ""}>
             <span>{props.name}:</span> <span>${props.amount.toLocaleString()}</span>
         </p>
     );

@@ -121,6 +121,7 @@ function DataForm(props: DataFormProps) {
 
     return (
         <Box id="data-form-container">
+            <FormHeading title="Cotiza tu arrendamiento" subtitle="This is a subtitle parsed to FormHeading" />
             <Box
                 id="data-form"
                 component="form"
@@ -128,7 +129,6 @@ function DataForm(props: DataFormProps) {
                 onChange={handleFormChange}
                 ref={formRef}
             >
-                <FormHeading title="Cotiza tu arrendamiento" subtitle="This is a subtitle parsed to FormHeading" />
                 <Stack id="data-form-content">
                     <DataTextInput label="Nombre del cliente" placeholder="Nombre del cliente" name="name" required />
                     <DataTextInput label="Nombre de equipo a cotizar" placeholder="Nombre de equipo a cotizar" name="item" required />

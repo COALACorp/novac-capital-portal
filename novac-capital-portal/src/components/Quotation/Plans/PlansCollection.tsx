@@ -41,9 +41,33 @@ function PlansCollection(props: PlansCollectionProps) {
                     totalExpenses={plan.totalExpenses}
                     insurance={plan.insurance}
                     selected={selection === plan.months}
-                    onClick={handleSelection}
+                    onSelect={handleSelection}
                 />
             ))}
+            <PlanCard
+                months={props.plans[0].months}
+                taxedEquipment={props.plans[0].taxedEquipment}
+                taxedPartialities={props.plans[0].taxedPartialities}
+                administrativeExpenses={props.plans[0].administrativeExpenses}
+                firstLastPartiality={props.plans[0].firstLastPartiality}
+                advancePayment={props.plans[0].advancePayment}
+                totalExpenses={props.plans[0].totalExpenses}
+                insurance={props.plans[0].insurance}
+                selected={selection === props.plans[0].months}
+                onSelect={handleSelection}
+            />
+            <PlanCard
+                months={props.plans[0].months}
+                taxedEquipment={props.plans[0].taxedEquipment}
+                taxedPartialities={props.plans[0].taxedPartialities}
+                administrativeExpenses={props.plans[0].administrativeExpenses}
+                firstLastPartiality={props.plans[0].firstLastPartiality}
+                advancePayment={props.plans[0].advancePayment}
+                totalExpenses={props.plans[0].totalExpenses}
+                insurance={props.plans[0].insurance}
+                selected={selection === props.plans[0].months}
+                onSelect={handleSelection}
+            />
         </Box>
     );
 }

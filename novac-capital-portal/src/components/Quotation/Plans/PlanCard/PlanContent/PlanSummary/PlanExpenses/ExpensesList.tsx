@@ -12,7 +12,7 @@ function ExpensesList(props: ExpensesListProps) {
     return (
         <Box className="expenses-list">
             <ExpensesItem name="Parcialidad Inicial y Última" amount={props.firstLastPartiality} />
-            <ExpensesItem name="Gastos Administrativos" amount={props.administrativeExpenses} />
+            <ExpensesItem name="Gastos Administrativos" amount={props.administrativeExpenses} comment />
             <ExpensesItem name="Anticipo" amount={props.advancePayment} />
         </Box>
     );

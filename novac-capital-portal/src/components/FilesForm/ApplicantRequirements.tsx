@@ -40,14 +40,16 @@ function ApplicantRequirements() {
     return (
         <Box className="requirements-container">
             <p className="requirements-title strong">Requisitos del solicitante</p>
-            {files.map((file, index) => (
-                <FileInput
-                    key={index}
-                    label={file.label}
-                    name={file.name}
-                    templateUrl={file.template || undefined}
-                />
-            ))}
+            <Box className="requirements-list">
+                {files.map((file, index) => (
+                    <FileInput
+                        key={index}
+                        label={file.label}
+                        name={file.name}
+                        templateUrl={file.template || undefined}
+                    />
+                ))}
+            </Box>
         </Box>
     );
 }
