@@ -3,33 +3,26 @@
 A web portal for Novac Capital company
 
 > ## About the project
-> This project was bootstrapped with [Vite](https://vitejs.dev/guide/).
+This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Specifications
-- Typescript + WSC
-- React based
+- Next.JS based
+- React
+- Typescript
+- Material UI
+- Redux for state management
+- Firebase
 
-## Available Scripts
+## Getting Started
 
-In the project directory, you can run:
+First, run the development server:
 
-### `npm install`
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+```
 
-Install all the packages included in the project.
-
-### `npm run dev`
-
-Runs the app in the development mode.\
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm run build`
-
-Builds the app for production to the `dist` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://vitejs.dev/guide/static-deploy.html) for more information.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

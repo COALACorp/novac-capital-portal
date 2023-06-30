@@ -1,0 +1,31 @@
+import Box from "@mui/material/Box";
+
+type SummaryDataType = {
+    label: string,
+    value: string,
+    startIcon?: JSX.Element,
+    strong?: boolean,
+};
+
+type DataSummaryProps = {
+    data: SummaryDataType[],
+};
+
+function DataSummary(props: DataSummaryProps) {
+    return (
+        <Box id="data-form-summary">
+            {props.data.map((item, index) => (
+                <Box key={index} className={"data-form-summary-item " + (item.strong && "strong")}>
+                    <Box className="data-form-summary-item-label">
+                        {item.startIcon}
+                        <p>{item.label}</p>
+                    </Box>
+                    <p>{item.value}</p>
+                </Box>
+            ))}
+        </Box>
+    );
+}
+
+export default DataSummary;
+export type { SummaryDataType };
