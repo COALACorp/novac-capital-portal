@@ -1,17 +1,17 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
-import calcs from "../../../utils/calculations";
+import calcs from "@/utils/calculations";
 import type { ValidatedFormValuesType } from "../DataForm/DataForm";
 import PlansHeading from "./PlansHeading";
 import PlansCollection, { PlanType } from "./PlansCollection";
 
-import { useAppSelector } from "../../../app/hooks";
-import { selectParams } from "../../../features/params/paramsSlice";
+import { useAppSelector } from "@/app/hooks";
+import { selectParams } from "@/features/params/paramsSlice";
 
-import "../../../styles/quotation/plans.css";
+import "@/styles/quotation/plans.css";
 
 type PlansProps = {
     form: ValidatedFormValuesType,
@@ -19,12 +19,12 @@ type PlansProps = {
 
 function Plans(props: PlansProps) {
     const clientParams = useAppSelector(selectParams);
-    const navigate = useNavigate();
+    const router = useRouter();
     const [plans, setPlans] = useState<PlanType[]>([]);
     const [selection, setSelection] = useState<number>();
 
     const handleSubmit = () => {
-        navigate("/signin");
+        router.push("/signin");
     };
 
     useEffect(() => {

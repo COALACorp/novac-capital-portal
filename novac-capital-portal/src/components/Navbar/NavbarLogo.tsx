@@ -1,10 +1,10 @@
-import logoUri from "/logo.png";
+import Image from "next/image";
 
 function NavbarLogo() {
     return (
         <img
             id="navbar-logo"
-            src={logoUri}
+            src="logo.png"
             alt="novac capital logo"
         />
     );

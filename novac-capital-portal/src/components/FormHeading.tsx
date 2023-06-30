@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 
-import "../styles/form.css";
+import "@/styles/form.css";
 
 type FormHeadingProps = {
     title: string,

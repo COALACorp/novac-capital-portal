@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -13,13 +13,11 @@ import Alert from "@mui/material/Alert";
 import GoogleIcon from "@mui/icons-material/Google";
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
-import { auth, googleProvider, CheckAdmin } from "../../utils/firebase";
+import { auth, googleProvider, CheckAdmin } from "@/utils/firebase";
 import Copyright from "../Copyright";
 
-import { useAppSelector } from "../../app/hooks";
-import { selectUser } from "../../features/user/userSlice";
-
-import logoUri from "/logo.png";
+import { useAppSelector } from "@/app/hooks";
+import { selectUser } from "@/features/user/userSlice";
 
 type SignInData = {
     email: string,
@@ -34,7 +32,7 @@ type ErrorData = {
 type Error = ErrorData|null;
 
 function SignIn() {
-    const navigate = useNavigate();
+    const router = useRouter();
     const user = useAppSelector(selectUser);
     const [error, setError] = useState<Error>();
 
@@ -46,9 +44,9 @@ function SignIn() {
             admin = await CheckAdmin();
             
         if (admin)
-            navigate("/admin");
+            router.push("/admin_portal");
         else
-            navigate("/files");
+        router.push("/files_form");
     };
 
     const handleGoogleSignIn = () => {
@@ -125,7 +123,7 @@ function SignIn() {
                         m: 1,
                         bgcolor: "secondary.main"
                     }}
-                    src={logoUri}
+                    src="logo.png"
                     alt="Novac Capital logo"
                 >
                     <LockOutlinedIcon />
@@ -179,12 +177,12 @@ function SignIn() {
                     </Button>
                     <Grid container>
                         <Grid item xs>
-                            <Link href="#" variant="body2" onClick={() => navigate("/reset")}>
+                            <Link href="#" variant="body2" onClick={() => router.push("/password_reset")}>
                                 ¿Olvidaste tu contraseña?
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="#" variant="body2" onClick={() => navigate("/signup")}>
+                            <Link href="#" variant="body2" onClick={() => router.push("/signup")}>
                                 ¿No tienes cuenta? Regístrate
                             </Link>
                         </Grid>

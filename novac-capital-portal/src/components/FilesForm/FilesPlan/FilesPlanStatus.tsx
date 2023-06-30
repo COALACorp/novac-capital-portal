@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
-import WatchLaterIcon from '@mui/icons-material/WatchLater';
-import CheckCircleIcon from '@mui/icons-material/CheckCircle';
-import CancelIcon from '@mui/icons-material/Cancel';
+import WatchLaterIcon from "@mui/icons-material/WatchLater";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 type Status = "pending"|"approved"|"denied";
 

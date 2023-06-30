@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -12,10 +12,8 @@ import Container from "@mui/material/Container";
 import Alert from "@mui/material/Alert";
 import { sendPasswordResetEmail } from "firebase/auth";
 
-import { auth } from "../../utils/firebase";
+import { auth } from "@/utils/firebase";
 import Copyright from "../Copyright";
-
-import logoUri from "/logo.png";
 
 type PasswordResetData = {
     email: string,
@@ -29,7 +27,7 @@ type ErrorData = {
 type Error = ErrorData|null;
 
 function PasswordReset() {
-    const navigate = useNavigate();
+    const router = useRouter();
     const [error, setError] = useState<Error>();
 
     const passwordReset = (authData: PasswordResetData) => {
@@ -37,7 +35,7 @@ function PasswordReset() {
             .then(() => {
                 // Password reset email sent!
                 console.log("Reset email sent");
-                navigate("/signin");
+                router.push("/signin");
             })
             .catch(e => {
                 const errorState: ErrorData = {
@@ -75,7 +73,7 @@ function PasswordReset() {
                         m: 1,
                         bgcolor: "secondary.main"
                     }}
-                    src={logoUri}
+                    src="logo.png"
                     alt="Novac Capital logo"
                 >
                     <LockOutlinedIcon />
@@ -110,12 +108,12 @@ function PasswordReset() {
                     </Button>
                     <Grid container>
                         <Grid item xs>
-                            <Link href="#" variant="body2" onClick={() => navigate("/signin")}>
+                            <Link href="#" variant="body2" onClick={() => router.push("/signin")}>
                                 Inicia sesión
                             </Link>
                         </Grid>
                         <Grid item>
-                            <Link href="#" variant="body2" onClick={() => navigate("/signup")}>
+                            <Link href="#" variant="body2" onClick={() => router.push("/signup")}>
                                 ¿No tienes cuenta? Regístrate
                             </Link>
                         </Grid>

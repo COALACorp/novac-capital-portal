@@ -1,12 +1,13 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
+import "@/styles/globals.css";
+import "@/styles/app.css";
+import type { AppProps } from "next/app";
 import { Provider } from "react-redux";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import App from "./components/App.tsx"
+import WindowContent from "@/components/WindowContent";
 
-import store from "./app/store.ts";
+import store from "@/app/store";
 
 const theme = createTheme({
     typography: {
@@ -19,13 +20,15 @@ const theme = createTheme({
     },
 });
 
-ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
-    <React.StrictMode>
+export default function App({ Component, pageProps }: AppProps) {
+    return (
         <Provider store={store}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <App />
+                <WindowContent>
+                    <Component {...pageProps} />
+                </WindowContent>
             </ThemeProvider>
         </Provider>
-    </React.StrictMode>,
-);
+    );
+}

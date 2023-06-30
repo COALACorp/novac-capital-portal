@@ -1,7 +1,7 @@
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 
-import FormHeading from "../../FormHeading";
+import FormHeading from "@/components/FormHeading";
 
 type PlansHeadingProps = {
     client: string,

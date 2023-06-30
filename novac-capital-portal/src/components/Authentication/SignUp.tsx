@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/router";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
@@ -12,10 +12,8 @@ import Container from "@mui/material/Container";
 import Alert from "@mui/material/Alert";
 import { User, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 
-import { auth } from "../../utils/firebase";
+import { auth } from "@/utils/firebase";
 import Copyright from "../Copyright";
-
-import logoUri from "/logo.png";
 
 type SignUpData = {
     email: string,
@@ -30,7 +28,7 @@ type ErrorData = {
 type Error = ErrorData|null;
 
 function SignUp() {
-    const navigate = useNavigate();
+    const router = useRouter();
     const [error, setError] = useState<Error>();
 
     const sendVerification = async (user: User) => {
@@ -38,7 +36,7 @@ function SignUp() {
             .then(() => {
                 // Email verification sent!
                 console.log("Verification emil sent");
-                navigate("/signin");
+                router.push("/signin");
             })
             .catch(e => {
                 const errorState: ErrorData = {
@@ -97,7 +95,7 @@ function SignUp() {
                         m: 1,
                         bgcolor: "secondary.main"
                     }}
-                    src={logoUri}
+                    src="logo.png"
                     alt="Novac Capital logo"
                 >
                     <LockOutlinedIcon />
@@ -142,7 +140,7 @@ function SignUp() {
                     </Button>
                     <Grid container justifyContent="flex-end">
                         <Grid item>
-                            <Link href="#" variant="body2" onClick={() => navigate("/signin")}>
+                            <Link href="#" variant="body2" onClick={() => router.push("/signin")}>
                                 ¿Ya tienes cuenta? Inicia sesión
                             </Link>
                         </Grid>

@@ -5,9 +5,13 @@ import FilesFormHead from "./FilesFormHead";
 import ApplicantRequirements from "./ApplicantRequirements";
 import EndorsementRequirements from "./EndorsementRequirements";
 
-import "../../styles/filesform.css";
+import "@/styles/filesform.css";
 
 function FilesForm() {
+    const handleSend = () => {
+        console.log("Send clicked");
+    };
+
     return (
         <Box id="files-form-container">
             <FilesFormHead
@@ -19,7 +23,7 @@ function FilesForm() {
             />
             <ApplicantRequirements />
             <EndorsementRequirements />
-            <Button id="files-form-submit">Enviar</Button>
+            <Button id="files-form-submit" onClick={handleSend}>Enviar</Button>
         </Box>
     );
 }

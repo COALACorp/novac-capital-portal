@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Box from "@mui/material/Box";
-import Popover from '@mui/material/Popover';
+import Popover from "@mui/material/Popover";
 
 type RemoveFileButtonProps = {
     file: File,
@@ -42,7 +42,7 @@ function RemoveFileButton(props: RemoveFileButtonProps) {
                 }}
             >
                 <Box className="file-remove-action">
-                    <p>Estás seguro que quieres eliminar "{props.file.name}"?</p>
+                    <p>Estás seguro que quieres eliminar &quot;{props.file.name}&quot;?</p>
                     <Box className="file-input-action-container">
                         <Box
                             className="file-input-action"

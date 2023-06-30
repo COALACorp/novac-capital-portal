@@ -3,12 +3,12 @@ import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
-import FormHeading from "../../FormHeading";
+import FormHeading from "@/components/FormHeading";
 import DataTextInput from "./DataTextInput";
 import DataSliderInput from "./DataSliderInput";
 import DataSummary, { SummaryDataType } from "./DataSummary";
 
-import "../../../styles/quotation/dataform.css";
+import "@/styles/quotation/dataform.css";
 
 const initialSummary: SummaryDataType[] = [
     {
