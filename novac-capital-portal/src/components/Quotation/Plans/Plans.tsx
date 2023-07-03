@@ -15,6 +15,7 @@ import "@/styles/quotation/plans.css";
 
 type PlansProps = {
     form: ValidatedFormValuesType,
+    onSubmit?: (plan: PlanType) => void,
 };
 
 function Plans(props: PlansProps) {
@@ -24,7 +25,11 @@ function Plans(props: PlansProps) {
     const [selection, setSelection] = useState<number>();
 
     const handleSubmit = () => {
-        router.push("/signin");
+        const selectedPlan = plans.find(value => value.months === selection);
+        if (selectedPlan) {
+            props.onSubmit && props.onSubmit(selectedPlan);
+            router.push("/signin?origin=quotation");
+        }
     };
 
     useEffect(() => {
@@ -43,7 +48,7 @@ function Plans(props: PlansProps) {
                     clientParams.folioVerification,
                     clientParams.openingCommission,
                     clientParams.creditBureau,
-                    clientParams.iva
+                    clientParams.iva,
                 );
                 const advancePayment = calcs.advancePayment(taxedEquipment, props.form.advancePercentage);
                 const totalExpenses = calcs.totalInitialExpense(firstLastPartiality, advancePayment, administrativeExpenses);

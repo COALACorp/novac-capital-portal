@@ -18,6 +18,7 @@ import Copyright from "../Copyright";
 
 import { useAppSelector } from "@/app/hooks";
 import { selectUser } from "@/features/user/userSlice";
+import { selectQuotation } from "@/features/quotation/quotationSlice";
 
 type SignInData = {
     email: string,
@@ -32,21 +33,27 @@ type ErrorData = {
 type Error = ErrorData|null;
 
 function SignIn() {
+    const origin = new URLSearchParams(window.location.search).get("origin");
+    const quotation = useAppSelector(selectQuotation);
     const router = useRouter();
     const user = useAppSelector(selectUser);
     const [error, setError] = useState<Error>();
 
     const handleSignedIn = async () => {
-        let admin = false;
-        if (user)
-            admin = user.admin;
-        else
-            admin = await CheckAdmin();
-            
-        if (admin)
-            router.push("/admin_portal");
-        else
-        router.push("/files_form");
+        if (origin === "quotation")
+            console.log("Redirect to files checklist", quotation);
+        else {
+            let admin = false;
+            if (user)
+                admin = user.admin;
+            else
+                admin = await CheckAdmin();
+                
+            if (admin)
+                router.push("/admin_portal");
+            else
+            router.push("/files_form");
+        }
     };
 
     const handleGoogleSignIn = () => {

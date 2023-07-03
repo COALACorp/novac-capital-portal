@@ -12,6 +12,7 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next
 - Material UI
 - Redux for state management
 - Firebase
+- Axios
 
 ## Getting Started
 
