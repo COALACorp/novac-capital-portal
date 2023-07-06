@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Head from "next/head";
 import { ref, child, get } from "firebase/database";
 import { onAuthStateChanged, User } from "firebase/auth";
@@ -55,8 +56,10 @@ export default function QuotationWindow() {
         });
     };
 
-    getClientConfig();
-    setOnAuthStateChange();
+    useEffect(() => {
+        getClientConfig();
+        setOnAuthStateChange();
+    }, []);
 
     return (
         <>
