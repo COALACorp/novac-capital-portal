@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const medichat = axios.create({
-    baseURL: "https://fqt682j9dj.execute-api.us-east-1.amazonaws.com/dev",
+const ncApi = axios.create({
+    baseURL: "https://2ljokl3jsa.execute-api.us-east-1.amazonaws.com/dev",
     headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
@@ -59,49 +59,52 @@ async function CreateUser(guid: string, name: string, email: string): Promise<AP
         name,
         email,
     };
-    const response = await medichat.post("/user", payload);
-    console.log("API response:", response.data);
+    console.log("API request create user:", payload);
+    const response = await ncApi.post("/user", payload);
+    console.log("API response create user:", response.data);
 
     return response.status === 200 ? response.data ?? null : null;
 }
 
 async function CreateApplication(
-    userId: number,
+    userGuid: string,
     advanceFee: number,
     advanceAmount: number,
     loanAmount: number,
-    status: string,
-    progress: number,
     partiality: number,
     initialPayment: number,
     equipment: string,
     cost: number,
-    iva: number
+    iva: number,
+    planId: number
 ): Promise<APICreationResponse> {
     const payload = {
-        userId,
+        userGuid,
         advanceFee,
         advanceAmount,
         loanAmount,
-        status,
-        progress,
+        status: "pending",
+        progress: 0,
         partiality,
         initialPayment,
         equipment,
         cost,
         iva,
+        planId,
     };
-    const response = await medichat.post("/application", payload);
-    console.log("API response:", response.data);
+    console.log("API request create application:", payload);
+    const response = await ncApi.post("/application", payload);
+    console.log("API response create application:", response.data);
 
     return response.status === 200 ? response.data ?? null : null;
 }
 
-async function GetApplication(applicationId: number): Promise<APIApplication> {
-    const response = await medichat.get("/application/" + applicationId);
-    console.log("API response:", response.data);
+async function GetApplication(guid: number): Promise<APIApplication> {
+    console.log("API request get application:", guid);
+    const response = await ncApi.get("/application/" + guid);
+    console.log("API response get application:", response.data);
 
     return response.status === 200 ? response.data ?? null : null;
 }
 
-export { CreateUser, CreateApplication };
+export { CreateUser, CreateApplication, GetApplication };
