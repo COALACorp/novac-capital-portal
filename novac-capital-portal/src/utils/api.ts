@@ -8,52 +8,60 @@ const ncApi = axios.create({
     },
 });
 
-type APICreationResponse = {
-    statusCode: number,
-    data: {
-        userId: number
+type APIUserCreateData = {
+    userId: number,
+};
+
+type APIUserData = {
+    id: number,
+    guid: string,
+    name: string,
+    email: string,
+};
+
+type APIApplicationCreateData = {
+    applicationId: number,
+};
+
+type APIApplicationData = {
+    id: number,
+    userId: number,
+    advanceFee: number,
+    advanceAmount: number,
+    loanAmount: number,
+    status: string,
+    progress: number,
+    partiality: number,
+    initialPayment: number,
+    equipment: string,
+    cost: number,
+    iva: number,
+    planId: number,
+    plan: {
+        dues: number,
+        administrative: number,
+        initialCustomerExpenses: number,
+        signaturesRatification: number,
+        folioVerification: number,
+        openingCommission: number,
+        iva: number,
+        creditBureau: number,
+        margin: number,
     },
+};
+
+type APIUserApplicationsData = {
+    user: APIUserData,
+    applications: APIApplicationData[],
+}
+
+type APIResponse<T> = null|{
+    statusCode: number,
+    data: T,
     message: string,
 };
 
-type APIApplication = {
-    statusCode: number,
-    data: {
-        user: {
-            guid: string,
-            name: string,
-            email: string
-        },
-        application: {
-            userId: number,
-            advanceFee: number,
-            advanceAmount: number,
-            loanAmount: number,
-            status: string,
-            progress: number,
-            partiality: number,
-            initialPayment: number,
-            equipment: string,
-            cost: number,
-            iva: number,
-            planId: number,
-            plan: {
-                dues: number,
-                administrative: number,
-                initialCustomerExpenses: number,
-                signaturesRatification: number,
-                folioVerification: number,
-                openingCommission: number,
-                iva: number,
-                creditBureau: number,
-                margin: number,
-            },
-        },
-    },
-    message: string,
-};
-
-async function CreateUser(guid: string, name: string, email: string): Promise<APICreationResponse> {
+async function CreateUser(guid: string, name: string, email: string): Promise<APIResponse<APIUserCreateData>> {
     const payload = {
         guid,
         name,
@@ -64,6 +72,19 @@ async function CreateUser(guid: string, name: string, email: string): Promise<AP
     console.log("API response create user:", response.data);
 
     return response.status === 200 ? response.data ?? null : null;
+}
+
+async function GetUser(guid: string): Promise<APIResponse<APIUserData>> {
+    try {
+        console.log("API request get user:", guid);
+        const response = await ncApi.get("/user/" + guid);
+        console.log("API response get user:", response.data);
+
+        return response.status === 200 ? response.data ?? null : null;
+    } catch (error) {
+        console.log("Error while getting user:", error);
+    }
+    return null;
 }
 
 async function CreateApplication(
@@ -77,7 +98,7 @@ async function CreateApplication(
     cost: number,
     iva: number,
     planId: number
-): Promise<APICreationResponse> {
+): Promise<APIResponse<APIApplicationCreateData>> {
     const payload = {
         userGuid,
         advanceFee,
@@ -99,12 +120,19 @@ async function CreateApplication(
     return response.status === 200 ? response.data ?? null : null;
 }
 
-async function GetApplication(guid: number): Promise<APIApplication> {
+async function GetApplication(guid: string, applicationId: number): Promise<APIResponse<APIUserApplicationsData>|null> {
     console.log("API request get application:", guid);
-    const response = await ncApi.get("/application/" + guid);
-    console.log("API response get application:", response.data);
+    const response: APIResponse<APIUserApplicationsData> = (await ncApi.get("/application/" + guid)).data;
+    const application = response?.data.applications.find(application => application.id === applicationId);
+    let result = null;
+    if (response && application) {
+        response.data.applications = [ application ];
+        result = response;
+    }
+    console.log("API response get application:", result);
 
-    return response.status === 200 ? response.data ?? null : null;
+    return result;
 }
 
-export { CreateUser, CreateApplication, GetApplication };
+export { CreateUser, GetUser, CreateApplication, GetApplication };
+export type { APIUserApplicationsData };

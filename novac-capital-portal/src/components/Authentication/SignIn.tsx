@@ -15,7 +15,7 @@ import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 
 
 import { auth, googleProvider, CheckAdmin } from "@/utils/firebase";
 import Copyright from "../Copyright";
-import { CreateApplication } from "@/utils/api";
+import { CreateUser, GetUser, CreateApplication } from "@/utils/api";
 
 import { useAppSelector } from "@/app/hooks";
 import { selectParams } from "@/features/params/paramsSlice";
@@ -42,7 +42,22 @@ function SignIn() {
     const user = useAppSelector(selectUser);
     const [error, setError] = useState<Error>();
 
+    const checkUserIsRegistered = async () => {
+        if (user) {
+            const registered = await GetUser(user.uid);
+            if (!registered) {
+                const newUser = await CreateUser(user.uid, user.displayName ?? "", user.email ?? "");
+                if (newUser)
+                    console.log("User registered successfully");
+                else
+                    console.log("Failed to register user");
+            } else
+                console.log("User already registered");
+        }
+    };
+
     const handleSignedIn = async () => {
+        await checkUserIsRegistered();
         if (origin === "quotation" && user && params && quotation?.formValues && quotation.selectedPlan) {
             console.log("Redirect to files checklist", quotation);
             const application = await CreateApplication(
@@ -58,7 +73,7 @@ function SignIn() {
                 quotation.selectedPlan.months
             );
             if (application)
-                router.push("/files_form");
+                router.push("/files_form?id=" + application.data.applicationId);
             else {
                 const errorState = {
                     code: "unknown",
