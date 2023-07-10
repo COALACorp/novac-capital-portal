@@ -15,7 +15,7 @@ import { useAppSelector } from "@/app/hooks";
 import { selectUser } from "@/features/user/userSlice";
 
 function FilesForm() {
-    const applicationId = window ? new URLSearchParams(window.location.search).get("id") : "";
+    const applicationId = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("id") : "";
     const user = useAppSelector(selectUser);
     const [application, setApplication] = useState<APIUserApplicationsData|null>();
 
@@ -34,7 +34,7 @@ function FilesForm() {
             } else
                 console.log("Can't retrieve application. User or applicationId is null:", applicationId, user);
         })();
-    }, []);
+    }, [user]);
 
     return application
         ? (

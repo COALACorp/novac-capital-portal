@@ -35,7 +35,7 @@ type ErrorData = {
 type Error = ErrorData|null;
 
 function SignIn() {
-    const origin = window ? new URLSearchParams(window.location.search).get("origin") : "";
+    const origin = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("origin") : "";
     const params = useAppSelector(selectParams);
     const quotation = useAppSelector(selectQuotation);
     const router = useRouter();
