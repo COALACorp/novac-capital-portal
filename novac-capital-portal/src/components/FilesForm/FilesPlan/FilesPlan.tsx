@@ -6,7 +6,6 @@ import FilesPlanStatus, { Status } from "./FilesPlanStatus";
 type FilesPlanProps = {
     months: number,
     applicant: string,
-    taxedEquipment: number,
     taxedPartialities: number,
     status: Status,
 };

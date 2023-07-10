@@ -42,7 +42,6 @@ function FilesForm() {
                 <FilesFormHead
                     months={application.applications[0].plan.dues}
                     applicant={application.user.name}
-                    taxedEquipment={application.applications[0].cost}
                     taxedPartialities={application.applications[0].partiality}
                     status={application.applications[0].status as Status}
                 />
