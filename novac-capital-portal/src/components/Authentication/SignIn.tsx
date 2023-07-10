@@ -15,9 +15,12 @@ import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 
 
 import { auth, googleProvider, CheckAdmin } from "@/utils/firebase";
 import Copyright from "../Copyright";
+import { CreateUser, GetUser, CreateApplication } from "@/utils/api";
 
 import { useAppSelector } from "@/app/hooks";
+import { selectParams } from "@/features/params/paramsSlice";
 import { selectUser } from "@/features/user/userSlice";
+import { selectQuotation } from "@/features/quotation/quotationSlice";
 
 type SignInData = {
     email: string,
@@ -32,21 +35,65 @@ type ErrorData = {
 type Error = ErrorData|null;
 
 function SignIn() {
+    const origin = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("origin") : "";
+    const params = useAppSelector(selectParams);
+    const quotation = useAppSelector(selectQuotation);
     const router = useRouter();
     const user = useAppSelector(selectUser);
     const [error, setError] = useState<Error>();
 
+    const checkUserIsRegistered = async () => {
+        if (user) {
+            const registered = await GetUser(user.uid);
+            if (!registered) {
+                const newUser = await CreateUser(user.uid, quotation?.formValues.name ?? "", user.email ?? "");
+                if (newUser)
+                    console.log("User registered successfully");
+                else
+                    console.log("Failed to register user");
+            } else
+                console.log("User already registered");
+        }
+    };
+
     const handleSignedIn = async () => {
-        let admin = false;
-        if (user)
-            admin = user.admin;
-        else
-            admin = await CheckAdmin();
-            
-        if (admin)
-            router.push("/admin_portal");
-        else
-        router.push("/files_form");
+        await checkUserIsRegistered();
+        if (origin === "quotation" && user && params && quotation?.formValues && quotation.selectedPlan) {
+            console.log("Redirect to files checklist", quotation);
+            const application = await CreateApplication(
+                user.uid,
+                (quotation.formValues.advancePercentage / 100),
+                quotation.selectedPlan.advancePayment,
+                quotation.formValues.totalLease,
+                quotation.selectedPlan.taxedPartialities,
+                quotation.selectedPlan.totalExpenses,
+                quotation.formValues.equipment,
+                quotation.formValues.amount,
+                params.iva,
+                quotation.selectedPlan.months
+            );
+            if (application)
+                router.push("/files_form?id=" + application.data.applicationId);
+            else {
+                const errorState = {
+                    code: "unknown",
+                    message: "Could not create application",
+                };
+                console.log("Error:", errorState, application);
+                setError(errorState);
+            }
+        } else {
+            let admin = false;
+            if (user)
+                admin = user.admin;
+            else
+                admin = await CheckAdmin();
+                
+            if (admin)
+                router.push("/admin_portal");
+            else
+            router.push("/");
+        }
     };
 
     const handleGoogleSignIn = () => {

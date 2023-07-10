@@ -41,16 +41,23 @@ const initialSummary: SummaryDataType[] = [
     },
 ];
 
+type CalculatedAmounts = {
+    equipmentCost: number,
+    advancePercentage: number,
+    totalLease: number,
+};
+
 type ValidatedFormValuesType = {
     name: string,
-    item: string,
+    equipment: string,
     amount: number,
     advancePercentage: number,
+    totalLease: number,
 };
 
 type FormValuesType = {
     name?: string,
-    item?: string,
+    equipment?: string,
     amount?: number,
     advancePercentage?: number,
 };
@@ -69,18 +76,30 @@ function DataForm(props: DataFormProps) {
 
     const generateForm = (event: React.FormEvent<HTMLFormElement>) => new FormData(event.currentTarget);
 
+    const calculateAmounts = (): CalculatedAmounts => {
+        const equipmentCost = formValues.amount ?? 0;
+        const advancePercentage = Number((equipmentCost * ((formValues.advancePercentage ?? 5) / 100)).toFixed(2));
+        const totalLease = equipmentCost - advancePercentage;
+
+        return { equipmentCost, advancePercentage, totalLease };
+    };
+
     const generateFormValues = (data: FormData): FormValuesType => ({
         ...formValues,
         name: (data.get("name")?.toString() ?? ""),
-        item: (data.get("item")?.toString() ?? ""),
+        equipment: (data.get("item")?.toString() ?? ""),
         amount: inputToNumber(data.get("amount")?.toString() ?? ""),
         advancePercentage: inputToNumber(data.get("advancePercentage")?.toString() ?? ""),
     });
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const newFormValues = generateFormValues(generateForm(event));
-        if (newFormValues.name && newFormValues.item && newFormValues.amount && newFormValues.advancePercentage)
+        const amounts = calculateAmounts();
+        const newFormValues = {
+            ...generateFormValues(generateForm(event)),
+            totalLease: amounts.totalLease,
+        };
+        if (newFormValues.name && newFormValues.equipment && newFormValues.amount && newFormValues.advancePercentage)
             props.onSubmit && props.onSubmit(newFormValues as ValidatedFormValuesType);
     };
 
@@ -98,14 +117,12 @@ function DataForm(props: DataFormProps) {
     };
 
     useEffect(() => {
-        const equipmentCost = formValues.amount ?? 0;
-        const advancePercentage = Number((equipmentCost * ((formValues.advancePercentage ?? 5) / 100)).toFixed(2));
-        const totalLease = equipmentCost - advancePercentage;
+        const amounts = calculateAmounts();
 
         const newSummary = [ ...summary ];
-        newSummary[0].value = "$" + equipmentCost.toLocaleString();
-        newSummary[1].value = "$" + advancePercentage.toLocaleString();
-        newSummary[2].value = "$" + totalLease.toLocaleString();
+        newSummary[0].value = "$" + amounts.equipmentCost.toLocaleString();
+        newSummary[1].value = "$" + amounts.advancePercentage.toLocaleString();
+        newSummary[2].value = "$" + amounts.totalLease.toLocaleString();
 
         setSummary(newSummary);
     }, [formValues.amount, formValues.advancePercentage]);
@@ -113,11 +130,11 @@ function DataForm(props: DataFormProps) {
     useEffect(() => {
         const newValid = (
             (formValues.name !== undefined && formValues.name.trim().length > 0)
-            && (formValues.item !== undefined && formValues.item.trim().length > 0)
+            && (formValues.equipment !== undefined && formValues.equipment.trim().length > 0)
             && (formValues.amount !== undefined && formValues.amount > 0)
         );
         setValid(newValid);
-    }, [formValues.name, formValues.item, formValues.amount, formValues.advancePercentage]);
+    }, [formValues.name, formValues.equipment, formValues.amount, formValues.advancePercentage]);
 
     return (
         <Box id="data-form-container">

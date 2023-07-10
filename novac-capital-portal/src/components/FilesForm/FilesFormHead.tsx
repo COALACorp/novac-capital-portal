@@ -7,7 +7,6 @@ import type { Status } from "./FilesPlan/FilesPlanStatus";
 type FilesFormHeadProps = {
     months: number,
     applicant: string,
-    taxedEquipment: number,
     taxedPartialities: number,
     status: Status,
 };
@@ -19,7 +18,6 @@ function FilesFormHead(props: FilesFormHeadProps) {
             <FilesPlan
                 months={props.months}
                 applicant={props.applicant}
-                taxedEquipment={props.taxedEquipment}
                 taxedPartialities={props.taxedPartialities}
                 status={props.status}
             />

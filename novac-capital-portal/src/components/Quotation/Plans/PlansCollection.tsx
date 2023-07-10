@@ -23,6 +23,7 @@ function PlansCollection(props: PlansCollectionProps) {
     const [selection, setSelection] = useState<number>();
 
     const handleSelection = (selection: number) => {
+        console.log("Plan selected:", selection);
         setSelection(selection);
         props.onSelection && props.onSelection(selection);
     };
