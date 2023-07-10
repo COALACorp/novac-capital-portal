@@ -46,7 +46,7 @@ function SignIn() {
         if (user) {
             const registered = await GetUser(user.uid);
             if (!registered) {
-                const newUser = await CreateUser(user.uid, user.displayName ?? "", user.email ?? "");
+                const newUser = await CreateUser(user.uid, quotation?.formValues.name ?? "", user.email ?? "");
                 if (newUser)
                     console.log("User registered successfully");
                 else
