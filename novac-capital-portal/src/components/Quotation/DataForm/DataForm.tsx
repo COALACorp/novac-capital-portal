@@ -7,6 +7,7 @@ import FormHeading from "@/components/FormHeading";
 import DataTextInput from "./DataTextInput";
 import DataSliderInput from "./DataSliderInput";
 import DataSummary, { SummaryDataType } from "./DataSummary";
+import { formatAmount } from "@/utils/formats";
 
 import "@/styles/quotation/dataform.css";
 
@@ -120,9 +121,9 @@ function DataForm(props: DataFormProps) {
         const amounts = calculateAmounts();
 
         const newSummary = [ ...summary ];
-        newSummary[0].value = "$" + amounts.equipmentCost.toLocaleString();
-        newSummary[1].value = "$" + amounts.advancePercentage.toLocaleString();
-        newSummary[2].value = "$" + amounts.totalLease.toLocaleString();
+        newSummary[0].value = "$" + formatAmount(amounts.equipmentCost.toFixed(2));
+        newSummary[1].value = "$" + formatAmount(amounts.advancePercentage.toFixed(2));
+        newSummary[2].value = "$" + formatAmount(amounts.totalLease.toFixed(2));
 
         setSummary(newSummary);
     }, [formValues.amount, formValues.advancePercentage]);

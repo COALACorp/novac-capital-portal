@@ -1,5 +1,7 @@
 import Box from "@mui/material/Box";
 
+import { formatAmount } from "@/utils/formats";
+
 type ExpensesTotalProps = {
     totalExpenses: number,
 };
@@ -10,7 +12,7 @@ function ExpensesTotal(props: ExpensesTotalProps) {
             <Box className="expenses-total">
                 <Box className="plan-property">
                     <p className="strong">TOTAL Desembolso Inicial:</p>
-                    <p>${props.totalExpenses.toLocaleString()}</p>
+                    <p>${formatAmount(props.totalExpenses.toFixed(2))}</p>
                 </Box>
             </Box>
         </Box>

@@ -1,6 +1,7 @@
 import { useState, useRef } from "react";
 import Stack from "@mui/material/Stack";
 import OutlinedInput from "@mui/material/OutlinedInput";
+import { formatAmount } from "@/utils/formats";
 
 type DataTextInputProps = {
     label: string,
@@ -19,9 +20,7 @@ function DataTextInput(props: DataTextInputProps) {
     const handleChange = (event: React.ChangeEvent<HTMLInputElement|HTMLTextAreaElement>) => {
         let input = event.target.value;
         if (props.isNumber) {
-            let formattedValue = input.replace(/[^\d.]/g, "");
-            formattedValue = formattedValue.match(/\d+(\.\d{0,2})?/)?.[0] ?? "";
-            formattedValue = formattedValue.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+            let formattedValue = formatAmount(input);
             formattedValue = formattedValue.length > 0 ? (props.preffix + formattedValue) : "";
             input = formattedValue;
         }
