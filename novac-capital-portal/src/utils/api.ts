@@ -62,16 +62,21 @@ type APIResponse<T> = null|{
 };
 
 async function CreateUser(guid: string, name: string, email: string): Promise<APIResponse<APIUserCreateData>> {
-    const payload = {
-        guid,
-        name,
-        email,
-    };
-    console.log("API request create user:", payload);
-    const response = await ncApi.post("/user", payload);
-    console.log("API response create user:", response.data);
-
-    return response.status === 200 ? response.data ?? null : null;
+    try {
+        const payload = {
+            guid,
+            name,
+            email,
+        };
+        console.log("API request create user:", payload);
+        const response = await ncApi.post("/user", payload);
+        console.log("API response create user:", response.data);
+    
+        return response.status === 200 ? response.data ?? null : null;   
+    } catch (error) {
+        console.log("Error while creating user:", error);
+    }
+    return null;
 }
 
 async function GetUser(guid: string): Promise<APIResponse<APIUserData>> {
@@ -120,10 +125,10 @@ async function CreateApplication(
     return response.status === 200 ? response.data ?? null : null;
 }
 
-async function GetApplication(guid: string, applicationId: number): Promise<APIResponse<APIUserApplicationsData>|null> {
+async function GetApplication(guid: string): Promise<APIResponse<APIUserApplicationsData>|null> {
     console.log("API request get application:", guid);
     const response: APIResponse<APIUserApplicationsData> = (await ncApi.get("/application/" + guid)).data;
-    const application = response?.data.applications.find(application => application.id === applicationId);
+    const application = response?.data.applications.find(application => application.id === Math.max(...response.data.applications.map(application => application.id)));
     let result = null;
     if (response && application) {
         response.data.applications = [ application ];

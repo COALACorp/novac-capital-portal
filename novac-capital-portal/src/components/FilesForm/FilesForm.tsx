@@ -1,5 +1,6 @@
 import "@/styles/filesform.css";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
@@ -15,7 +16,7 @@ import { useAppSelector } from "@/app/hooks";
 import { selectUser } from "@/features/user/userSlice";
 
 function FilesForm() {
-    const applicationId = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("id") : "";
+    const router = useRouter();
     const user = useAppSelector(selectUser);
     const [application, setApplication] = useState<APIUserApplicationsData|null>();
 
@@ -25,14 +26,15 @@ function FilesForm() {
 
     useEffect(() => {
         (async () => {
-            if (user && applicationId) {
-                const applicationData = await GetApplication(user.uid, Number(applicationId));
-                if (applicationData)
+            if (user) {
+                const applicationData = await GetApplication(user.uid);
+                if (applicationData) {
                     setApplication(applicationData.data);
-                else
-                    setApplication(null);
+                    return;
+                }
             } else
-                console.log("Can't retrieve application. User or applicationId is null:", applicationId, user);
+                console.log("Can't retrieve application. User is null:", user);
+            router.push("/");
         })();
     }, [user]);
 
@@ -50,7 +52,7 @@ function FilesForm() {
                 <Button id="files-form-submit" onClick={handleSend}>Enviar</Button>
             </Box>
         )
-        : application === undefined ? <Loading /> : <Error error={"No se pudo cargar la información relacionada a la aplicación con ID: " + applicationId} />;
+        : application === undefined ? <Loading /> : <Error error={"No se pudo cargar la información relacionada a la aplicación"} />;
 }
 
 export default FilesForm;

@@ -28,6 +28,7 @@ type ErrorData = {
 type Error = ErrorData|null;
 
 function SignUp() {
+    const origin = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("origin") : "";
     const router = useRouter();
     const [error, setError] = useState<Error>();
 
@@ -36,7 +37,7 @@ function SignUp() {
             .then(() => {
                 // Email verification sent!
                 console.log("Verification emil sent");
-                router.push("/signin");
+                router.push("/signin" + (origin ? ("?origin=" + origin) : ""));
             })
             .catch(e => {
                 const errorState: ErrorData = {
