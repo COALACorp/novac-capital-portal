@@ -36,8 +36,8 @@ function SignUp() {
         await sendEmailVerification(user)
             .then(() => {
                 // Email verification sent!
-                console.log("Verification emil sent");
-                router.push("/signin" + (origin ? ("?origin=" + origin) : ""));
+                console.log("Verification email sent");
+                router.push("/signin?new=true" + (origin ? ("&origin=" + origin) : ""));
             })
             .catch(e => {
                 const errorState: ErrorData = {
@@ -47,6 +47,7 @@ function SignUp() {
                 console.log("Error:", errorState);
                 setError(errorState);
             });
+        auth.signOut();
     };
 
     const signUp = async (authData: SignUpData) => {

@@ -10,6 +10,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
 import GoogleIcon from "@mui/icons-material/Google";
 import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 
@@ -35,12 +36,18 @@ type ErrorData = {
 type Error = ErrorData|null;
 
 function SignIn() {
-    const origin = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("origin") : "";
+    const searchParams = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : undefined;
+    const origin = searchParams ? searchParams.get("origin") : "";
+    const newUser = searchParams ? Boolean(searchParams.get("new")) : false;
     const params = useAppSelector(selectParams);
     const quotation = useAppSelector(selectQuotation);
     const router = useRouter();
     const user = useAppSelector(selectUser);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState<Error>();
+
+    const startLoading = () => setLoading(true);
+    const endLoading = () => setLoading(false);
 
     const checkUserIsRegistered = async () => {
         console.log("Check user:", user);
@@ -62,6 +69,17 @@ function SignIn() {
     };
 
     const handleSignedIn = async (userLogged: UserValue) => {
+        if (!user?.emailVerified) {
+            console.log("Cuenta no verificada");
+            setError({
+                code: "Cuenta no verificada",
+                message: "Verifica tu cuenta mediante el link enviado a tu e-mail y vuelve a intentar."
+            });
+            auth.signOut();
+            endLoading();
+            return;
+        }
+
         const registered = await checkUserIsRegistered();
         if (registered)
             if (origin === "quotation" && params && quotation?.formValues && quotation.selectedPlan) {
@@ -105,6 +123,7 @@ function SignIn() {
     };
 
     const handleGoogleSignIn = () => {
+        startLoading();
         signInWithPopup(auth, googleProvider)
             .then(result => {
                 // This gives you a Google Access Token. You can use it to access the Google API.   
@@ -126,10 +145,12 @@ function SignIn() {
                 };
                 console.log("Error:", errorState);
                 setError(errorState);
+                endLoading()
             });
     };
 
     const signIn = async (authData: SignInData) => {
+        startLoading();
         signInWithEmailAndPassword(auth, authData.email, authData.password)
             .then(userCredential => {
                 // Signed In
@@ -143,6 +164,7 @@ function SignIn() {
                 };
                 console.log("Error:", errorState);
                 setError(errorState);
+                endLoading()
             });
     };
 
@@ -197,6 +219,7 @@ function SignIn() {
                         type="email"
                         autoComplete="email"
                         autoFocus
+                        disabled={loading}
                     />
                     <TextField
                         margin="normal"
@@ -207,10 +230,18 @@ function SignIn() {
                         label="Contraseña"
                         type="password"
                         autoComplete="current-password"
+                        disabled={loading}
                     />
+                    {newUser && !error && (
+                        <Alert variant="outlined" severity="success">
+                            <AlertTitle>Verifica tu cuenta</AlertTitle>
+                            Verifica tu cuenta mediante el link enviado a tu e-mail antes de iniciar sesión.
+                        </Alert>
+                    )}
                     {error && (
                         <Alert variant="outlined" severity="error">
-                            {error.code} - {error.message}
+                            <AlertTitle>{error.code}</AlertTitle>
+                            {error.message}
                         </Alert>
                     )}
                     <Button
@@ -218,6 +249,7 @@ function SignIn() {
                         fullWidth
                         variant="contained"
                         sx={{ mt: 3, mb: 2 }}
+                        disabled={loading}
                     >
                         Ingresar
                     </Button>
@@ -227,6 +259,7 @@ function SignIn() {
                         sx={{ mt: 1, mb: 3 }}
                         startIcon={<GoogleIcon />}
                         onClick={handleGoogleSignIn}
+                        disabled={loading}
                     >
                         Ingresar con Google
                     </Button>
