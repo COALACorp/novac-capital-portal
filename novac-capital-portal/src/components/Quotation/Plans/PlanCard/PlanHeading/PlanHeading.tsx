@@ -15,8 +15,8 @@ function PlanHeading(props: PlanHeadingProps) {
             <PlanAvatar months={props.months} />
             <Box className="plan-heading-info">
                 <p className="plan-heading-title strong">Plazo a {props.months} meses</p>
-                <Box className="plan-heading-info-items">
-                    <PlanHeadingItem name="Valor Equipo c/IVA" amount={props.taxedEquipment} />
+                <Box className="plan-heading-info-item-container">
+                    <PlanHeadingItem name="Valor del equipo c/IVA" amount={props.taxedEquipment} />
                     <PlanHeadingItem name="Parcialidades c/IVA" amount={props.taxedPartialities} bold />
                 </Box>
             </Box>
