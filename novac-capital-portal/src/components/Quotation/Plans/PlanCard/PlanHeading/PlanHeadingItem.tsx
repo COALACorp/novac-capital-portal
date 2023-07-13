@@ -9,7 +9,7 @@ type PlanHeadingItemProps = {
 function PlanHeadingItem(props: PlanHeadingItemProps) {
     return (
         <p className={"plan-heading-info-item" + (props.bold ? " strong" : "")}>
-            <span className="strong">{props.name}:</span> <span>${formatAmount(props.amount.toFixed(2))}</span>
+            <span className="strong">{props.name}:</span> <span>${formatAmount(props.amount)}</span>
         </p>
     );
 }

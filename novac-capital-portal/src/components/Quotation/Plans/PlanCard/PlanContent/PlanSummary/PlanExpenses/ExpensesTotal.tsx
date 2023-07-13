@@ -12,7 +12,7 @@ function ExpensesTotal(props: ExpensesTotalProps) {
             <Box className="expenses-total">
                 <Box className="plan-property">
                     <p className="strong">TOTAL Desembolso Inicial:</p>
-                    <p>${formatAmount(props.totalExpenses.toFixed(2))}</p>
+                    <p>${formatAmount(props.totalExpenses)}</p>
                 </Box>
             </Box>
         </Box>
