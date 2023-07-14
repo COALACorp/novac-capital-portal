@@ -1,3 +1,5 @@
+import { formatAmount } from "@/utils/formats";
+
 type PlanHeadingItemProps = {
     name: string,
     amount: number,
@@ -6,8 +8,8 @@ type PlanHeadingItemProps = {
 
 function PlanHeadingItem(props: PlanHeadingItemProps) {
     return (
-        <p className={props.bold ? "strong" : ""}>
-            <span>{props.name}:</span> <span>${props.amount.toLocaleString()}</span>
+        <p className={"plan-heading-info-item" + (props.bold ? " strong" : "")}>
+            <span className="strong">{props.name}:</span> <span>${formatAmount(props.amount)}</span>
         </p>
     );
 }

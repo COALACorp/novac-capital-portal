@@ -2,37 +2,47 @@ import Box from "@mui/material/Box";
 
 import FileInput from "./FileInput/FileInput";
 
-const files = [
+type FileSpec = {
+    label: string,
+    files: string[],
+    template?: string,
+};
+
+const files: FileSpec[] = [
     {
         label: "Solicitud de financiamiento",
-        name: "applicantFinancingRequest",
+        files: [ "applicantFinancingRequest" ],
         template: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
     },
     {
         label: "Aviso de privacidad",
-        name: "applicantPrivacyNotice",
+        files: [ "applicantPrivacyNotice" ],
         template: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
     },
     {
         label: "Formato de Autorización de Círculo de Crédito",
-        name: "applicantCreditCircleAuthorizationForm",
+        files: [ "applicantCreditCircleAuthorizationForm" ],
         template: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
     },
     {
         label: "Copia de Credencial de Elector y/o Pasaporte",
-        name: "applicantVoterIdentificationCardOrPassportCopy",
+        files: [ "applicantVoterIdentificationCardOrPassportCopy" ],
     },
     {
         label: "Comprobante de Domicilio Vigente",
-        name: "applicantCurrentAddressProof",
+        files: [ "applicantCurrentAddressProof" ],
     },
     {
         label: "Cédula de Identificación Fiscal de RFC, Alta ante SHCP",
-        name: "applicantRFCFiscalIdentificationCard_RegistrationBeforeSHCP",
+        files: [ "applicantRFCFiscalIdentificationCard_RegistrationBeforeSHCP" ],
     },
     {
         label: "Tres últimos Estados de Cuenta",
-        name: "applicantThreeLastAccountStatements",
+        files: [
+            "applicantThreeLastAccountStatements_1",
+            "applicantThreeLastAccountStatements_2",
+            "applicantThreeLastAccountStatements_3",
+        ]
     },
 ];
 
@@ -45,7 +55,7 @@ function ApplicantRequirements() {
                     <FileInput
                         key={index}
                         label={file.label}
-                        name={file.name}
+                        files={file.files}
                         templateUrl={file.template || undefined}
                     />
                 ))}

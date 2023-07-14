@@ -22,7 +22,7 @@ const statusIcons: StatusIcons = {
 };
 
 type FileInputActionProps = {
-    name: string,
+    files: string[],
     templateUrl?: string,
     status?: Status,
     onChange?: (name: string, value: File|undefined) => void,
@@ -56,7 +56,10 @@ function FileInputAction(props: FileInputActionProps) {
                     </svg>
                 </a>
             )}
-            <UploadFileAction name={props.name} onChange={props.onChange} onUpload={handleSend} onRemove={handleRemove} />
+            {props.files.length > 1
+                ? props.files.map((file, index) => <UploadFileAction key={index} name={file} number={index + 1} onChange={props.onChange} onUpload={handleSend} onRemove={handleRemove} />)
+                : <UploadFileAction name={props.files[0]} onChange={props.onChange} onUpload={handleSend} onRemove={handleRemove} />
+            }
             {statusIcons[status]}
         </Box>
     );

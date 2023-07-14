@@ -5,21 +5,21 @@ import FileInput from "./FileInput/FileInput";
 const files = [
     {
         label: "Aviso de privacidad",
-        name: "endorsementPrivacyNotice",
+        files: [ "endorsementPrivacyNotice" ],
         template: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
     },
     {
         label: "Formato de Autorización de Círculo de Crédito",
-        name: "endorsementCreditCircleAuthorizationForm",
+        files: [ "endorsementCreditCircleAuthorizationForm" ],
         template: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
     },
     {
         label: "Copia de Credencial de Elector y/o Pasaporte",
-        name: "endorsementVoterIdentificationCardOrPassportCopy",
+        files: [ "endorsementVoterIdentificationCardOrPassportCopy" ],
     },
     {
         label: "Comprobante de Domicilio Vigente",
-        name: "endorsementCurrentAddressProof",
+        files: [ "endorsementCurrentAddressProof" ],
     },
 ];
 
@@ -32,7 +32,7 @@ function EndorsementRequirements() {
                     <FileInput
                         key={index}
                         label={file.label}
-                        name={file.name}
+                        files={file.files}
                         templateUrl={file.template || undefined}
                     />
                 ))}

@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const ncApi = axios.create({
-    baseURL: "https://2ljokl3jsa.execute-api.us-east-1.amazonaws.com/dev",
+    baseURL: "https://teqzfxt83a.execute-api.us-east-1.amazonaws.com/dev",
     headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",

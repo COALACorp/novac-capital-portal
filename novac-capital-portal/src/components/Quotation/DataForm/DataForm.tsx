@@ -121,9 +121,9 @@ function DataForm(props: DataFormProps) {
         const amounts = calculateAmounts();
 
         const newSummary = [ ...summary ];
-        newSummary[0].value = "$" + formatAmount(amounts.equipmentCost.toFixed(2));
-        newSummary[1].value = "$" + formatAmount(amounts.advancePercentage.toFixed(2));
-        newSummary[2].value = "$" + formatAmount(amounts.totalLease.toFixed(2));
+        newSummary[0].value = "$" + formatAmount(amounts.equipmentCost);
+        newSummary[1].value = "$" + formatAmount(amounts.advancePercentage);
+        newSummary[2].value = "$" + formatAmount(amounts.totalLease);
 
         setSummary(newSummary);
     }, [formValues.amount, formValues.advancePercentage]);
