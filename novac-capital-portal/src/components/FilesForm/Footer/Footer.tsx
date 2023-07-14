@@ -1,4 +1,3 @@
-import "@/styles/filesform.css";
 import Box from "@mui/material/Box";
 
 import Contact from "./Contact";

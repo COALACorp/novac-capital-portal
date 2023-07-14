@@ -2,7 +2,6 @@ import "@/styles/filesform.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 
 import { GetApplication, APIUserApplicationsData } from "@/utils/api";
 import FilesFormHead from "./FilesFormHead";
@@ -19,10 +18,6 @@ function FilesForm() {
     const router = useRouter();
     const user = useAppSelector(selectUser);
     const [application, setApplication] = useState<APIUserApplicationsData|null>();
-
-    const handleSend = () => {
-        console.log("Send clicked");
-    };
 
     useEffect(() => {
         (async () => {
@@ -49,7 +44,6 @@ function FilesForm() {
                 />
                 <ApplicantRequirements />
                 <EndorsementRequirements />
-                <Button id="files-form-submit" onClick={handleSend}>Enviar</Button>
             </Box>
         )
         : application === undefined ? <Loading /> : <Error error={"No se pudo cargar la información relacionada a la aplicación"} />;

@@ -231,22 +231,6 @@
     color: #EB5757;
 }
 
-#files-form-submit {
-    padding: 16px 10px;
-    background-color: #3454D0;
-    color: #FFF;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: normal;
-    text-transform: none;
-    border-radius: 10px;
-    align-self: stretch;
-}
-
-#files-form-submit.Mui-disabled {
-    background-color: #C1CAF1;
-}
-
 #footer {
     color: #828282;
     font-size: 16px;
