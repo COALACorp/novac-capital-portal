@@ -246,3 +246,37 @@
 #files-form-submit.Mui-disabled {
     background-color: #C1CAF1;
 }
+
+#footer {
+    color: #828282;
+    font-size: 16px;
+    line-height: normal;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+}
+
+#footer-contact {
+    font-size: 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+#footer-whatsapp-button {
+    width: 247px;
+    padding: 16px 10px;
+    background-color: #26323D;
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+    line-height: normal;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+}
