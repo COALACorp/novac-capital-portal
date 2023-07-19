@@ -10,14 +10,17 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Alert from "@mui/material/Alert";
-import { User, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { User, createUserWithEmailAndPassword, updatePhoneNumber, sendEmailVerification } from "firebase/auth";
 
 import { auth } from "@/utils/firebase";
 import Copyright from "../Copyright";
+import PhoneNumberInput from "./PhoneNumberInput";
+import { GetUser, CreateUser } from "@/utils/api";
 
 type SignUpData = {
     email: string,
     password: string,
+    phone: string,
 };
 
 type ErrorData = {
@@ -74,9 +77,12 @@ function SignUp() {
         const authData: SignUpData = {
             email: data.get("email")?.toString() ?? "",
             password: data.get("password")?.toString() ?? "",
+            phone: data.get("phone")?.toString() ?? "",
         };
 
-        if (authData.email.length > 0 && authData.password.length > 0) 
+        console.log("Auth data:", authData);
+
+        if (authData.email.length > 0 && authData.password.length > 0 && authData.phone.length > 0) 
             signUp(authData);
     };
 
@@ -117,6 +123,7 @@ function SignUp() {
                         autoComplete="email"
                         autoFocus
                     />
+                    <PhoneNumberInput name="phone" />
                     <TextField
                         margin="normal"
                         required

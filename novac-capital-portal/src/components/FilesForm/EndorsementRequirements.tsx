@@ -26,7 +26,7 @@ const files = [
 function EndorsementRequirements() {
     return (
         <Box className="requirements-container">
-            <p className="requirements-title strong">Requisitos del solicitante</p>
+            <p className="requirements-title strong">Requisitos del Aval</p>
             <Box className="requirements-list">
                 {files.map((file, index) => (
                     <FileInput

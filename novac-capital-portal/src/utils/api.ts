@@ -17,6 +17,7 @@ type APIUserData = {
     guid: string,
     name: string,
     email: string,
+    phone: string,
 };
 
 type APIApplicationCreateData = {
@@ -61,12 +62,13 @@ type APIResponse<T> = null|{
     message: string,
 };
 
-export async function CreateUser(guid: string, name: string, email: string): Promise<APIResponse<APIUserCreateData>> {
+export async function CreateUser(guid: string, name: string, email: string, phone: string): Promise<APIResponse<APIUserCreateData>> {
     try {
         const payload = {
             guid,
             name,
             email,
+            phone,
         };
         console.log("API request create user:", payload);
         const response = await api.post("/user", payload);
