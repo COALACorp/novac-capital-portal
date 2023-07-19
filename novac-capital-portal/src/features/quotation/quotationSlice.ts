@@ -6,6 +6,7 @@ import { PlanType } from "@/components/Quotation/Plans/PlansCollection";
 type QuotationValue = {
     formValues: ValidatedFormValuesType,
     selectedPlan: PlanType,
+    applicationId?: number,
 };
 
 type QuotationState = {
@@ -23,10 +24,14 @@ const quotationSlice = createSlice({
         setQuotation: (state, action: PayloadAction<QuotationValue>) => {
             state.value = action.payload;
         },
+        setApplicationId: (state, action: PayloadAction<number>) => {
+            if (state.value)
+                state.value.applicationId = action.payload;
+        }
     },
 });
 
 export default quotationSlice.reducer;
 export type { QuotationValue };
-export const { setQuotation } = quotationSlice.actions;
+export const { setQuotation, setApplicationId } = quotationSlice.actions;
 export const selectQuotation = (state: RootState) => state.quotation.value;

@@ -11,11 +11,14 @@ import EndorsementRequirements from "./EndorsementRequirements";
 import Loading from "../Loading";
 import Error from "../Error";
 
-import { useAppSelector } from "@/app/hooks";
+import { useAppSelector, useAppDispatch } from "@/app/hooks";
+import { selectQuotation, setApplicationId } from "@/features/quotation/quotationSlice";
 import { selectUser } from "@/features/user/userSlice";
 
 function FilesForm() {
     const router = useRouter();
+    const dispatch = useAppDispatch();
+    const quotation = useAppSelector(selectQuotation);
     const user = useAppSelector(selectUser);
     const [application, setApplication] = useState<APIUserApplicationsData|null>();
 
@@ -24,6 +27,7 @@ function FilesForm() {
             if (user) {
                 const applicationData = await GetApplication(user.uid);
                 if (applicationData) {
+                    dispatch(setApplicationId(applicationData.data.applications[0].id));
                     setApplication(applicationData.data);
                     return;
                 }

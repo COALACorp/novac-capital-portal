@@ -172,6 +172,12 @@
     cursor: default;
 }
 
+.file-input-action.send-file {
+    color: #FFF;
+    background-color: #3454D0;
+    border: 0;
+}
+
 .file-input-action > p {
     white-space: nowrap;
     overflow: hidden;

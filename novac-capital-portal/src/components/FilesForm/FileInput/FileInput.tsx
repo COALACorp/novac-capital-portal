@@ -5,7 +5,7 @@ import FileInputAction, { Status } from "./FileInputAction/FileInputAction";
 type FileInputProps = {
     label: string,
     files: string[],
-    templateUrl?: string,
+    template?: string,
     status?: Status,
 };
 
@@ -16,7 +16,7 @@ function FileInput(props: FileInputProps) {
                 <Box className="file-input-label-container">
                     <p className="file-input-label strong">{props.label}</p>
                 </Box>
-                <FileInputAction files={props.files} templateUrl={props.templateUrl} status={props.status} />
+                <FileInputAction files={props.files} template={props.template} status={props.status} />
             </Box>
         </Box>
     );

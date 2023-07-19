@@ -6,12 +6,12 @@ const files = [
     {
         label: "Aviso de privacidad",
         files: [ "endorsementPrivacyNotice" ],
-        template: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        template: "Aviso_de_Privacidad_Novac_Capital_2023.pdf",
     },
     {
         label: "Formato de Autorización de Círculo de Crédito",
         files: [ "endorsementCreditCircleAuthorizationForm" ],
-        template: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+        template: "Autorizacion_de_Buro_de_Credito_PF-PM_NOVAC_23.pdf",
     },
     {
         label: "Copia de Credencial de Elector y/o Pasaporte",
@@ -33,7 +33,7 @@ function EndorsementRequirements() {
                         key={index}
                         label={file.label}
                         files={file.files}
-                        templateUrl={file.template || undefined}
+                        template={file.template || undefined}
                     />
                 ))}
             </Box>
