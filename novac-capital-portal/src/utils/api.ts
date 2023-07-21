@@ -1,5 +1,5 @@
 import axios from "axios";
-import { Status } from "@/components/FilesForm/FileInput/FileInputAction/FileInputAction";
+import { Status } from "@/components/FilesForm/FileInput/FileInput";
 
 const api = axios.create({
     baseURL: "https://teqzfxt83a.execute-api.us-east-1.amazonaws.com/dev",

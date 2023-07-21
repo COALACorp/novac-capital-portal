@@ -52,7 +52,7 @@ function FilesForm() {
                         const newFile: FileSpec = { name: file.name };
                         if (doc) {
                             newFile.uploaded = true;
-                            newFile.status = doc.status;
+                            newFile.status = doc.status.toLowerCase() as Status;
                             newFile.fileName = doc.name
                         }
                         return newFile;

@@ -3,10 +3,12 @@ import { useState, useEffect } from "react";
 import UploadFileButton from "./UploadFileButton";
 import RemoveFileButton from "./RemoveFileButton";
 import { FileSpec } from "@/data/filesRequirements";
+import { Status } from "../FileInput";
 
 type UploadFileActionProps = {
     file: FileSpec,
     number?: number,
+    status?: Status,
     onChange?: (name: string, file: File|undefined) => void,
     onRemove?: (name: string) => boolean|Promise<boolean>,
 };
@@ -20,10 +22,12 @@ function UploadFileAction(props: UploadFileActionProps) {
     };
 
     const handleRemove = async () => {
-        if (props.file.uploaded
-            && props.file.fileName
-            && props.onRemove
-            && await props.onRemove(props.file.fileName)
+        if (
+            (props.file.uploaded
+                && props.file.fileName
+                && props.onRemove
+                && await props.onRemove(props.file.fileName)
+            ) || file
         )
             setFile(undefined);
         else
@@ -45,7 +49,7 @@ function UploadFileAction(props: UploadFileActionProps) {
     }, [file]);
 
     return uploaded
-        ? <RemoveFileButton fileName={uploaded} onRemove={handleRemove} />
+        ? <RemoveFileButton fileName={uploaded} status={props.status} onRemove={handleRemove} />
         : <UploadFileButton name={props.file.name} number={props.number} onChange={handleChange} />;
 }
 
