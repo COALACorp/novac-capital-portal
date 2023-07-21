@@ -56,6 +56,7 @@ function FileInput(props: FileInputProps) {
 
     const handleUpload = () => {
         props.onUpload && props.onUpload(files);
+        setFiles({});
     };
 
     useEffect(() => {

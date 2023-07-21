@@ -158,9 +158,8 @@
     text-decoration: none;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
     border-radius: 10px;
     border: 1px solid #BDBDBD;
     cursor: pointer;
@@ -182,6 +181,7 @@
 .file-input-action > p {
     white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .file-input-action > input {

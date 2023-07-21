@@ -9,6 +9,7 @@ type UploadFileActionProps = {
     file: FileSpec,
     number?: number,
     status?: Status,
+    loading?: boolean,
     onChange?: (name: string, file: File|undefined) => void,
     onRemove?: (name: string) => boolean|Promise<boolean>,
 };
@@ -49,7 +50,7 @@ function UploadFileAction(props: UploadFileActionProps) {
     }, [file]);
 
     return uploaded
-        ? <RemoveFileButton fileName={uploaded} status={props.status} onRemove={handleRemove} />
+        ? <RemoveFileButton fileName={uploaded} status={props.status} onRemove={handleRemove} loading={props.loading} />
         : <UploadFileButton name={props.file.name} number={props.number} onChange={handleChange} />;
 }
 
