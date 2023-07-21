@@ -48,12 +48,13 @@ function FilesForm() {
                 const newReqs = newState[key].map(requirement => {
                     const newReq = { ...requirement };
                     newReq.files = requirement.files.map(file => {
-                        const doc = application.documents.find(doc => doc.name.includes(file.name));
+                        const doc = application.documents.find(doc => doc.name.split("|")[0] === file.name || doc.name.includes(file.name));
                         const newFile: FileSpec = { name: file.name };
                         if (doc) {
                             newFile.uploaded = true;
                             newFile.status = doc.status.toLowerCase() as Status;
-                            newFile.fileName = doc.name
+                            newFile.fileName = doc.name;
+                            newFile.displayName = doc.name.split("|")[1];
                         }
                         return newFile;
                     });
@@ -75,7 +76,7 @@ function FilesForm() {
                 const file = filesToSend[name];
                 console.log("File:", name, file);
                 if (file) {
-                    const fileName = name + extname(file.name);
+                    const fileName = `${name}|${file.name}`;
                     const result = await Upload(user.uid, application.application.id.toString(), fileName, file);
                     if (result) {
                         results.push(true);

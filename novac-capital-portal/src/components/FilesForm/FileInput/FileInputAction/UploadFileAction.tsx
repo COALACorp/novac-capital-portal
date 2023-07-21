@@ -35,9 +35,9 @@ function UploadFileAction(props: UploadFileActionProps) {
     };
     
     useEffect(() => {
-        if (props.file.uploaded && props.file.fileName) {
+        if (props.file.uploaded && props.file.displayName) {
             setFile(undefined);
-            setUploaded(props.file.fileName);
+            setUploaded(props.file.displayName);
         } else if (file)
             setUploaded(file.name);
         else

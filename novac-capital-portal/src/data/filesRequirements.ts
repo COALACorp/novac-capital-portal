@@ -5,6 +5,7 @@ export type FileSpec = {
     uploaded?: boolean,
     status?: Status,
     fileName?: string,
+    displayName?: string,
 };
 
 export type RequirementSpec = {
