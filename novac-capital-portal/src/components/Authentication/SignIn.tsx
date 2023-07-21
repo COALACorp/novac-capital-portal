@@ -16,7 +16,7 @@ import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 
 
 import { auth, googleProvider, CheckAdmin } from "@/utils/firebase";
 import Copyright from "../Copyright";
-import { CreateUser, GetUser, CreateApplication } from "@/utils/api";
+import { GetUser, CreateApplication } from "@/utils/api";
 
 import { useAppSelector } from "@/app/hooks";
 import { selectParams } from "@/features/params/paramsSlice";
@@ -51,20 +51,12 @@ function SignIn() {
 
     const checkUserIsRegistered = async () => {
         console.log("Check user:", user);
-        if (user) {
-            const registered = await GetUser(user.uid);
-            if (!registered) {
-                const newUser = await CreateUser(user.uid, quotation?.formValues.name ?? "", user.email ?? "");
-                if (newUser) {
-                    console.log("User registered successfully");
-                    return true;
-                } else
-                    console.log("Failed to register user");
-            } else {
+        if (user)
+            if (await GetUser(user.uid)) {
                 console.log("User already registered");
                 return true;
-            }
-        }
+            } else
+                console.log("User not registered");
         return false;
     };
 
@@ -86,6 +78,7 @@ function SignIn() {
                 console.log("Redirect to files checklist", quotation);
                 const application = await CreateApplication(
                     userLogged.uid,
+                    quotation.formValues.name,
                     (quotation.formValues.advancePercentage / 100),
                     quotation.selectedPlan.advancePayment,
                     quotation.formValues.totalLease,
@@ -106,19 +99,27 @@ function SignIn() {
                     console.log("Error:", errorState, application);
                     setError(errorState);
                 }
-            } else
-                router.push("/files_form");
+            } else {
+                let admin = false;
+                if (userLogged)
+                    admin = userLogged.admin;
+                else
+                    admin = await CheckAdmin();
+                    
+                if (admin)
+                    router.push("/admin_portal");
+                else
+                router.push("/");
+            }
         else {
-            let admin = false;
-            if (userLogged)
-                admin = userLogged.admin;
-            else
-                admin = await CheckAdmin();
-                
-            if (admin)
-                router.push("/admin_portal");
-            else
-            router.push("/");
+            const errorState = {
+                code: "No registrado",
+                message: "La cuenta con la que estás iniciando sesión no se encuentra registrada. Crea una cuenta antes de continuar.",
+            };
+            console.log("Error:", errorState);
+            setError(errorState);
+            auth.signOut();
+            endLoading();
         }
     };
 

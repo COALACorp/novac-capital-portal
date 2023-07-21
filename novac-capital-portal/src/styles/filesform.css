@@ -151,7 +151,7 @@
 }
 
 .file-input-action {
-    max-width: 225px;
+    max-width: 200px;
     padding: 12px 16px;
     color: #26323D;
     font-size: 14px;
@@ -159,7 +159,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 20px;
+    gap: 10px;
     border-radius: 10px;
     border: 1px solid #BDBDBD;
     cursor: pointer;
@@ -172,9 +172,16 @@
     cursor: default;
 }
 
+.file-input-action.send-file {
+    color: #FFF;
+    background-color: #3454D0;
+    border: 0;
+}
+
 .file-input-action > p {
     white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .file-input-action > input {
@@ -182,14 +189,14 @@
 }
 
 .file-remove-action {
-    width: 350px;
+    /* width: 350px; */
     padding: 10px;
     text-align: center;
     font-size: 14px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
 }
 
 .file-remove-action .file-input-action {
@@ -205,7 +212,6 @@
 }
 
 .unknown {
-    padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -229,22 +235,6 @@
 
 .error {
     color: #EB5757;
-}
-
-#files-form-submit {
-    padding: 16px 10px;
-    background-color: #3454D0;
-    color: #FFF;
-    font-size: 20px;
-    font-weight: 500;
-    line-height: normal;
-    text-transform: none;
-    border-radius: 10px;
-    align-self: stretch;
-}
-
-#files-form-submit.Mui-disabled {
-    background-color: #C1CAF1;
 }
 
 #footer {

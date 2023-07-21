@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -10,14 +10,21 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Alert from "@mui/material/Alert";
-import { User, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import AlertTitle from "@mui/material/AlertTitle";
+import { User, createUserWithEmailAndPassword, sendEmailVerification, deleteUser } from "firebase/auth";
 
 import { auth } from "@/utils/firebase";
 import Copyright from "../Copyright";
+import PhoneNumberInput from "./PhoneNumberInput";
+import { CreateUser } from "@/utils/api";
+
+import { useAppSelector } from "@/app/hooks";
+import { selectUser } from "@/features/user/userSlice";
 
 type SignUpData = {
     email: string,
     password: string,
+    phone: string,
 };
 
 type ErrorData = {
@@ -30,6 +37,7 @@ type Error = ErrorData|null;
 function SignUp() {
     const origin = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("origin") : "";
     const router = useRouter();
+    const user = useAppSelector(selectUser);
     const [error, setError] = useState<Error>();
 
     const sendVerification = async (user: User) => {
@@ -52,11 +60,31 @@ function SignUp() {
 
     const signUp = async (authData: SignUpData) => {
         await createUserWithEmailAndPassword(auth, authData.email, authData.password)
-            .then(userCredential => {
+            .then(async userCredential => {
                 // Signed In
                 const user = userCredential.user;
                 console.log("User:", user);
-                sendVerification(user);
+
+                const createResult = await CreateUser(user.uid, user.email ?? authData.email, authData.phone);
+                console.log("Create user result:", !!createResult, createResult);
+                if (createResult)
+                    sendVerification(user);
+                else {
+                    const errorState: ErrorData = {
+                        code: "Not created",
+                        message: "Could not create the account. Please try again.",
+                    };
+                    deleteUser(user)
+                        .then(() => {
+                            console.log("User deleted successfully");
+                        })
+                        .catch(error => {
+                            console.log("Error while deleting user:", error);
+                            errorState.code += " -> Not deleted";
+                        });
+                    console.log("Error:", errorState);
+                    setError(errorState);
+                }
             })
             .catch(e => {
                 const errorState: ErrorData = {
@@ -74,11 +102,19 @@ function SignUp() {
         const authData: SignUpData = {
             email: data.get("email")?.toString() ?? "",
             password: data.get("password")?.toString() ?? "",
+            phone: data.get("phone")?.toString() ?? "",
         };
 
-        if (authData.email.length > 0 && authData.password.length > 0) 
+        console.log("Auth data:", authData);
+
+        if (authData.email.length > 0 && authData.password.length > 0 && authData.phone.length > 0) 
             signUp(authData);
     };
+
+    useEffect(() => {
+        if (user)
+            router.push("/");
+    }, [user]);
 
     return (
         <Container component="main" maxWidth="xs">
@@ -117,6 +153,7 @@ function SignUp() {
                         autoComplete="email"
                         autoFocus
                     />
+                    <PhoneNumberInput name="phone" />
                     <TextField
                         margin="normal"
                         required
@@ -129,7 +166,8 @@ function SignUp() {
                     />
                     {error && (
                         <Alert variant="outlined" severity="error">
-                            {error.code} - {error.message}
+                            <AlertTitle>{error.code}</AlertTitle>
+                            {error.message}
                         </Alert>
                     )}
                     <Button

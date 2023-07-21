@@ -2,43 +2,56 @@ import { useState, useEffect } from "react";
 
 import UploadFileButton from "./UploadFileButton";
 import RemoveFileButton from "./RemoveFileButton";
+import { FileSpec } from "@/data/filesRequirements";
+import { Status } from "../FileInput";
 
 type UploadFileActionProps = {
-    name: string,
+    file: FileSpec,
     number?: number,
+    status?: Status,
+    loading?: boolean,
     onChange?: (name: string, file: File|undefined) => void,
-    onUpload?: (name: string, file: File) => void,
-    onRemove?: (name: string) => void,
+    onRemove?: (name: string) => boolean|Promise<boolean>,
 };
 
 function UploadFileAction(props: UploadFileActionProps) {
     const [file, setFile] = useState<File>();
-    const [sending, setSending] = useState(false);
+    const [uploaded, setUploaded] = useState<string|undefined>();
 
     const handleChange = (newFile: File|undefined) => {
         setFile(newFile);
     };
 
-    const handleRemove = () => {
-        setFile(undefined);
-        props.onRemove && props.onRemove(props.name);
+    const handleRemove = async () => {
+        if (
+            (props.file.uploaded
+                && props.file.fileName
+                && props.onRemove
+                && await props.onRemove(props.file.fileName)
+            ) || file
+        )
+            setFile(undefined);
+        else
+            console.log("Failed to remove file");
     };
     
     useEffect(() => {
-        if (file) {
-            setSending(true);
-            props.onUpload && props.onUpload(props.name, file);
+        if (props.file.uploaded && props.file.displayName) {
+            setFile(undefined);
+            setUploaded(props.file.displayName);
+        } else if (file)
+            setUploaded(file.name);
+        else
+            setUploaded(undefined);
+    }, [props.file, file]);
 
-            setTimeout(() => {
-                setSending(false);
-            }, 2000);
-        }
-        props.onChange && props.onChange(props.name, file);
+    useEffect(() => {
+        props.onChange && props.onChange(props.file.name, file);
     }, [file]);
 
-    return file
-        ? <RemoveFileButton file={file} onRemove={handleRemove} loading={sending} />
-        : <UploadFileButton name={props.name} number={props.number} onChange={handleChange} />;
+    return uploaded
+        ? <RemoveFileButton fileName={uploaded} status={props.status} onRemove={handleRemove} loading={props.loading} />
+        : <UploadFileButton name={props.file.name} number={props.number} onChange={handleChange} />;
 }
 
 export default UploadFileAction;

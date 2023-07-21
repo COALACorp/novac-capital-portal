@@ -1,6 +1,7 @@
 import axios from "axios";
+import { Status } from "@/components/FilesForm/FileInput/FileInput";
 
-const ncApi = axios.create({
+const api = axios.create({
     baseURL: "https://teqzfxt83a.execute-api.us-east-1.amazonaws.com/dev",
     headers: {
         "Access-Control-Allow-Origin": "*",
@@ -15,8 +16,8 @@ type APIUserCreateData = {
 type APIUserData = {
     id: number,
     guid: string,
-    name: string,
     email: string,
+    phone: string,
 };
 
 type APIApplicationCreateData = {
@@ -48,6 +49,7 @@ type APIApplicationData = {
         creditBureau: number,
         margin: number,
     },
+    name: string,
 };
 
 type APIUserApplicationsData = {
@@ -55,21 +57,34 @@ type APIUserApplicationsData = {
     applications: APIApplicationData[],
 }
 
+type APIUserApplicationDocs = {
+    id: number,
+    applicationId: number,
+    name: string,
+    path: string,
+    status: Status,
+};
+
+type ApplicationData = {
+    application: APIApplicationData,
+    documents: APIUserApplicationDocs[],
+};
+
 type APIResponse<T> = null|{
     statusCode: number,
     data: T,
     message: string,
 };
 
-async function CreateUser(guid: string, name: string, email: string): Promise<APIResponse<APIUserCreateData>> {
+export async function CreateUser(guid: string, email: string, phone: string): Promise<APIResponse<APIUserCreateData>> {
     try {
         const payload = {
             guid,
-            name,
             email,
+            phone,
         };
         console.log("API request create user:", payload);
-        const response = await ncApi.post("/user", payload);
+        const response = await api.post("/user", payload);
         console.log("API response create user:", response.data);
     
         return response.status === 200 ? response.data ?? null : null;   
@@ -79,10 +94,10 @@ async function CreateUser(guid: string, name: string, email: string): Promise<AP
     return null;
 }
 
-async function GetUser(guid: string): Promise<APIResponse<APIUserData>> {
+export async function GetUser(guid: string): Promise<APIResponse<APIUserData>> {
     try {
         console.log("API request get user:", guid);
-        const response = await ncApi.get("/user/" + guid);
+        const response = await api.get("/user/" + guid);
         console.log("API response get user:", response.data);
 
         return response.status === 200 ? response.data ?? null : null;
@@ -92,8 +107,9 @@ async function GetUser(guid: string): Promise<APIResponse<APIUserData>> {
     return null;
 }
 
-async function CreateApplication(
+export async function CreateApplication(
     userGuid: string,
+    name: string,
     advanceFee: number,
     advanceAmount: number,
     loanAmount: number,
@@ -103,9 +119,10 @@ async function CreateApplication(
     cost: number,
     iva: number,
     planId: number
-): Promise<APIResponse<APIApplicationCreateData>> {
+): Promise<APIResponse<APIApplicationCreateData>|null> {
     const payload = {
         userGuid,
+        name,
         advanceFee,
         advanceAmount,
         loanAmount,
@@ -119,25 +136,55 @@ async function CreateApplication(
         planId,
     };
     console.log("API request create application:", payload);
-    const response = await ncApi.post("/application", payload);
+    const response = await api.post<APIResponse<APIApplicationCreateData>>("/application", payload);
     console.log("API response create application:", response.data);
 
     return response.status === 200 ? response.data ?? null : null;
 }
 
-async function GetApplication(guid: string): Promise<APIResponse<APIUserApplicationsData>|null> {
+export async function GetApplicationDocs(guid: string, applicationId: number): Promise<APIResponse<APIUserApplicationDocs[]>|null> {
+    console.log("API request get documents:", guid);
+    const response = await api.get<APIResponse<APIUserApplicationDocs[]>>(`/document/${guid}/${applicationId}`);
+    console.log("API response get documents:", response.data);
+
+    return response.status === 200 ? response.data ?? null : null;
+}
+
+export async function GetLastApplication(guid: string): Promise<APIResponse<ApplicationData>|null> {
     console.log("API request get application:", guid);
-    const response: APIResponse<APIUserApplicationsData> = (await ncApi.get("/application/" + guid)).data;
-    const application = response?.data.applications.find(application => application.id === Math.max(...response.data.applications.map(application => application.id)));
-    let result = null;
-    if (response && application) {
-        response.data.applications = [ application ];
-        result = response;
+    const response = await api.get<APIResponse<APIUserApplicationsData>>("/application/" + guid);
+    console.log("API response get application:", response.data);
+
+    let result: APIResponse<ApplicationData>|null = null;
+    if (response.status === 200 && response.data) {
+        const data = response.data;
+        const latest = data.data.applications.find(application => application.id === Math.max(...data.data.applications.map(application => application.id)));
+        if (latest) {
+            result = {
+                statusCode: data.statusCode,
+                data: {
+                    application: latest,
+                    documents: [],
+                },
+                message: data.message,
+            }
+            const docs = await GetApplicationDocs(guid, latest.id);
+            if (docs) {
+                result = {
+                    statusCode: docs.statusCode,
+                    data: {
+                        ...result.data,
+                        documents: docs.data,
+                    },
+                    message: docs.message,
+                };
+            }
+        }
     }
-    console.log("API response get application:", result);
+
+    console.log("Get last application result:", result);
 
     return result;
 }
 
-export { CreateUser, GetUser, CreateApplication, GetApplication };
-export type { APIUserApplicationsData };
+export type { ApplicationData };
