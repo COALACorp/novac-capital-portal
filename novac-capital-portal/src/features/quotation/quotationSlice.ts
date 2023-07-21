@@ -4,17 +4,17 @@ import { ValidatedFormValuesType } from "@/components/Quotation/DataForm/DataFor
 import { PlanType } from "@/components/Quotation/Plans/PlansCollection";
 
 type QuotationValue = {
-    formValues: ValidatedFormValuesType,
-    selectedPlan: PlanType,
+    formValues?: ValidatedFormValuesType,
+    selectedPlan?: PlanType,
     applicationId?: number,
 };
 
 type QuotationState = {
-    value: QuotationValue|null,
+    value: QuotationValue,
 };
 
 const initialState: QuotationState = {
-    value: null,
+    value: {},
 };
 
 const quotationSlice = createSlice({
@@ -24,14 +24,19 @@ const quotationSlice = createSlice({
         setQuotation: (state, action: PayloadAction<QuotationValue>) => {
             state.value = action.payload;
         },
+        setFormValues: (state, action: PayloadAction<ValidatedFormValuesType>) => {
+            state.value.formValues = action.payload;
+        },
+        setSelectedPlan: (state, action: PayloadAction<PlanType>) => {
+            state.value.selectedPlan = action.payload;
+        },
         setApplicationId: (state, action: PayloadAction<number>) => {
-            if (state.value)
-                state.value.applicationId = action.payload;
+            state.value.applicationId = action.payload;
         }
     },
 });
 
 export default quotationSlice.reducer;
 export type { QuotationValue };
-export const { setQuotation, setApplicationId } = quotationSlice.actions;
+export const { setQuotation, setFormValues, setSelectedPlan, setApplicationId } = quotationSlice.actions;
 export const selectQuotation = (state: RootState) => state.quotation.value;

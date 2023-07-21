@@ -1,8 +1,8 @@
 import axios from "axios";
 
 const docsApi = axios.create({
-    // baseURL: "http://localhost:4000",
-    baseURL: "https://up35nqqwaaznbykfkhwwd5bdm40rojuw.lambda-url.us-east-1.on.aws",
+    baseURL: "http://localhost:4000",
+    // baseURL: "https://up35nqqwaaznbykfkhwwd5bdm40rojuw.lambda-url.us-east-1.on.aws",
     headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
