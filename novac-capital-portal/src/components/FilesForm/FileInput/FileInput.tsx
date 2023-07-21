@@ -31,7 +31,7 @@ type SelectedFile = {
 type FileInputProps = {
     requirement: RequirementSpec,
     onChange?: (name: string, value: File|undefined) => void,
-    onUpload?: (files: SelectedFile) => void,
+    onUpload?: (files: SelectedFile) => boolean|Promise<boolean>,
     onRemove?: (name: string) => boolean|Promise<boolean>,
 };
 
@@ -54,13 +54,12 @@ function FileInput(props: FileInputProps) {
         setFiles(newFiles);
     };
 
-    const handleUpload = () => {
-        props.onUpload && props.onUpload(files);
-        setFiles({});
+    const handleUpload = async () => {
+        if (props.onUpload && await props.onUpload(files))
+            setFiles({});
     };
 
     useEffect(() => {
-        console.log("Update status");
         const t_files = props.requirement.files;
         let newStatus = status;
         if (t_files.find(file => file.status === "pending"))
@@ -76,7 +75,6 @@ function FileInput(props: FileInputProps) {
         setStatus(newStatus);
 
         const fileStatus = t_files.filter(file => !file.uploaded);
-        console.log("File status:", fileStatus);
         setSendable(fileStatus.length > 0 && files
             ? fileStatus.reduce((acc, curr) => files[curr.name] ? acc : false, true)
             : false

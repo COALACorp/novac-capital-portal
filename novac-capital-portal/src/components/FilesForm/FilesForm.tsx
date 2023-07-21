@@ -40,7 +40,7 @@ function FilesForm() {
     };
 
     const requestUploadedDocuments = () => {
-        console.log("Request uploaded documents");
+        console.log("Request uploaded requirements");
         if (application) {
             const newState = { ...requirements };
             Object.keys(newState).forEach(category => {
@@ -62,12 +62,13 @@ function FilesForm() {
                 });
                 newState[key] = newReqs;
             });
-            console.log("Parsed requirements:", newState);
+            console.log("Updated requirements:", newState);
             setRequirements(newState);
         }
     }
 
     const handleUpload = async (filesToSend: SelectedFile) => {
+        let result = false
         console.log("Send clicked");
         if (user && application) {
             console.log("Files:", filesToSend);
@@ -86,11 +87,14 @@ function FilesForm() {
                 results.push(false);
             };
             console.log("Upload result:", results);
-            if (results.includes(false))
-                console.log("Failed to upload files");
-        } else
+            result = !results.includes(false);
+        }
+
+        if (!result)
             console.log("Failed to upload files");
         refreshApplication();
+
+        return result;
     };
 
     const handleRemove = async (name: string) => {
