@@ -80,11 +80,11 @@ function FileInput(props: FileInputProps) {
                             </svg>
                         </Box>
                     )}
-                    {props.requirement.files.map((file, index) => (
+                    {props.requirement.files.map((file, index, files) => (
                         <UploadFileAction
                             key={index}
                             file={file}
-                            number={index + 1}
+                            number={(files.length > 1) ? (index + 1) : undefined}
                             onChange={handleChange}
                             onRemove={props.onRemove}
                         />

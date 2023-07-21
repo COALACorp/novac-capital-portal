@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { extname } from "path";
 
 import UploadFileButton from "./UploadFileButton";
 import RemoveFileButton from "./RemoveFileButton";
@@ -14,21 +13,25 @@ type UploadFileActionProps = {
 
 function UploadFileAction(props: UploadFileActionProps) {
     const [file, setFile] = useState<File>();
-    const [uploaded, setUploaded] = useState<string>();
+    const [uploaded, setUploaded] = useState<string|undefined>();
 
     const handleChange = (newFile: File|undefined) => {
         setFile(newFile);
     };
 
     const handleRemove = async () => {
-        if (uploaded && props.onRemove && await props.onRemove(uploaded))
+        if (props.file.uploaded
+            && props.file.fileName
+            && props.onRemove
+            && await props.onRemove(props.file.fileName)
+        )
             setFile(undefined);
         else
             console.log("Failed to remove file");
     };
     
     useEffect(() => {
-        if (props.file.uploaded) {
+        if (props.file.uploaded && props.file.fileName) {
             setFile(undefined);
             setUploaded(props.file.fileName);
         } else if (file)

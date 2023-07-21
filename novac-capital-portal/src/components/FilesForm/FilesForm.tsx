@@ -85,11 +85,10 @@ function FilesForm() {
                 results.push(false);
             };
             console.log("Upload result:", results);
-            if (!results.includes(false)) {
-                return;
-            }
-        }
-        console.log("Failed to upload files");
+            if (results.includes(false))
+                console.log("Failed to upload files");
+        } else
+            console.log("Failed to upload files");
         refreshApplication();
     };
 
@@ -142,11 +141,16 @@ function FilesForm() {
                         />
                     ))}
                 </RequirementsSection>
-                {/* <RequirementsSection title="Requisitos del Aval">
-                    {requirements.applicantFiles.map((requirement, index) => (
-                        <FileInput key={index} label={requirement.label} template={requirement.template} status="unknown" onUpload={handleUpload} />
+                <RequirementsSection title="Requisitos del Aval">
+                    {requirements.endorsementFiles.map((requirement, index) => (
+                        <FileInput
+                            key={index}
+                            requirement={requirement}
+                            onUpload={handleUpload}
+                            onRemove={handleRemove}
+                        />
                     ))}
-                </RequirementsSection> */}
+                </RequirementsSection>
             </Box>
         )
         : application === undefined ? <Loading /> : <Error error={"No se pudo cargar la información relacionada a la aplicación"} />;
