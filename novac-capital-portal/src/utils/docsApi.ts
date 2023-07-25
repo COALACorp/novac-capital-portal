@@ -1,11 +1,10 @@
 import axios from "axios";
 
 const docsApi = axios.create({
-    // baseURL: "http://localhost:4000",
-    baseURL: "https://402s9hzhql.execute-api.us-east-1.amazonaws.com/default/novaccapital-docs-api",
+    baseURL: process.env.NEXT_PUBLIC_DOCS_API_ENDPOINT,
     headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+        "access-control-allow-origin": "*",
+        "access-control-allow-headers": "*",
     },
 });
 
