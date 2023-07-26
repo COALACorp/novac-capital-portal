@@ -1,5 +1,5 @@
-import AdminPortal from "@/components/AdminPortal";
+import AdminDashboard from "@/components/AdminDashboard/AdminDashboard";
 
 export default function AdminPortalWindow() {
-    return <AdminPortal />;
+    return <AdminDashboard />;
 }

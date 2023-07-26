@@ -1,0 +1,124 @@
+#dashboard-container {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+#lateral-menu-container {
+    width: 250px;
+    min-height: 100vh;
+    padding: 20px 0;
+    background-color: #323A44;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+#lateral-menu {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 40px;
+}
+
+#menu-logo {
+    padding: 0 20px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+#user-info-container {
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#user-info-picture {
+    border-radius: 50%;
+}
+
+#user-info {
+    color: #FFF;
+    font-weight: 500;
+    line-height: normal;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 6px;
+}
+
+#user-info-name {
+    font-size: 16px;
+}
+
+#user-info-role {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 150%;
+}
+
+#nav-container {
+    /* height: 612px; */
+    color: #FFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+}
+
+.nav-button {
+    padding: 16px 20px;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 150%;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    align-self: stretch;
+}
+
+.nav-button:hover {
+    background-color: #45494E;
+    cursor: pointer;
+}
+
+.nav-button-icon {
+    width: 16px;
+    height: 16px;
+}
+
+#apps-nav {
+    color: #FFF;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+}
+
+#apps-nav-title {
+    padding: 0 0 26px 20px;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 150%;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    align-self: stretch;
+}
+
+#user-nav {
+    padding-bottom: 0;
+    color: #FFF;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    align-self: stretch;
+}
