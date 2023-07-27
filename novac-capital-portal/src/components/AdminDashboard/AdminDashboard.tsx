@@ -4,6 +4,7 @@ import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
 
 import LateralMenu from "./LateralMenu/LateralMenu";
+import Content from "./Content";
 import { SignOut } from "@/utils/firebase";
 
 import { useAppSelector } from "@/app/hooks";
@@ -26,14 +27,10 @@ function AdminDashboard() {
         }
     }, [user?.admin]);
 
-    return (
+    return user && (
         <Box id="dashboard-container">
-            <LateralMenu />
-            <h1>This is the admin portal window</h1>
-            <button onClick={() => router.push("/")}>Quotation</button>
-            <button onClick={() => router.push("/files_form")}>Files Checklist</button>
-            <button onClick={() => router.push("/home")}>Home</button>
-            {user && <button onClick={handleSignOut}>Sign Out</button>}
+            <LateralMenu user={user} onSignOut={handleSignOut} />
+            <Content />
         </Box>
     );
 }
