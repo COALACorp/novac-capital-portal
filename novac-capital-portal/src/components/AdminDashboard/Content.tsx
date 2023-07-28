@@ -5,11 +5,15 @@ import SearchBar from "./SearchBar";
 import ContentTable from "./ContentTable/ContentTable";
 import ContentRow from "./ContentTable/ContentRow";
 
-function Content() {
+type ContentProps = {
+    onLateralMenu?: () => void,
+};
+
+function Content(props: ContentProps) {
     return (
         <Box id="content-container">
             <Box id="content-nav">
-                <Box id="content-nav-menu" component="a" onClick={() => console.log("Hamburguer")}>
+                <Box id="content-nav-menu" component="a" onClick={props.onLateralMenu}>
                     <Image src="/icons/HamburguerMenu.svg" width="26" height="17" alt="Menu" />
                 </Box>
                 <Box id="content-nav-profile" component="a" onClick={() => console.log("Content profile")}>
@@ -28,7 +32,6 @@ function Content() {
                 <ContentRow
                     months={18}
                     name="Ana Garcia"
-                    picture="/logo.png"
                     phone="(55) 62-37-30-86"
                     progress={75}
                     amount={99999999.99}

@@ -1,11 +1,8 @@
-import Image from "next/image";
-
 import { formatAmount } from "@/utils/formats";
 
 type ContentRowProps = {
     months: number|string,
     name: string,
-    picture?: string,
     phone: string,
     progress: number,
     amount: number,
@@ -22,10 +19,7 @@ function ContentRow(props: ContentRowProps) {
                 </div>
             </td>
             <td>
-                <div className="name">
-                    {props.picture && <Image className="profile-pic" src={props.picture} width="40" height="40" alt="" />}
-                    <p>{props.name}</p>
-                </div>
+                <p>{props.name}</p>
             </td>
             <td>
                 <p>{props.phone}</p>

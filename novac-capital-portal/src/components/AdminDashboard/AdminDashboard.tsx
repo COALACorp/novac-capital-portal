@@ -1,5 +1,5 @@
 import "@/styles/dashboard.css";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Box from "@mui/material/Box";
 
@@ -13,6 +13,12 @@ import { selectUser } from "@/features/user/userSlice";
 function AdminDashboard() {
     const router = useRouter();
     const user = useAppSelector(selectUser);
+    const [menuHidden, setMenuHidden] = useState(false);
+
+    const handleLateralMenu = () => {
+        console.log("Handle lateral");
+        setMenuHidden(!menuHidden);
+    }
 
     const handleSignOut = () => {
         SignOut(() => router.push("/"));
@@ -29,8 +35,8 @@ function AdminDashboard() {
 
     return user && (
         <Box id="dashboard-container">
-            <LateralMenu user={user} onSignOut={handleSignOut} />
-            <Content />
+            <LateralMenu user={user} onSignOut={handleSignOut} hidden={menuHidden} />
+            <Content onLateralMenu={handleLateralMenu} />
         </Box>
     );
 }
