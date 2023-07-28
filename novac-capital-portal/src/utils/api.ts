@@ -2,7 +2,7 @@ import axios from "axios";
 import { Status } from "@/components/FilesForm/FileInput/FileInput";
 
 const api = axios.create({
-    baseURL: "https://teqzfxt83a.execute-api.us-east-1.amazonaws.com/dev",
+    baseURL: "https://kplaf2m4k6.execute-api.us-east-1.amazonaws.com/dev",
     headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
@@ -151,9 +151,9 @@ export async function GetApplicationDocs(guid: string, applicationId: number): P
 }
 
 export async function GetLastApplication(guid: string): Promise<APIResponse<ApplicationData>|null> {
-    console.log("API request get application:", guid);
-    const response = await api.get<APIResponse<APIUserApplicationsData>>("/application/" + guid);
-    console.log("API response get application:", response.data);
+    console.log("API request get user applications:", guid);
+    const response = await api.get<APIResponse<APIUserApplicationsData>>(`/application/user/${guid}`);
+    console.log("API response get user applications:", response.data);
 
     let result: APIResponse<ApplicationData>|null = null;
     if (response.status === 200 && response.data) {
@@ -187,4 +187,12 @@ export async function GetLastApplication(guid: string): Promise<APIResponse<Appl
     return result;
 }
 
-export type { ApplicationData };
+export async function GetAllApplications(n: number, page: number): Promise<APIResponse<APIApplicationData[]>|null> {
+    console.log("API request get applications:", n, page);
+    const response = await api.get<APIResponse<APIApplicationData[]>>("/application", { params: { n, page } });
+    console.log("API response get applications:", response.data);
+
+    return response.status === 200 ? response.data ?? null : null;
+}
+
+export type { ApplicationData, APIApplicationData };

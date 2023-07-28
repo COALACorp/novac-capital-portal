@@ -1,7 +1,7 @@
 import { ContentRowProps } from "./ContentRow";
 
 type ContentTableProps = {
-    children: React.ReactElement<ContentRowProps>|React.ReactElement<ContentRowProps>[],
+    children: React.ReactElement<ContentRowProps>|React.ReactElement<ContentRowProps>[]|any,
 };
 
 function ContentTable(props: ContentTableProps) {
