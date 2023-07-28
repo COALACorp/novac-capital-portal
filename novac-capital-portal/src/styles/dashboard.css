@@ -213,38 +213,53 @@
 
 #content-table {
     width: 100%;
-    border-collapse: collapse;
-    border: 1px solid #BDBDBD;
-    border-radius: 10px;
-}
-
-#content-table thead {
-    background-color: #E8E8E8;
-    color: #828282;
-}
-
-#content-table tbody {
-    background-color: #FFF;
-    color: #333;
-}
-
-tr {
-    border: 1px solid #BDBDBD;
+    border-spacing: 0;
+    border-collapse: separate;
 }
 
 th {
+    background-color: #E8E8E8;
+    color: #828282;
     font-size: 16px;
     font-weight: 600;
     text-transform: uppercase;
+    border-width: 1px 0;
 }
 
 td {
+    background-color: #FFF;
+    color: #333;
     font-size: 14px;
     font-weight: 400;
+    border-width: 0 0 1px;
 }
 
-td, th {
+th, td {
     padding: 20px 30px;
+    border-style: solid;
+    border-color: #BDBDBD;
+}
+
+ /* Set round corners */
+tr:first-child th:first-of-type {
+    border-top-left-radius: 10px;
+}
+tr:first-child th:last-of-type {
+    border-top-right-radius: 10px;
+}
+tr:last-child td:first-child {
+    border-bottom-left-radius: 10px;
+}
+tr:last-child td:last-child {
+    border-bottom-right-radius: 10px;
+}
+
+/* Set lateral borders */
+th:first-of-type, td:first-of-type {
+    border-left-width: 1px;
+}
+th:last-of-type, td:last-of-type {
+    border-right-width: 1px;
 }
 
 td > .term {

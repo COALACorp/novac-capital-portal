@@ -1,5 +1,3 @@
-import Box from "@mui/material/Box";
-import Image from "next/image";
 import { ContentRowProps } from "./ContentRow";
 
 type ContentTableProps = {
@@ -9,19 +7,15 @@ type ContentTableProps = {
 function ContentTable(props: ContentTableProps) {
     return (
         <table id="content-table">
-            <thead>
-                <tr>
-                    <th>PLAZO</th>
-                    <th>NOMBRE</th>
-                    <th>TELÉFONO</th>
-                    <th>PROGRESO</th>
-                    <th>VALOR DEL EQUIPO</th>
-                    <th>FECHA</th>
-                </tr>
-            </thead>
-            <tbody>
-                {props.children}
-            </tbody>
+            <tr>
+                <th>PLAZO</th>
+                <th>NOMBRE</th>
+                <th>TELÉFONO</th>
+                <th>PROGRESO</th>
+                <th>VALOR DEL EQUIPO</th>
+                <th>FECHA</th>
+            </tr>
+            {props.children}
         </table>
     );
 }
