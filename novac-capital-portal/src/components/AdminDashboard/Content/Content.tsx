@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 
 import SearchBar from "./SearchBar";
-import ContentTable from "./ContentTable/ContentTable";
-import ContentRow from "./ContentTable/ContentRow";
+import ContentTable from "./ContentTable";
+import ContentRow from "./ContentRow";
 import PaginationControls from "./PaginationControls";
 import { GetAllApplications, APIApplicationData } from "@/utils/api";
 
@@ -38,7 +38,7 @@ function Content(props: ContentProps) {
                 <a id="content-nav-profile" onClick={() => console.log("Content profile")}>
                     <div id="content-nav-profile-info">
                         <Image id="content-nav-profile-picture" src="/logo.png" width="38" height="38" alt="Imagen de perfil" />
-                        <p className="strong">James Smith</p>
+                        <p className="strong">Admin</p>
                     </div>
                     <Image src="/icons/ArrowDown.svg" width="14" height="7" alt="" />
                 </a>

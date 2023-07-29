@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
-import Box from "@mui/material/Box";
 
 import NavButton from "./NavButton";
 import { UserValue } from "@/features/user/userSlice";
@@ -17,33 +16,33 @@ function LateralMenu(props: LateralMenuProps) {
     useEffect(() => {
         if (!props.hidden)
             setContent(
-                <Box id="lateral-menu-container" className={props.hidden ? "hidden" : ""}>
-                    <Box id="lateral-menu">
-                        <Box id="menu-logo">
+                <div id="lateral-menu-container" className={props.hidden ? "hidden" : ""}>
+                    <div id="lateral-menu">
+                        <div id="menu-logo">
                             <Image src="/logo.png" width="82" height="83" alt="Logo" />
-                        </Box>
-                        <Box id="user-info-container">
+                        </div>
+                        <div id="user-info-container">
                             <Image id="user-info-picture" src="/logo.png" width="55" height="55" alt="Imagen de perfil" />
-                            <Box id="user-info">
+                            <div id="user-info">
                                 <p id="user-info-name">Novac Capital</p>
                                 <p id="user-info-role">{props.user.admin ? "Admin" : "User"}</p>
-                            </Box>
-                        </Box>
-                        <Box id="nav-container">
-                            <Box id="apps-nav">
-                                <Box id="apps-nav-title">
+                            </div>
+                        </div>
+                        <div id="nav-container">
+                            <div id="apps-nav">
+                                <div id="apps-nav-title">
                                     <p>Aplicaciones</p>
-                                </Box>
+                                </div>
                                 <NavButton name="Pendientes" icon="/icons/Pending.svg" />
                                 <NavButton name="Aprobadas" icon="/icons/Approved.svg" />
                                 <NavButton name="Denegadas" icon="/icons/Denied.svg" />
-                            </Box>
-                        </Box>
-                    </Box>
-                    <Box id="user-nav">
+                            </div>
+                        </div>
+                    </div>
+                    <div id="user-nav">
                         <NavButton name="Cerrar sesión" icon="/icons/LogOut.svg" onClick={props.onSignOut} />
-                    </Box>
-                </Box>
+                    </div>
+                </div>
             );
         else
             setContent(<></>);

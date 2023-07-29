@@ -1,5 +1,4 @@
 import { useState, useRef } from "react";
-import Stack from "@mui/material/Stack";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import { formatAmount } from "@/utils/formats";
 
@@ -30,7 +29,7 @@ function DataTextInput(props: DataTextInputProps) {
     };
 
     return (
-        <Stack className="data-form-input-container">
+        <div className="data-form-input-container">
             <p id="input-label"><span className="strong">{props.label}</span> <span className="light">{props.labelSuffix}</span></p>
             <OutlinedInput
                 className="data-form-input"
@@ -41,7 +40,7 @@ function DataTextInput(props: DataTextInputProps) {
                 onChange={handleChange}
             />
             <input name={props.name} readOnly hidden ref={inputRef}/>
-        </Stack>
+        </div>
     );
 }
 

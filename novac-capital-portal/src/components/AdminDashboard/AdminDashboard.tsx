@@ -1,10 +1,9 @@
 import "@/styles/dashboard.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import Box from "@mui/material/Box";
 
 import LateralMenu from "./LateralMenu/LateralMenu";
-import Content from "./Content";
+import Content from "./Content/Content";
 import { SignOut } from "@/utils/firebase";
 
 import { useAppSelector } from "@/app/hooks";
@@ -34,10 +33,10 @@ function AdminDashboard() {
     }, [user?.admin]);
 
     return user && (
-        <Box id="dashboard-container">
+        <div id="dashboard-container">
             <LateralMenu user={user} onSignOut={handleSignOut} hidden={menuHidden} />
             <Content onLateralMenu={handleLateralMenu} />
-        </Box>
+        </div>
     );
 }
 

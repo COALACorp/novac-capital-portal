@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Box from "@mui/material/Box";
 
 type NavButtonProps = {
     name: string,
@@ -9,10 +8,10 @@ type NavButtonProps = {
 
 function NavButton(props: NavButtonProps) {
     return (
-        <Box className="nav-button" component="a" onClick={props.onClick}>
+        <a className="nav-button" onClick={props.onClick}>
             <Image className="nav-button-icon" src={props.icon} width="16" height="16" alt={props.name + " icon"} />
             <p>{props.name}</p>
-        </Box>
+        </a>
     );
 }
 

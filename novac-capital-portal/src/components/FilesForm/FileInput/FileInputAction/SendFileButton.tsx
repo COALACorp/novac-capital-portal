@@ -1,5 +1,3 @@
-import Box from "@mui/material/Box";
-
 type SendFileButtonProps = {
     onSend?: () => void,
 };
@@ -10,9 +8,9 @@ function SendFileButton(props: SendFileButtonProps) {
     };
     
     return (
-        <Box className="file-input-action send-file" component="a" onClick={handleSend}>
+        <a className="file-input-action send-file" onClick={handleSend}>
             <p>Enviar</p>
-        </Box>
+        </a>
     );
 }
 

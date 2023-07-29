@@ -17,7 +17,7 @@ function PhoneNumberInput(props: PhoneNumberInputProps) {
             .replace(/^(\d{2})(\d{4})(\d{1,4})$/, '$1-$2-$3')
             .replace(/^(\d{2})(\d{1,4})$/, '$1-$2');
         setValue(formatted);
-    }
+    };
 
     return (
         <>

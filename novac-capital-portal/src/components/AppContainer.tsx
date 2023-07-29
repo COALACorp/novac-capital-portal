@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import Box from "@mui/material/Box";
 import { onAuthStateChanged, User } from "firebase/auth";
 
 import { auth, CheckAdmin } from "@/utils/firebase";
@@ -45,9 +44,9 @@ function AppContainer(props: PageContainerProps) {
     }, []);
 
     return (
-        <Box id="page-container">
+        <div id="page-container">
             {props.children}
-        </Box>
+        </div>
     );
 }
 

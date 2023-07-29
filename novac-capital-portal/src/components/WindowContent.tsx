@@ -1,6 +1,4 @@
-import Box from "@mui/material/Box";
-
-import Navbar from "./Navbar/Navbar";
+import Navbar from "./Navbar";
 
 type WindowContentProps = {
     children: React.ReactNode,
@@ -8,10 +6,10 @@ type WindowContentProps = {
 
 function WindowContent(props: WindowContentProps) {
     return (
-        <Box id="app-container">
+        <div id="app-container">
             <Navbar />
             {props.children}
-        </Box>
+        </div>
     );
 }
 

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import Stack from "@mui/material/Stack";
 import Slider from "@mui/material/Slider";
 
 type MarkType = {
@@ -40,7 +39,7 @@ function DataSliderInput(props: DataSliderInputProps) {
     }, [props.min, props.max, props.step, props.scale]);
 
     return (
-        <Stack className="data-form-input-container">
+        <div className="data-form-input-container">
             <p id="input-label" className="strong">{props.label}</p>
             <Slider
                 aria-label={props.label}
@@ -53,7 +52,7 @@ function DataSliderInput(props: DataSliderInputProps) {
                 name={props.name}
                 onChange={handleChange}
             />
-        </Stack>
+        </div>
     );
 }
 
