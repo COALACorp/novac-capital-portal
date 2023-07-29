@@ -8,6 +8,7 @@ type PaginationControlsProps = {
     currentPage: number,
     pageResults: number,
     totalResults: number,
+    disabled?: boolean,
     onPrevious?: () => void,
     onNext?: () => void,
     onPage?: (page: number) => void,
@@ -15,7 +16,7 @@ type PaginationControlsProps = {
 
 function PaginationControls(props: PaginationControlsProps) {
     return (
-        <div id="content-pagination">
+        <div id="content-pagination" className={props.disabled ? "disabled" : ""}>
             <p id="pagination-label"><span>{((props.currentPage - 1) * props.pageResults) + 1}-{(((props.currentPage - 1) * props.pageResults)) + props.pageResults}</span> de {props.totalResults}</p>
             <div id="pagination-controls">
                 {props.currentPage > props.min && (

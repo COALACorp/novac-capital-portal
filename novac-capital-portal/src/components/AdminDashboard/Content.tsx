@@ -66,6 +66,7 @@ function Content(props: ContentProps) {
                 currentPage={currentPage}
                 pageResults={6}
                 totalResults={60}
+                disabled={loading}
                 onNext={() => setCurrentPage(currentPage + 1)}
                 onPrevious={() => setCurrentPage(currentPage - 1)}
                 onPage={page => setCurrentPage(page)}

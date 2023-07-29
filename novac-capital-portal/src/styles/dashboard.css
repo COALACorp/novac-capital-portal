@@ -12,7 +12,7 @@
 
 #lateral-menu-container {
     width: 250px;
-    min-height: 100vh;
+    height: 100vh;
     padding: 20px 0;
     background-color: #323A44;
     display: flex;
@@ -130,13 +130,13 @@
 
 #content-container {
     width: 100%;
-    /* height: 100vh; */
+    height: 100vh;
     padding: 0 20px 30px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
     gap: 30px;
+    overflow: auto;
 }
 
 #content-nav {
@@ -317,6 +317,11 @@ td > .progress > .bar > .indicator {
     display: flex;
     align-items: center;
     gap: 30px;
+}
+
+#content-pagination.disabled {
+    pointer-events: none;
+    opacity: 0.4;
 }
 
 #pagination-label {
