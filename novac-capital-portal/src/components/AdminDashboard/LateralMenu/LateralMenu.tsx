@@ -22,9 +22,9 @@ function LateralMenu(props: LateralMenuProps) {
                             <Image src="/logo.png" width="82" height="83" alt="Logo" />
                         </div>
                         <div id="user-info-container">
-                            <Image id="user-info-picture" src="/logo.png" width="55" height="55" alt="Imagen de perfil" />
+                            <Image id="user-info-picture" src="/profile.png" width="55" height="55" alt="Imagen de perfil" />
                             <div id="user-info">
-                                <p id="user-info-name">Novac Capital</p>
+                                <p id="user-info-name">NovacCapital</p>
                                 <p id="user-info-role">{props.user.admin ? "Admin" : "User"}</p>
                             </div>
                         </div>

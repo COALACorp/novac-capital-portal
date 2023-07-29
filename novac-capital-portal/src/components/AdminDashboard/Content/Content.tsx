@@ -37,8 +37,8 @@ function Content(props: ContentProps) {
                 </a>
                 <a id="content-nav-profile" onClick={() => console.log("Content profile")}>
                     <div id="content-nav-profile-info">
-                        <Image id="content-nav-profile-picture" src="/logo.png" width="38" height="38" alt="Imagen de perfil" />
-                        <p className="strong">Admin</p>
+                        <Image id="content-nav-profile-picture" src="/profile.png" width="38" height="38" alt="Imagen de perfil" />
+                        <p className="strong">NovacCapital</p>
                     </div>
                     <Image src="/icons/ArrowDown.svg" width="14" height="7" alt="" />
                 </a>
