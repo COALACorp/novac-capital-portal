@@ -25,13 +25,13 @@ function PaginationControls(props: PaginationControlsProps) {
                     </a>
                 )}
                 <div id="pagination-numeration">
-                    {[...Array(props.max - (props.min - 1)).keys()].map(value => {
+                    {[...Array(props.max - (props.min - 1)).keys()].map((value, index) => {
                         const page = value + 1;
                         if ([props.min, props.currentPage - MARGIN, props.currentPage, props.currentPage + MARGIN, props.max].includes(page))
                             if (props.currentPage === page)
-                                return <p id="page-selected">{page}</p>;
+                                return <p key={index} id="page-selected">{page}</p>;
                             else
-                                return <a onClick={() => props.onPage && props.onPage(page)}>{page}</a>;
+                                return <a key={index} onClick={() => props.onPage && props.onPage(page)}>{page}</a>;
                         else
                             return "...";
                     }).filter((value, index, array) => index === 0 || value !== array[index - 1])}
