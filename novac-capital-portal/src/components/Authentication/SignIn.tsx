@@ -49,19 +49,8 @@ function SignIn() {
     const startLoading = () => setLoading(true);
     const endLoading = () => setLoading(false);
 
-    const checkUserIsRegistered = async () => {
-        console.log("Check user:", user);
-        if (user)
-            if (await GetUser(user.uid)) {
-                console.log("User already registered");
-                return true;
-            } else
-                console.log("User not registered");
-        return false;
-    };
-
     const handleSignedIn = async (userLogged: UserValue) => {
-        if (!user?.emailVerified) {
+        if (!userLogged?.emailVerified) {
             console.log("Cuenta no verificada");
             setError({
                 code: "Cuenta no verificada",
@@ -72,7 +61,9 @@ function SignIn() {
             return;
         }
 
-        const registered = await checkUserIsRegistered();
+        const registered = userLogged.registered;
+        console.log("Registered:", registered);
+
         if (registered)
             if (origin === "quotation" && params && quotation?.formValues && quotation.selectedPlan) {
                 console.log("Redirect to files checklist", quotation);
@@ -111,16 +102,19 @@ function SignIn() {
                 else
                 router.push("/");
             }
-        else {
-            const errorState = {
-                code: "No registrado",
-                message: "La cuenta con la que estás iniciando sesión no se encuentra registrada. Crea una cuenta antes de continuar.",
-            };
-            console.log("Error:", errorState);
-            setError(errorState);
-            auth.signOut();
-            endLoading();
-        }
+        else
+            if (!userLogged.providerData.find(item => item.providerId === "password"))
+                router.push("provider_signup" + (origin ? ("?origin=" + origin) : ""));
+            else {
+                const errorState = {
+                    code: "No registrado",
+                    message: "La cuenta con la que estás iniciando sesión no se encuentra registrada. Crea una cuenta antes de continuar.",
+                };
+                console.log("Error:", errorState);
+                setError(errorState);
+                auth.signOut();
+                endLoading();
+            }
     };
 
     const handleGoogleSignIn = () => {

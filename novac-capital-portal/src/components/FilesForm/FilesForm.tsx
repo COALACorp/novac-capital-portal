@@ -15,6 +15,7 @@ import defaultRequirements, { FileSpec } from "@/data/filesRequirements";
 import { useAppSelector, useAppDispatch } from "@/app/hooks";
 import { setApplicationId } from "@/features/quotation/quotationSlice";
 import { selectUser } from "@/features/user/userSlice";
+import { auth } from "@/utils/firebase";
 
 function FilesForm() {
     const router = useRouter();
@@ -114,6 +115,12 @@ function FilesForm() {
     useEffect(requestUploadedDocuments, [application]);
 
     useEffect(() => {
+        if (!user?.registered) {
+            // auth.signOut();
+            router.push("/signin");
+            return;
+        }
+
         (async () => {
             if (await refreshApplication())
                 return;

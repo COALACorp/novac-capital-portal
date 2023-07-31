@@ -53,7 +53,7 @@ function Content(props: ContentProps) {
                         key={index}
                         months={application.planId}
                         name={application.name}
-                        phone="none"
+                        phone="(+52) 1234 5678"
                         progress={application.progress * 100}
                         amount={application.cost}
                         date="none"

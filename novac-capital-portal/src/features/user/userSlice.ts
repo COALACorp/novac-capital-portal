@@ -3,8 +3,9 @@ import { RootState } from "@/app/store";
 import { User } from "firebase/auth";
 
 interface UserValue extends User {
+    registered: boolean,
     admin: boolean,
-}
+};
 
 type UserState = {
     value: UserValue|null,
@@ -21,6 +22,10 @@ const userSlice = createSlice({
         setUser: (state, action: PayloadAction<UserValue>) => {
             state.value = action.payload;
         },
+        setRegistered: (state, action: PayloadAction<boolean>) => {
+            if (state.value)
+                state.value.registered = action.payload;
+        },
         resetUser: (state) => {
             state.value = null;
         },
@@ -29,5 +34,5 @@ const userSlice = createSlice({
 
 export default userSlice.reducer;
 export type { UserValue };
-export const { setUser, resetUser } = userSlice.actions;
+export const { setUser, setRegistered, resetUser } = userSlice.actions;
 export const selectUser = (state: RootState) => state.user.value;

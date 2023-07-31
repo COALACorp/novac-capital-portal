@@ -11,19 +11,17 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Alert from "@mui/material/Alert";
 import AlertTitle from "@mui/material/AlertTitle";
-import { User, createUserWithEmailAndPassword, sendEmailVerification, deleteUser } from "firebase/auth";
+import { deleteUser } from "firebase/auth";
 
-import { auth } from "@/utils/firebase";
 import Copyright from "../Copyright";
 import PhoneNumberInput from "./PhoneNumberInput";
 import { CreateUser } from "@/utils/api";
 
-import { useAppSelector } from "@/app/hooks";
-import { selectUser } from "@/features/user/userSlice";
+import { useAppSelector, useAppDispatch } from "@/app/hooks";
+import { selectUser, setRegistered } from "@/features/user/userSlice";
 
-type SignUpData = {
+type ProviderSignUpData = {
     email: string,
-    password: string,
     phone: string,
 };
 
@@ -34,86 +32,60 @@ type ErrorData = {
 
 type Error = ErrorData|null;
 
-function SignUp() {
-    const origin = typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("origin") : "";
+function ProviderSignUp() {
+    const searchParams = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : undefined;
+    const origin = searchParams ? searchParams.get("origin") : "";
     const router = useRouter();
+    const dispatch = useAppDispatch();
     const user = useAppSelector(selectUser);
     const [error, setError] = useState<Error>();
 
-    const sendVerification = async (signedUser: User) => {
-        await sendEmailVerification(signedUser)
-            .then(() => {
-                // Email verification sent!
-                console.log("Verification email sent");
-                router.push("/signin?new=true" + (origin ? ("&origin=" + origin) : ""));
-            })
-            .catch(e => {
-                const errorState: ErrorData = {
-                    code: e.code,
-                    message: e.message,
-                };
-                console.log("Error:", errorState);
-                setError(errorState);
-            });
-        auth.signOut();
-    };
+    const signUp = async (authData: ProviderSignUpData) => {
+        console.log("User:", user);
 
-    const signUp = async (authData: SignUpData) => {
-        await createUserWithEmailAndPassword(auth, authData.email, authData.password)
-            .then(async userCredential => {
-                // Signed In
-                const signedUser = userCredential.user;
-                console.log("User:", signedUser);
+        if (!user)
+            return;
 
-                const createResult = await CreateUser(signedUser.uid, signedUser.email ?? authData.email, authData.phone);
-                console.log("Create user result:", !!createResult, createResult);
-                if (createResult)
-                    sendVerification(signedUser);
-                else {
-                    const errorState: ErrorData = {
-                        code: "Not created",
-                        message: "Could not create the account. Please try again.",
-                    };
-                    deleteUser(signedUser)
-                        .then(() => {
-                            console.log("User deleted successfully");
-                        })
-                        .catch(error => {
-                            console.log("Error while deleting user:", error);
-                            errorState.code += " -> Not deleted";
-                        });
-                    console.log("Error:", errorState);
-                    setError(errorState);
-                }
-            })
-            .catch(e => {
-                const errorState: ErrorData = {
-                    code: e.code,
-                    message: e.message,
-                };
-                console.log("Error:", errorState);
-                setError(errorState);
-            });
+        const createResult = await CreateUser(user.uid, user.email ?? authData.email, authData.phone);
+        console.log("Create user result:", !!createResult, createResult);
+        if (createResult) {
+            dispatch(setRegistered(true));
+            router.push("/signin" + (origin ? ("?origin=" + origin) : ""));
+        } else {
+            const errorState: ErrorData = {
+                code: "Not created",
+                message: "Could not create the account. Please try again.",
+            };
+            deleteUser(user)
+                .then(() => {
+                    console.log("User deleted successfully");
+                })
+                .catch(error => {
+                    console.log("Error while deleting user:", error);
+                    errorState.code += " -> Not deleted";
+                });
+            console.log("Error:", errorState);
+            setError(errorState);
+        }
     };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        const authData: SignUpData = {
-            email: data.get("email")?.toString() ?? "",
-            password: data.get("password")?.toString() ?? "",
+        const authData: ProviderSignUpData = {
+            email: user?.email ?? "",
             phone: data.get("phone")?.toString() ?? "",
         };
 
         console.log("Auth data:", authData);
 
-        if (authData.email.length > 0 && authData.password.length > 0 && authData.phone.length > 0) 
+        if (authData.email.length > 0 && authData.phone.length > 0) 
             signUp(authData);
     };
 
     useEffect(() => {
-        if (user)
-            router.push("/");
+        if (!user)
+            router.push("/signin");
     }, [user]);
 
     return (
@@ -150,20 +122,11 @@ function SignUp() {
                         name="email"
                         label="Correo electrónico"
                         type="email"
-                        autoComplete="email"
+                        value={user?.email}
                         autoFocus
+                        disabled
                     />
-                    <PhoneNumberInput name="phone" />
-                    <TextField
-                        margin="normal"
-                        required
-                        fullWidth
-                        id="password"
-                        name="password"
-                        label="Contraseña"
-                        type="password"
-                        autoComplete="current-password"
-                    />
+                    <PhoneNumberInput name="phone" value={user?.phoneNumber} />
                     {error && (
                         <Alert variant="outlined" severity="error">
                             <AlertTitle>{error.code}</AlertTitle>
@@ -192,4 +155,4 @@ function SignUp() {
     );
 }
 
-export default SignUp;
+export default ProviderSignUp;

@@ -4,10 +4,11 @@ import InputAdornment from "@mui/material/InputAdornment";
 
 type PhoneNumberInputProps = {
     name: string,
+    value?: string|null,
 };
 
 function PhoneNumberInput(props: PhoneNumberInputProps) {
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState(props.value ?? "");
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         const newValue = event.target.value;
