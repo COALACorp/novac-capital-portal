@@ -22,13 +22,14 @@ function Navbar() {
             <div id="navbar-links">
                 <Link className="navbar-link strong" href="/">Inicio</Link>
                 {user ? (
-                        <>
-                            {/* <Link className="navbar-link" href="/home">Test</Link> */}
-                            {/* {user.admin && <Link className="navbar-link" href="/admin_portal">Admin</Link>} */}
-                            <Link className="navbar-link" href="/files_form">Mi Cuenta</Link>
-                        </>
-                    ) : <Link className="navbar-link" href="/signin">Log In</Link>
-                }
+                    user.admin ? (
+                        <Link className="navbar-link" href="/admin_portal">Dashboard</Link>
+                    ) : (
+                        <Link className="navbar-link" href="/files_form">Mi Cuenta</Link>
+                    )
+                ) : (
+                    <Link className="navbar-link" href="/signin">Log In</Link>
+                )}
             </div>
         </div>
     );
