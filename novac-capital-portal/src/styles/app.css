@@ -1,3 +1,8 @@
+.loading {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
 .strong {
     font-weight: 600;
 }

@@ -38,6 +38,7 @@ function FileInput(props: FileInputProps) {
     const [files, setFiles] = useState<SelectedFile>({});
     const [sendable, setSendable] = useState(false);
     const [status, setStatus] = useState(statusIcons["unknown"]);
+    const [loading, setLoading] = useState(false);
 
     const handleGetTemplate = async () => {
         if (props.requirement.template) {
@@ -54,8 +55,10 @@ function FileInput(props: FileInputProps) {
     };
 
     const handleUpload = async () => {
+        setLoading(true);
         if (props.onUpload && await props.onUpload(files))
             setFiles({});
+        setLoading(false);
     };
 
     useEffect(() => {
@@ -106,9 +109,10 @@ function FileInput(props: FileInputProps) {
                             status={(files.length > 1) ? file.status : undefined}
                             onChange={handleChange}
                             onRemove={props.onRemove}
+                            loading={loading}
                         />
                     ))}
-                    {sendable && <SendFileButton onSend={handleUpload} />}
+                    {sendable && <SendFileButton onSend={handleUpload} loading={loading} />}
                     {status}
                 </div>
             </div>
