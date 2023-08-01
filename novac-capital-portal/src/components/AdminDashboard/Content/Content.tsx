@@ -51,6 +51,7 @@ function Content(props: ContentProps) {
                 {applications && applications.applications.map((application, index) => (
                     <ContentRow
                         key={index}
+                        applicationId={application.id}
                         months={application.planId}
                         name={application.name}
                         equipment={application.equipment}

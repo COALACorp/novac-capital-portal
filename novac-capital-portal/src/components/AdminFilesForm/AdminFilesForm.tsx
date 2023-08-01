@@ -2,7 +2,7 @@ import "@/styles/filesform.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
-import { GetLastApplication, ApplicationData } from "@/utils/api";
+import { GetApplication, ApplicationFullData } from "@/utils/api";
 import FilesFormHead from "./FilesFormHead";
 import { Status } from "./FilesPlan/FilesPlanStatus";
 import RequirementsSection from "./RequirementsSection";
@@ -15,18 +15,19 @@ import defaultRequirements, { FileSpec } from "@/data/filesRequirements";
 import { useAppSelector, useAppDispatch } from "@/app/hooks";
 import { setApplicationId } from "@/features/quotation/quotationSlice";
 import { selectUser } from "@/features/user/userSlice";
-import { auth } from "@/utils/firebase";
 
 function AdminFilesForm() {
+    const searchParams = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : undefined;
+    const applicationId = searchParams ? searchParams.get("id") : null;
     const router = useRouter();
     const dispatch = useAppDispatch();
     const user = useAppSelector(selectUser);
-    const [application, setApplication] = useState<ApplicationData|null>();
+    const [application, setApplication] = useState<ApplicationFullData|null>();
     const [requirements, setRequirements] = useState(defaultRequirements);
 
     const refreshApplication = async () => {
-        if (user) {
-            const applicationData = await GetLastApplication(user.uid);
+        if (applicationId) {
+            const applicationData = await GetApplication(applicationId);
             if (applicationData) {
                 dispatch(setApplicationId(applicationData.data.application.id));
                 setApplication(applicationData.data);

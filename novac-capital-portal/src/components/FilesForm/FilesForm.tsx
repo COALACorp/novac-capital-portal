@@ -2,7 +2,7 @@ import "@/styles/filesform.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
-import { GetLastApplication, ApplicationData } from "@/utils/api";
+import { GetLastApplication, ApplicationFullData } from "@/utils/api";
 import FilesFormHead from "./FilesFormHead";
 import { Status } from "./FilesPlan/FilesPlanStatus";
 import RequirementsSection from "./RequirementsSection";
@@ -15,13 +15,12 @@ import defaultRequirements, { FileSpec } from "@/data/filesRequirements";
 import { useAppSelector, useAppDispatch } from "@/app/hooks";
 import { setApplicationId } from "@/features/quotation/quotationSlice";
 import { selectUser } from "@/features/user/userSlice";
-import { auth } from "@/utils/firebase";
 
 function FilesForm() {
     const router = useRouter();
     const dispatch = useAppDispatch();
     const user = useAppSelector(selectUser);
-    const [application, setApplication] = useState<ApplicationData|null>();
+    const [application, setApplication] = useState<ApplicationFullData|null>();
     const [requirements, setRequirements] = useState(defaultRequirements);
 
     const refreshApplication = async () => {
