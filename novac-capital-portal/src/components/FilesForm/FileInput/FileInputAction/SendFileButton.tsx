@@ -1,5 +1,5 @@
 type SendFileButtonProps = {
-    loading?: boolean,
+    disabled?: boolean,
     onSend?: () => void,
 };
 
@@ -9,7 +9,7 @@ function SendFileButton(props: SendFileButtonProps) {
     };
     
     return (
-        <a className={"file-input-action send-file" + (props.loading ? " loading" : "")} onClick={handleSend}>
+        <a className={"file-input-action send-file" + (props.disabled ? " disabled" : "")} onClick={handleSend}>
             <p>Enviar</p>
         </a>
     );

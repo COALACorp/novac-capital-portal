@@ -320,11 +320,6 @@ td > .progress > .bar > .indicator {
     gap: 30px;
 }
 
-#content-pagination.disabled {
-    pointer-events: none;
-    opacity: 0.4;
-}
-
 #pagination-label {
     font-size: 14px;
     font-weight: 400;
