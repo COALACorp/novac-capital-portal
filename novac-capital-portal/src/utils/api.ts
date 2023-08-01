@@ -2,7 +2,7 @@ import axios from "axios";
 import { Status } from "@/components/FilesForm/FileInput/FileInput";
 
 const api = axios.create({
-    baseURL: "https://kplaf2m4k6.execute-api.us-east-1.amazonaws.com/dev",
+    baseURL: process.env.NEXT_PUBLIC_API_ENDPOINT,
     headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",

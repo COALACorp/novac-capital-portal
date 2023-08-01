@@ -17,12 +17,14 @@ type UploadFileActionProps = {
 function UploadFileAction(props: UploadFileActionProps) {
     const [file, setFile] = useState<File>();
     const [uploaded, setUploaded] = useState<string|undefined>();
+    const [loading, setLoading] = useState(false);
 
     const handleChange = (newFile: File|undefined) => {
         setFile(newFile);
     };
 
     const handleRemove = async () => {
+        setLoading(true);
         if (
             (props.file.uploaded
                 && props.file.fileName
@@ -33,6 +35,7 @@ function UploadFileAction(props: UploadFileActionProps) {
             setFile(undefined);
         else
             console.log("Failed to remove file");
+        setLoading(false);
     };
     
     useEffect(() => {
@@ -50,7 +53,7 @@ function UploadFileAction(props: UploadFileActionProps) {
     }, [file]);
 
     return uploaded
-        ? <RemoveFileButton fileName={uploaded} status={props.status} onRemove={handleRemove} loading={props.loading} />
+        ? <RemoveFileButton fileName={uploaded} status={props.status} onRemove={handleRemove} loading={props.loading || loading} />
         : <UploadFileButton name={props.file.name} number={props.number} onChange={handleChange} />;
 }
 
