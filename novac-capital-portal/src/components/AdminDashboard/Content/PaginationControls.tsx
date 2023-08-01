@@ -15,9 +15,11 @@ type PaginationControlsProps = {
 };
 
 function PaginationControls(props: PaginationControlsProps) {
+    const resultCount = ((props.currentPage - 1) * props.pageResults);
+
     return (
         <div id="content-pagination" className={props.disabled ? "disabled" : ""}>
-            <p id="pagination-label"><span>{((props.currentPage - 1) * props.pageResults) + 1}-{(((props.currentPage - 1) * props.pageResults)) + props.pageResults}</span> de {props.totalResults}</p>
+            <p id="pagination-label"><span>{resultCount + 1}-{(resultCount + props.pageResults) > props.totalResults ? props.totalResults : (resultCount + props.pageResults)}</span> de {props.totalResults}</p>
             <div id="pagination-controls">
                 {props.currentPage > props.min && (
                     <a className="pagination-control-arrow" onClick={props.onPrevious}>

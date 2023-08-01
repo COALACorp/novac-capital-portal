@@ -50,6 +50,7 @@ type APIApplicationData = {
         margin: number,
     },
     name: string,
+    createdAt: string,
 };
 
 type APIUserApplicationsData = {
@@ -68,6 +69,17 @@ type APIUserApplicationDocs = {
 type ApplicationData = {
     application: APIApplicationData,
     documents: APIUserApplicationDocs[],
+};
+
+type ApplicationsPagination = {
+    applications: APIApplicationData[],
+    pagination: {
+        count: number,
+        current: number,
+        previous: number|null,
+        next: number|null,
+        last: number,
+    },
 };
 
 type APIResponse<T> = null|{
@@ -187,12 +199,12 @@ export async function GetLastApplication(guid: string): Promise<APIResponse<Appl
     return result;
 }
 
-export async function GetAllApplications(n: number, page: number): Promise<APIResponse<APIApplicationData[]>|null> {
+export async function GetAllApplications(n: number, page: number): Promise<APIResponse<ApplicationsPagination>|null> {
     console.log("API request get applications:", n, page);
-    const response = await api.get<APIResponse<APIApplicationData[]>>("/application", { params: { n, page } });
+    const response = await api.get<APIResponse<ApplicationsPagination>>("/application", { params: { n, page } });
     console.log("API response get applications:", response.data);
 
     return response.status === 200 ? response.data ?? null : null;
 }
 
-export type { ApplicationData, APIApplicationData };
+export type { ApplicationData, ApplicationsPagination };
