@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/app/store";
 import { ValidatedFormValuesType } from "@/components/Quotation/DataForm/DataForm";
-import { PlanType } from "@/components/Quotation/Plans/PlansCollection";
+import { PlanType } from "@/components/Quotation/Plans/Plans";
 
 type QuotationValue = {
     formValues?: ValidatedFormValuesType,
