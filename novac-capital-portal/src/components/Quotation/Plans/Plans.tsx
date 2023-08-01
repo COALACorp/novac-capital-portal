@@ -1,17 +1,28 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 
 import calcs from "@/utils/calculations";
 import type { ValidatedFormValuesType } from "../DataForm/DataForm";
-import PlansHeading from "./PlansHeading";
-import PlansCollection, { PlanType } from "./PlansCollection";
+import FormHeading from "@/components/FormHeading";
+import PlanHeading from "./PlanHeading";
+import PlanContent from "./PlanContent";
 
 import { useAppSelector } from "@/app/hooks";
 import { selectParams } from "@/features/params/paramsSlice";
 
 import "@/styles/quotation/plans.css";
+
+type PlanType = {
+    months: number,
+    taxedEquipment: number,
+    taxedPartialities: number,
+    administrativeExpenses: number,
+    firstLastPartiality: number,
+    advancePayment: number,
+    totalExpenses: number,
+    insurance: string,
+};
 
 type PlansProps = {
     form: ValidatedFormValuesType,
@@ -75,16 +86,40 @@ function Plans(props: PlansProps) {
     }, [props.form, clientParams]);
 
     return (
-        <Box id="plans-container">
-            <Box
-                id="plans"
-            >
-                <PlansHeading client={props.form.name} />
-                <PlansCollection plans={plans} onSelection={setSelection} />
-            </Box>
+        <div id="plans-container">
+            <div id="plans">
+                <div id="plans-heading-container">
+                    <FormHeading title="Cotiza tu arrendamiento" subtitle="This is a subtitle parsed to FormHeading" />
+                    <div id="plans-collection-heading">
+                        <p><span className="strong">Nombre del cliente:</span> {props.form.name}</p>
+                        <p><span className="strong">Fecha:</span> {new Date().toLocaleDateString("es-MX")}</p>
+                    </div>
+                </div>
+                <div id="plans-collection">
+                    {plans.map((plan, index) => (
+                        <a key={index} className="plan-card-container" onClick={() => setSelection(plan.months)}>
+                            <div className={"plan-card" + (selection === plan.months ? " selected" : "")}>
+                                <PlanHeading
+                                    months={plan.months}
+                                    taxedEquipment={plan.taxedEquipment}
+                                    taxedPartialities={plan.taxedPartialities}
+                                />
+                                <PlanContent
+                                    administrativeExpenses={plan.administrativeExpenses}
+                                    firstLastPartiality={plan.firstLastPartiality}
+                                    advancePayment={plan.advancePayment}
+                                    totalExpenses={plan.totalExpenses}
+                                    insurance={plan.insurance}
+                                />
+                            </div>
+                        </a>
+                    ))}
+                </div>
+            </div>
             <Button id="plans-submit" disabled={!selection} onClick={handleSubmit}>Continuar</Button>
-        </Box>
+        </div>
     );
 }
 
 export default Plans;
+export type { PlanType };

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import Head from "next/head";
 import { ref, child, get } from "firebase/database";
 
+import WindowContent from "@/components/WindowContent";
 import { database } from "@/utils/firebase";
 import Quotation from "@/components/Quotation/Quotation";
 
@@ -34,7 +35,7 @@ export default function QuotationWindow() {
     }, []);
 
     return (
-        <>
+        <WindowContent>
             <Head>
                 <title>Novac Capital</title>
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -42,6 +43,6 @@ export default function QuotationWindow() {
             <main>
                 <Quotation />
             </main>
-        </>
+        </WindowContent>
     );
 }

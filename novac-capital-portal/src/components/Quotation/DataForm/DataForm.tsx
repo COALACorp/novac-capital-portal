@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from "react";
-import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 
@@ -138,25 +137,24 @@ function DataForm(props: DataFormProps) {
     }, [formValues.name, formValues.equipment, formValues.amount, formValues.advancePercentage]);
 
     return (
-        <Box id="data-form-container">
+        <div id="data-form-container">
             <FormHeading title="Cotiza tu arrendamiento" subtitle="This is a subtitle parsed to FormHeading" />
-            <Box
+            <form
                 id="data-form"
-                component="form"
                 onSubmit={handleSubmit}
                 onChange={handleFormChange}
                 ref={formRef}
             >
-                <Stack id="data-form-content">
+                <div id="data-form-content">
                     <DataTextInput label="Nombre del cliente" placeholder="Nombre del cliente" name="name" required />
                     <DataTextInput label="Nombre de equipo a cotizar" placeholder="Nombre de equipo a cotizar" name="item" required />
                     <DataTextInput label="Monto de equipo a cotizar" labelSuffix="(IVA incluido)" placeholder="Monto de equipo a cotizar" preffix="$" name="amount" isNumber required />
                     <DataSliderInput label="Anticipo" min={0} max={30} step={5} scale="%" defaultValue={5} showMarks name="advancePercentage" onChange={handleInputChange} />
                     <DataSummary data={summary} />
-                </Stack>
+                </div>
                 <Button id="data-form-submit" type="submit" disabled={!valid}>Cotizar</Button>
-            </Box>
-        </Box>
+            </form>
+        </div>
     );
 }
 

@@ -1,8 +1,6 @@
 import "@/styles/filesform.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
-import Box from "@mui/material/Box";
-import { extname } from "path";
 
 import { GetLastApplication, ApplicationData } from "@/utils/api";
 import FilesFormHead from "./FilesFormHead";
@@ -17,6 +15,7 @@ import defaultRequirements, { FileSpec } from "@/data/filesRequirements";
 import { useAppSelector, useAppDispatch } from "@/app/hooks";
 import { setApplicationId } from "@/features/quotation/quotationSlice";
 import { selectUser } from "@/features/user/userSlice";
+import { auth } from "@/utils/firebase";
 
 function FilesForm() {
     const router = useRouter();
@@ -65,10 +64,10 @@ function FilesForm() {
             console.log("Updated requirements:", newState);
             setRequirements(newState);
         }
-    }
+    };
 
     const handleUpload = async (filesToSend: SelectedFile) => {
-        let result = false
+        let result = false;
         console.log("Send clicked");
         if (user && application) {
             console.log("Files:", filesToSend);
@@ -116,6 +115,12 @@ function FilesForm() {
     useEffect(requestUploadedDocuments, [application]);
 
     useEffect(() => {
+        if (!user?.registered) {
+            // auth.signOut();
+            router.push("/signin");
+            return;
+        }
+
         (async () => {
             if (await refreshApplication())
                 return;
@@ -123,13 +128,9 @@ function FilesForm() {
         })();
     }, [user]);
 
-    useEffect(() => {
-
-    }, [application?.documents])
-
     return application
         ? (
-            <Box id="files-form-container">
+            <div id="files-form-container">
                 <FilesFormHead
                     months={application.application.plan.dues}
                     applicant={application.application.name}
@@ -156,7 +157,7 @@ function FilesForm() {
                         />
                     ))}
                 </RequirementsSection>
-            </Box>
+            </div>
         )
         : application === undefined ? <Loading /> : <Error error={"No se pudo cargar la información relacionada a la aplicación"} />;
 }

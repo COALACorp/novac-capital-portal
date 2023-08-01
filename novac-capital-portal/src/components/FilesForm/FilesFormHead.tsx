@@ -1,5 +1,3 @@
-import Box from "@mui/material/Box";
-
 import FormHeading from "../FormHeading";
 import FilesPlan from "./FilesPlan/FilesPlan";
 import type { Status } from "./FilesPlan/FilesPlanStatus";
@@ -13,7 +11,7 @@ type FilesFormHeadProps = {
 
 function FilesFormHead(props: FilesFormHeadProps) {
     return (
-        <Box id="files-form-heading-container">
+        <div id="files-form-heading-container">
             <FormHeading title="Checklist" subtitle="This is a subtitle parsed to FormHeading" />
             <FilesPlan
                 months={props.months}
@@ -21,7 +19,7 @@ function FilesFormHead(props: FilesFormHeadProps) {
                 taxedPartialities={props.taxedPartialities}
                 status={props.status}
             />
-        </Box>
+        </div>
     );
 }
 

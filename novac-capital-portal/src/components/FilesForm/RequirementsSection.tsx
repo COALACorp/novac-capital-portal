@@ -1,5 +1,3 @@
-import Box from "@mui/material/Box";
-
 type RequirementsSectionProps = {
     title: string,
     children?: React.ReactNode|React.ReactNode[];
@@ -7,12 +5,12 @@ type RequirementsSectionProps = {
 
 function RequirementsSection(props: RequirementsSectionProps) {
     return (
-        <Box className="requirements-container">
+        <div className="requirements-container">
             <p className="requirements-title strong">{props.title}</p>
-            <Box className="requirements-list">
+            <div className="requirements-list">
                 {props.children}
-            </Box>
-        </Box>
+            </div>
+        </div>
     );
 }
 

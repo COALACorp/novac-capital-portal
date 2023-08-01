@@ -1,5 +1,3 @@
-import Box from "@mui/material/Box";
-
 type SummaryDataType = {
     label: string,
     value: string,
@@ -13,17 +11,17 @@ type DataSummaryProps = {
 
 function DataSummary(props: DataSummaryProps) {
     return (
-        <Box id="data-form-summary">
+        <div id="data-form-summary">
             {props.data.map((item, index) => (
-                <Box key={index} className={"data-form-summary-item " + (item.strong && "strong")}>
-                    <Box className="data-form-summary-item-label">
+                <div key={index} className={"data-form-summary-item " + (item.strong && "strong")}>
+                    <div className="data-form-summary-item-label">
                         {item.startIcon}
                         <p>{item.label}</p>
-                    </Box>
+                    </div>
                     <p>{item.value}</p>
-                </Box>
+                </div>
             ))}
-        </Box>
+        </div>
     );
 }
 

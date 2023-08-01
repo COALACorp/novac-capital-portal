@@ -1,6 +1,3 @@
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-
 import "@/styles/form.css";
 
 type FormHeadingProps = {
@@ -10,8 +7,8 @@ type FormHeadingProps = {
 
 function FormHeading(props: FormHeadingProps) {
     return (
-        <Box id="form-heading-container">
-            <Stack id="form-heading">
+        <div id="form-heading-container">
+            <div id="form-heading">
                 <h1 className="strong">
                     {props.title}
                 </h1>
@@ -20,8 +17,8 @@ function FormHeading(props: FormHeadingProps) {
                         {props.subtitle}
                     </h2>
                 )}
-            </Stack>
-        </Box>
+            </div>
+        </div>
     );
 }
 

@@ -40,8 +40,8 @@ function SignUp() {
     const user = useAppSelector(selectUser);
     const [error, setError] = useState<Error>();
 
-    const sendVerification = async (user: User) => {
-        await sendEmailVerification(user)
+    const sendVerification = async (signedUser: User) => {
+        await sendEmailVerification(signedUser)
             .then(() => {
                 // Email verification sent!
                 console.log("Verification email sent");
@@ -62,19 +62,19 @@ function SignUp() {
         await createUserWithEmailAndPassword(auth, authData.email, authData.password)
             .then(async userCredential => {
                 // Signed In
-                const user = userCredential.user;
-                console.log("User:", user);
+                const signedUser = userCredential.user;
+                console.log("User:", signedUser);
 
-                const createResult = await CreateUser(user.uid, user.email ?? authData.email, authData.phone);
+                const createResult = await CreateUser(signedUser.uid, signedUser.email ?? authData.email, authData.phone);
                 console.log("Create user result:", !!createResult, createResult);
                 if (createResult)
-                    sendVerification(user);
+                    sendVerification(signedUser);
                 else {
                     const errorState: ErrorData = {
                         code: "Not created",
                         message: "Could not create the account. Please try again.",
                     };
-                    deleteUser(user)
+                    deleteUser(signedUser)
                         .then(() => {
                             console.log("User deleted successfully");
                         })

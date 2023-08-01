@@ -1,8 +1,7 @@
 import { useState, useEffect } from "react";
 
 import DataForm, { ValidatedFormValuesType } from "./DataForm/DataForm";
-import Plans from "./Plans/Plans";
-import { PlanType } from "./Plans/PlansCollection";
+import Plans, { PlanType } from "./Plans/Plans";
 
 import { useAppDispatch } from "@/app/hooks";
 import { QuotationValue, setQuotation } from "@/features/quotation/quotationSlice";

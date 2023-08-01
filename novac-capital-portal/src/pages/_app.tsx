@@ -5,8 +5,7 @@ import { Provider } from "react-redux";
 import CssBaseline from "@mui/material/CssBaseline";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
-import WindowContent from "@/components/WindowContent";
-
+import AppContainer from "@/components/AppContainer";
 import store from "@/app/store";
 
 const theme = createTheme({
@@ -25,9 +24,9 @@ export default function App({ Component, pageProps }: AppProps) {
         <Provider store={store}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <WindowContent>
+                <AppContainer>
                     <Component {...pageProps} />
-                </WindowContent>
+                </AppContainer>
             </ThemeProvider>
         </Provider>
     );
