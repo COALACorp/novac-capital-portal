@@ -53,10 +53,10 @@ function Content(props: ContentProps) {
                         key={index}
                         months={application.planId}
                         name={application.name}
-                        phone="(+52) 1234 5678"
+                        equipment={application.equipment}
                         progress={application.progress * 100}
                         amount={application.cost}
-                        date="none"
+                        date={new Date(application.createdAt).toLocaleDateString()}
                     />
                 ))}
             </ContentTable>

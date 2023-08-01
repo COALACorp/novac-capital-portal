@@ -3,7 +3,7 @@ import { formatAmount } from "@/utils/formats";
 type ContentRowProps = {
     months: number|string,
     name: string,
-    phone: string,
+    equipment: string,
     progress: number,
     amount: number,
     date: string,
@@ -22,7 +22,7 @@ function ContentRow(props: ContentRowProps) {
                 <p>{props.name}</p>
             </td>
             <td>
-                <p>{props.phone}</p>
+                <p>{props.equipment}</p>
             </td>
             <td>
                 <div className="progress">
