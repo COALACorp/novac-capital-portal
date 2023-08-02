@@ -83,6 +83,11 @@
     gap: 16px;
 }
 
+.data-form-summary-item-label div.icon {
+    width: 20px;
+    height: 20px;
+}
+
 #data-form-submit {
     width: 584px;
     padding: 16px 10px;
@@ -99,8 +104,45 @@
     background-color: #C1CAF1;
 }
 
-@media only screen and (max-width: 850px) {
-    .data-form-summary-item {
-        flex-direction: column;
+@media only screen and (max-width: 600px) {
+    #data-form-container {
+        width: 388px;
+        padding: 20px;
+    }
+
+    #data-form {
+        gap: 30px;
+        align-self: stretch;
+    }
+
+    #data-form-content {
+        width: unset;
+        align-self: stretch;
+    }
+
+    #input-label {
+        font-size: 16px;
+    }
+
+    .data-form-input.MuiInputBase-root {
+        height: 34px;
+        border-radius: 6px;
+    }
+
+    .data-form-input .MuiInputBase-input {
+        padding: 16px 20px 16px 10px;
+        font-size: 14px;
+        line-height: normal;
+        flex: 1 0 0;
+    }
+
+    .data-form-summary-item-label {
+        width: 160px;
+    }
+
+    #data-form-submit {
+        width: unset;
+        height: 46px;
+        align-self: stretch;
     }
 }

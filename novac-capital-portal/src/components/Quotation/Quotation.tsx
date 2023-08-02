@@ -30,7 +30,6 @@ function Quotation() {
     }, [formValues, plan]);
 
     return formValues ? <Plans form={formValues} onSubmit={handlePlanSubmit} /> : <DataForm onSubmit={handleFormSubmit} />;
-    // return formValues && <Plans form={formValues} />;
 }
 
 export default Quotation;
