@@ -221,13 +221,61 @@
 }
 
 @media only screen and (max-width: 600px) {
-    .plan-heading-item {
-        display: flex;
-        flex-direction: column;
+    #app-container:has( #plans-container) {
+        padding-bottom: 40px;
+        gap: 25px;
     }
 
-    .plan-property {
-        flex-direction: column;
-        gap: unset;
+    #plans-container {
+        width: 388px;
+        padding: 20px 0;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 30px;
+    }
+    
+    #plans {
+        width: 100%;
+    }
+
+    #plans-collection-heading {
+        padding: 0 20px;
+        font-size: 14px;
+    }
+    
+    .plan-card-container {
+        height: unset;
+    }
+
+    .plan-card,
+    .plan-heading,
+    .plan-heading-info-item-container,
+    .plan-heading-info-item,
+    .plan-content,
+    .expenses-total,
+    .expenses-total > .plan-property {
+        align-self: stretch;
+    }
+
+    .plan-card {
+        width: unset;
+        height: unset;
+        padding: 20px;
+    }
+
+    .plan-heading-info {
+        flex: 1 0 0;
+    }
+
+    .plan-heading-title {
+        font-size: 16px;
+    }
+
+    .plan-content {
+        width: unset;
+    }
+
+    #plans-submit {
+        display: none;
     }
 }

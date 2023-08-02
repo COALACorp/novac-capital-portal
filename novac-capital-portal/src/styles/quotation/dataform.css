@@ -110,14 +110,18 @@
         padding: 20px;
     }
 
+    #data-form,
+    #data-form-content,
+    #data-form-submit {
+        align-self: stretch;
+    }
+    
     #data-form {
         gap: 30px;
-        align-self: stretch;
     }
 
     #data-form-content {
         width: unset;
-        align-self: stretch;
     }
 
     #input-label {
@@ -143,6 +147,5 @@
     #data-form-submit {
         width: unset;
         height: 46px;
-        align-self: stretch;
     }
 }
