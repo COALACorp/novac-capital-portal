@@ -6,7 +6,7 @@ import { Status, statusIcons } from "../FileInput";
 type RemoveFileButtonProps = {
     fileName: string,
     status?: Status,
-    loading?: boolean,
+    disabled?: boolean,
     onRemove?: () => void,
 };
 
@@ -25,7 +25,7 @@ function RemoveFileButton(props: RemoveFileButtonProps) {
     return (
         <>
             <a
-                className={"file-input-action" + (props.loading ? " loading" : "")}
+                className={"file-input-action" + (props.disabled ? " disabled" : "")}
                 aria-describedby={removeAnchorEl ? "remove-file-popover" : undefined}
                 onClick={handleClickRemove}
             >

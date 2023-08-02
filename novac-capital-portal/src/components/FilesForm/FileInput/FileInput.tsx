@@ -109,10 +109,10 @@ function FileInput(props: FileInputProps) {
                             status={(files.length > 1) ? file.status : undefined}
                             onChange={handleChange}
                             onRemove={props.onRemove}
-                            loading={loading}
+                            disabled={loading}
                         />
                     ))}
-                    {sendable && <SendFileButton onSend={handleUpload} loading={loading} />}
+                    {sendable && <SendFileButton onSend={handleUpload} disabled={loading} />}
                     {status}
                 </div>
             </div>

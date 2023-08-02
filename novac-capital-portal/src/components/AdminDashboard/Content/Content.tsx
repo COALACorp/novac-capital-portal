@@ -5,7 +5,7 @@ import SearchBar from "./SearchBar";
 import ContentTable from "./ContentTable";
 import ContentRow from "./ContentRow";
 import PaginationControls from "./PaginationControls";
-import { GetAllApplications, APIApplicationData } from "@/utils/api";
+import { GetAllApplications, ApplicationsPagination } from "@/utils/api";
 
 type ContentProps = {
     onLateralMenu?: () => void,
@@ -13,14 +13,14 @@ type ContentProps = {
 
 function Content(props: ContentProps) {
     const [currentPage, setCurrentPage] = useState(1);
-    const [applications, setApplications] = useState<APIApplicationData[]>()
+    const [applications, setApplications] = useState<ApplicationsPagination>()
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setLoading(true);
         GetAllApplications(6, currentPage)
             .then(response => {
-                setApplications(response?.data ?? []);
+                setApplications(response?.data);
                 setLoading(false);
             })
             .catch(error => {
@@ -48,24 +48,25 @@ function Content(props: ContentProps) {
                 <SearchBar />
             </div>
             <ContentTable>
-                {applications && applications.map((application, index) => (
+                {applications && applications.applications.map((application, index) => (
                     <ContentRow
                         key={index}
+                        applicationId={application.id}
                         months={application.planId}
                         name={application.name}
-                        phone="(+52) 1234 5678"
+                        equipment={application.equipment}
                         progress={application.progress * 100}
                         amount={application.cost}
-                        date="none"
+                        date={new Date(application.createdAt).toLocaleDateString()}
                     />
                 ))}
             </ContentTable>
             <PaginationControls
-                min={1}
-                max={100}
+                min={applications ? 1 : 0}
+                max={applications?.pagination.last ?? 0}
                 currentPage={currentPage}
                 pageResults={6}
-                totalResults={60}
+                totalResults={applications?.pagination.count ?? 0}
                 disabled={loading}
                 onNext={() => setCurrentPage(currentPage + 1)}
                 onPrevious={() => setCurrentPage(currentPage - 1)}

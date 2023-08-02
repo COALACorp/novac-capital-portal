@@ -11,7 +11,7 @@ function ContentTable(props: ContentTableProps) {
                 <tr>
                     <th>PLAZO</th>
                     <th>NOMBRE</th>
-                    <th>TELÉFONO</th>
+                    <th>EQUIPO</th>
                     <th>PROGRESO</th>
                     <th>VALOR DEL EQUIPO</th>
                     <th>FECHA</th>

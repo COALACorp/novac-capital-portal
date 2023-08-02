@@ -49,10 +49,10 @@ export async function Upload(guid: string, appId: string, fileName: string, file
     return null;
 }
 
-export async function Download(guid: string, appId: string, fileName: string): Promise<APIDownloadResponse|null> {
+export async function Download(guid: string, appId: string, fileName: string, downloadFileName?: string): Promise<APIDownloadResponse|null> {
     try {
         console.log("API request download:", guid, appId, fileName);
-        const response = await docsApi.get(`/download/${guid}/${appId}/${fileName}`);
+        const response = await docsApi.get(`/download/${guid}/${appId}/${fileName}`, { params: { downloadFileName } });
         console.log("API response download:", response.data);
 
         return response.status === 200 ? response.data ?? null : null;

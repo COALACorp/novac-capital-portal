@@ -217,6 +217,12 @@
     border-collapse: separate;
 }
 
+th, td {
+    padding: 20px 30px;
+    border-style: solid;
+    border-color: #BDBDBD;
+}
+
 th {
     text-align: start;
     background-color: #E8E8E8;
@@ -235,10 +241,9 @@ td {
     border-width: 0 0 1px;
 }
 
-th, td {
-    padding: 20px 30px;
-    border-style: solid;
-    border-color: #BDBDBD;
+tr:hover > td {
+    background-color: #F2F2F2;
+    cursor: pointer;
 }
 
  /* Set round corners */
@@ -318,11 +323,6 @@ td > .progress > .bar > .indicator {
     display: flex;
     align-items: center;
     gap: 30px;
-}
-
-#content-pagination.disabled {
-    pointer-events: none;
-    opacity: 0.4;
 }
 
 #pagination-label {

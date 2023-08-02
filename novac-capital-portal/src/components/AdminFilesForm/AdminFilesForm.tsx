@@ -2,21 +2,22 @@ import "@/styles/filesform.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
-import { GetLastApplication, ApplicationFullData } from "@/utils/api";
+import { GetApplication, ApplicationFullData } from "@/utils/api";
 import FilesFormHead from "./FilesFormHead";
 import { Status } from "./FilesPlan/FilesPlanStatus";
 import RequirementsSection from "./RequirementsSection";
-import FileInput, { SelectedFile } from "./FileInput/FileInput";
+import FileInput from "./FileInput/FileInput";
 import Loading from "../Loading";
 import Error from "../Error";
-import { Upload, Delete } from "@/utils/docsApi";
 import defaultRequirements, { FileSpec } from "@/data/filesRequirements";
 
 import { useAppSelector, useAppDispatch } from "@/app/hooks";
 import { setApplicationId } from "@/features/quotation/quotationSlice";
 import { selectUser } from "@/features/user/userSlice";
 
-function FilesForm() {
+function AdminFilesForm() {
+    const searchParams = typeof window !== "undefined" ? new URLSearchParams(window.location.search) : undefined;
+    const applicationId = searchParams ? searchParams.get("id") : null;
     const router = useRouter();
     const dispatch = useAppDispatch();
     const user = useAppSelector(selectUser);
@@ -24,8 +25,8 @@ function FilesForm() {
     const [requirements, setRequirements] = useState(defaultRequirements);
 
     const refreshApplication = async () => {
-        if (user) {
-            const applicationData = await GetLastApplication(user.uid);
+        if (applicationId) {
+            const applicationData = await GetApplication(applicationId);
             if (applicationData) {
                 dispatch(setApplicationId(applicationData.data.application.id));
                 setApplication(applicationData.data);
@@ -65,56 +66,12 @@ function FilesForm() {
         }
     };
 
-    const handleUpload = async (filesToSend: SelectedFile) => {
-        let result = false;
-        console.log("Send clicked");
-        if (user && application) {
-            console.log("Files:", filesToSend);
-            const results = []
-            for (const name in filesToSend) {
-                const file = filesToSend[name];
-                console.log("File:", name, file);
-                if (file) {
-                    const fileName = `${name}|${file.name}`;
-                    const result = await Upload(user.uid, application.application.id.toString(), fileName, file);
-                    if (result) {
-                        results.push(true);
-                        continue;
-                    }
-                }
-                results.push(false);
-            };
-            console.log("Upload result:", results);
-            result = !results.includes(false);
-        }
-
-        if (!result)
-            console.log("Failed to upload files");
-        refreshApplication();
-
-        return result;
-    };
-
-    const handleRemove = async (name: string) => {
-        console.log("Remove clicked");
-        let result = false;
-        if (user && application) {
-            console.log("File:", name);
-            const deleteResult = await Delete(user.uid, application.application.id.toString(), name);
-            console.log("Delete result:", deleteResult);
-            if (deleteResult)
-                result = true;
-        }
-        refreshApplication()
-        return result;
-    };
-
     useEffect(() => console.log("Requirements updated:", requirements), [requirements]);
 
     useEffect(requestUploadedDocuments, [application]);
 
     useEffect(() => {
-        if (!user?.registered) {
+        if (!user?.admin) {
             // auth.signOut();
             router.push("/signin");
             return;
@@ -131,6 +88,8 @@ function FilesForm() {
         ? (
             <div id="files-form-container">
                 <FilesFormHead
+                    uid={application.user.guid}
+                    applicationId={application.application.id.toString()}
                     months={application.application.plan.dues}
                     applicant={application.application.name}
                     taxedPartialities={application.application.partiality}
@@ -140,9 +99,9 @@ function FilesForm() {
                     {requirements.applicantFiles.map((requirement, index) => (
                         <FileInput
                             key={index}
+                            uid={application.user.guid}
+                            applicationId={application.application.id.toString()}
                             requirement={requirement}
-                            onUpload={handleUpload}
-                            onRemove={handleRemove}
                         />
                     ))}
                 </RequirementsSection>
@@ -150,9 +109,9 @@ function FilesForm() {
                     {requirements.endorsementFiles.map((requirement, index) => (
                         <FileInput
                             key={index}
+                            uid={application.user.guid}
+                            applicationId={application.application.id.toString()}
                             requirement={requirement}
-                            onUpload={handleUpload}
-                            onRemove={handleRemove}
                         />
                     ))}
                 </RequirementsSection>
@@ -161,4 +120,4 @@ function FilesForm() {
         : application === undefined ? <Loading /> : <Error error={"No se pudo cargar la información relacionada a la aplicación"} />;
 }
 
-export default FilesForm;
+export default AdminFilesForm;

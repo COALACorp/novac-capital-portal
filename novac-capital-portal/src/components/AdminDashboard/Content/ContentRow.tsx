@@ -1,17 +1,22 @@
+import { useRouter } from "next/router";
+
 import { formatAmount } from "@/utils/formats";
 
 type ContentRowProps = {
+    applicationId: number,
     months: number|string,
     name: string,
-    phone: string,
+    equipment: string,
     progress: number,
     amount: number,
     date: string,
 };
 
 function ContentRow(props: ContentRowProps) {
+    const router = useRouter();
+
     return (
-        <tr>
+        <tr onClick={() => router.push("/user_application?id=" + props.applicationId)}>
             <td>
                 <div className="term">
                     <p className="months">{props.months}</p>
@@ -22,7 +27,7 @@ function ContentRow(props: ContentRowProps) {
                 <p>{props.name}</p>
             </td>
             <td>
-                <p>{props.phone}</p>
+                <p>{props.equipment}</p>
             </td>
             <td>
                 <div className="progress">

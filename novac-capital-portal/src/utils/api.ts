@@ -50,6 +50,7 @@ type APIApplicationData = {
         margin: number,
     },
     name: string,
+    createdAt: string,
 };
 
 type APIUserApplicationsData = {
@@ -65,7 +66,24 @@ type APIUserApplicationDocs = {
     status: Status,
 };
 
+type ApplicationsPagination = {
+    applications: APIApplicationData[],
+    pagination: {
+        count: number,
+        current: number,
+        previous: number|null,
+        next: number|null,
+        last: number,
+    },
+};
+
 type ApplicationData = {
+    user: APIUserData,
+    application: APIApplicationData,
+};
+
+type ApplicationFullData = {
+    user: APIUserData,
     application: APIApplicationData,
     documents: APIUserApplicationDocs[],
 };
@@ -150,12 +168,12 @@ export async function GetApplicationDocs(guid: string, applicationId: number): P
     return response.status === 200 ? response.data ?? null : null;
 }
 
-export async function GetLastApplication(guid: string): Promise<APIResponse<ApplicationData>|null> {
+export async function GetLastApplication(guid: string): Promise<APIResponse<ApplicationFullData>|null> {
     console.log("API request get user applications:", guid);
     const response = await api.get<APIResponse<APIUserApplicationsData>>(`/application/user/${guid}`);
     console.log("API response get user applications:", response.data);
 
-    let result: APIResponse<ApplicationData>|null = null;
+    let result: APIResponse<ApplicationFullData>|null = null;
     if (response.status === 200 && response.data) {
         const data = response.data;
         const latest = data.data.applications.find(application => application.id === Math.max(...data.data.applications.map(application => application.id)));
@@ -163,6 +181,7 @@ export async function GetLastApplication(guid: string): Promise<APIResponse<Appl
             result = {
                 statusCode: data.statusCode,
                 data: {
+                    user: data.data.user,
                     application: latest,
                     documents: [],
                 },
@@ -187,12 +206,50 @@ export async function GetLastApplication(guid: string): Promise<APIResponse<Appl
     return result;
 }
 
-export async function GetAllApplications(n: number, page: number): Promise<APIResponse<APIApplicationData[]>|null> {
-    console.log("API request get applications:", n, page);
-    const response = await api.get<APIResponse<APIApplicationData[]>>("/application", { params: { n, page } });
-    console.log("API response get applications:", response.data);
+export async function GetAllApplications(n: number, page: number): Promise<APIResponse<ApplicationsPagination>|null> {
+    console.log("API request get all applications:", n, page);
+    const response = await api.get<APIResponse<ApplicationsPagination>>("/application", { params: { n, page } });
+    console.log("API response get all applications:", response.data);
 
     return response.status === 200 ? response.data ?? null : null;
 }
 
-export type { ApplicationData, APIApplicationData };
+export async function GetApplication(applicationId: string): Promise<APIResponse<ApplicationFullData>|null> {
+    console.log("API request get application:", applicationId);
+    const response = await api.get<APIResponse<ApplicationData>>("/application/" + applicationId);
+    console.log("API response get application:", response.data);
+
+    let result: APIResponse<ApplicationFullData>|null = null;
+    if (response.status === 200 && response.data) {
+        const data = response.data;
+        const application = data.data.application;
+        if (application) {
+            result = {
+                statusCode: data.statusCode,
+                data: {
+                    user: data.data.user,
+                    application: application,
+                    documents: [],
+                },
+                message: data.message,
+            }
+            const docs = await GetApplicationDocs(data.data.user.guid, application.id);
+            if (docs) {
+                result = {
+                    statusCode: docs.statusCode,
+                    data: {
+                        ...result.data,
+                        documents: docs.data,
+                    },
+                    message: docs.message,
+                };
+            }
+        }
+    }
+
+    console.log("Get application result:", result);
+
+    return result;
+}
+
+export type { ApplicationFullData, ApplicationsPagination, ApplicationData };
