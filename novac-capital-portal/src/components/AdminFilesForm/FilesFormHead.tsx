@@ -3,6 +3,7 @@ import FilesPlan from "./FilesPlan/FilesPlan";
 import type { Status } from "./FilesPlan/FilesPlanStatus";
 
 type FilesFormHeadProps = {
+    applicationId: string,
     months: number,
     applicant: string,
     taxedPartialities: number,
@@ -12,7 +13,7 @@ type FilesFormHeadProps = {
 function FilesFormHead(props: FilesFormHeadProps) {
     return (
         <div id="files-form-heading-container">
-            <FormHeading title="Checklist" subtitle="This is a subtitle parsed to FormHeading" />
+            <FormHeading title={"Aplicación " + props.applicationId} subtitle="This is a subtitle parsed to FormHeading" />
             <FilesPlan
                 months={props.months}
                 applicant={props.applicant}

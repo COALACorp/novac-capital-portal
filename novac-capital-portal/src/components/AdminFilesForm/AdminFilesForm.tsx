@@ -6,10 +6,9 @@ import { GetApplication, ApplicationFullData } from "@/utils/api";
 import FilesFormHead from "./FilesFormHead";
 import { Status } from "./FilesPlan/FilesPlanStatus";
 import RequirementsSection from "./RequirementsSection";
-import FileInput, { SelectedFile } from "./FileInput/FileInput";
+import FileInput from "./FileInput/FileInput";
 import Loading from "../Loading";
 import Error from "../Error";
-import { Upload, Delete } from "@/utils/docsApi";
 import defaultRequirements, { FileSpec } from "@/data/filesRequirements";
 
 import { useAppSelector, useAppDispatch } from "@/app/hooks";
@@ -67,50 +66,6 @@ function AdminFilesForm() {
         }
     };
 
-    const handleUpload = async (filesToSend: SelectedFile) => {
-        let result = false;
-        console.log("Send clicked");
-        if (user && application) {
-            console.log("Files:", filesToSend);
-            const results = []
-            for (const name in filesToSend) {
-                const file = filesToSend[name];
-                console.log("File:", name, file);
-                if (file) {
-                    const fileName = `${name}|${file.name}`;
-                    const result = await Upload(user.uid, application.application.id.toString(), fileName, file);
-                    if (result) {
-                        results.push(true);
-                        continue;
-                    }
-                }
-                results.push(false);
-            };
-            console.log("Upload result:", results);
-            result = !results.includes(false);
-        }
-
-        if (!result)
-            console.log("Failed to upload files");
-        refreshApplication();
-
-        return result;
-    };
-
-    const handleRemove = async (name: string) => {
-        console.log("Remove clicked");
-        let result = false;
-        if (user && application) {
-            console.log("File:", name);
-            const deleteResult = await Delete(user.uid, application.application.id.toString(), name);
-            console.log("Delete result:", deleteResult);
-            if (deleteResult)
-                result = true;
-        }
-        refreshApplication()
-        return result;
-    };
-
     useEffect(() => console.log("Requirements updated:", requirements), [requirements]);
 
     useEffect(requestUploadedDocuments, [application]);
@@ -133,6 +88,7 @@ function AdminFilesForm() {
         ? (
             <div id="files-form-container">
                 <FilesFormHead
+                    applicationId={application.application.id.toString()}
                     months={application.application.plan.dues}
                     applicant={application.application.name}
                     taxedPartialities={application.application.partiality}
@@ -142,9 +98,9 @@ function AdminFilesForm() {
                     {requirements.applicantFiles.map((requirement, index) => (
                         <FileInput
                             key={index}
+                            uid={application.user.guid}
+                            applicationId={application.application.id.toString()}
                             requirement={requirement}
-                            onUpload={handleUpload}
-                            onRemove={handleRemove}
                         />
                     ))}
                 </RequirementsSection>
@@ -152,9 +108,9 @@ function AdminFilesForm() {
                     {requirements.endorsementFiles.map((requirement, index) => (
                         <FileInput
                             key={index}
+                            uid={application.user.guid}
+                            applicationId={application.application.id.toString()}
                             requirement={requirement}
-                            onUpload={handleUpload}
-                            onRemove={handleRemove}
                         />
                     ))}
                 </RequirementsSection>
