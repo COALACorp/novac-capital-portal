@@ -88,6 +88,7 @@ function AdminFilesForm() {
         ? (
             <div id="files-form-container">
                 <FilesFormHead
+                    uid={application.user.guid}
                     applicationId={application.application.id.toString()}
                     months={application.application.plan.dues}
                     applicant={application.application.name}
