@@ -17,10 +17,10 @@ type StatusIcons = {
 
 const statusIcons: StatusIcons = {
     unknown: <div className="status-indicator unknown" />,
-    pending: <WatchLaterIcon className="status-indicator pending" />,
-    approved: <CheckCircleIcon className="status-indicator approved" />,
-    denied: <CancelIcon className="status-indicator denied" />,
-    error: <ErrorIcon className="status-indicator error" />,
+    pending: <WatchLaterIcon className="pending" />,
+    approved: <CheckCircleIcon className="approved" />,
+    denied: <CancelIcon className="denied" />,
+    error: <ErrorIcon className="error" />,
 };
 
 type SelectedFile = {
@@ -88,6 +88,11 @@ function FileInput(props: FileInputProps) {
             <div className="file-input">
                 <div className="file-input-label-container">
                     <p className="file-input-label strong">{props.requirement.label}</p>
+                    {(window.innerWidth <= 600) && (
+                        <div className="status-indicator">
+                            {status}
+                        </div>
+                    )}
                 </div>
                 <div className="file-input-action-container">
                     {props.requirement.template && (
@@ -113,7 +118,11 @@ function FileInput(props: FileInputProps) {
                         />
                     ))}
                     {sendable && <SendFileButton onSend={handleUpload} disabled={loading} />}
-                    {status}
+                    {(window.innerWidth > 600) && (
+                        <div className="status-indicator">
+                            {status}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

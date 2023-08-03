@@ -14,15 +14,15 @@ type StatusData = {
 const statusData: StatusData = {
     pending: {
         label: "Pendiente",
-        icon: <WatchLaterIcon className="status-indicator pending" />,
+        icon: <WatchLaterIcon className="pending"/>,
     },
     approved: {
         label: "Aprobado",
-        icon: <CheckCircleIcon className="status-indicator approved" />,
+        icon: <CheckCircleIcon className="approved" />,
     },
     denied: {
         label: "Rechazado",
-        icon: <CancelIcon className="status-indicator denied" />,
+        icon: <CancelIcon className="denied" />,
     },
 };
 
@@ -34,7 +34,9 @@ function FilesPlanStatus(props: FilesPlanStatusProps) {
     return (
         <div id="files-plan-status" className={props.status || "pending"}>
             <p className="strong">Estado: {statusData[props.status || "pending"].label}</p>
-            {statusData[props.status || "pending"].icon}
+            <div className="status-indicator">
+                {statusData[props.status || "pending"].icon}
+            </div>
         </div>
     );
 }

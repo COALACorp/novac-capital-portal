@@ -19,7 +19,7 @@
 
 #app-container {
     width: 100%;
-    padding: 0 0 120px;
+    padding-bottom: 120px;
     background-color: #F2F2F2;
     display: inline-flex;
     flex-direction: column;

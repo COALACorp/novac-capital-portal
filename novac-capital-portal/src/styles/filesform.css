@@ -1,5 +1,4 @@
 #files-form-container {
-    /* margin: 0 120px; */
     padding: 40px;
     background: #FFF;
     display: flex;
@@ -20,7 +19,7 @@
 }
 
 #files-plan {
-    width: 100%;
+    /* width: 100%; */
     padding: 20px;
     background-color: #FFF;
     display: flex;
@@ -76,23 +75,54 @@
     border-radius: 10px;
 }
 
+.status-indicator {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.unknown {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 50px;
+    border: 1px solid #BDBDBD;
+}
+
+.pending {
+    color: #F2C94C;
+}
+
+.approved {
+    color: #27AE60;
+}
+
+.denied {
+    color: #EB5757;
+}
+
+.error {
+    color: #EB5757;
+}
+
 #files-plan-status.pending {
     background-color: #FFFBEA;
-    color: #EDC13A;
 }
 
 #files-plan-status.approved {
     background-color: #D3EFDF;
-    color: #27AE60;
 }
 
 #files-plan-status.denied {
     background-color: #FFE6E6;
-    color: #EB5757;
 }
 
 .requirements-container {
-    width: 900px;
+    /* width: 900px; */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -139,13 +169,13 @@
 .file-input-label {
     color: #26323D;
     font-size: 18px;
-    display: flex;
-    flex-direction: column;
+    line-height: normal;
     flex: 1 0 0;
 }
 
 .file-input-action-container {
     display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 20px;
 }
@@ -155,13 +185,29 @@
     padding: 12px 16px;
     color: #26323D;
     font-size: 14px;
-    text-decoration: none;
     display: flex;
     flex-direction: row;
+    justify-content: center;
     align-items: center;
     gap: 10px;
     border-radius: 10px;
     border: 1px solid #BDBDBD;
+}
+
+.file-input-action-label {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.file-input-action-label > p {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 a.file-input-action, label.file-input-action {
@@ -179,6 +225,10 @@ a.file-input-action, label.file-input-action {
     color: #FFF;
     background-color: #3454D0;
     border: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
 }
 
 .file-input-action > p {
@@ -209,39 +259,9 @@ a.file-input-action, label.file-input-action {
     justify-content: center;
 }
 
-.status-indicator {
-    width: 20px;
-    height: 20px;
-}
-
-.unknown {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
-    border-radius: 50px;
-    border: 1px solid #BDBDBD;
-}
-
-.pending {
-    color: #F2C94C;
-}
-
-.approved {
-    color: #27AE60;
-}
-
-.denied {
-    color: #EB5757;
-}
-
-.error {
-    color: #EB5757;
-}
-
 #footer {
     color: #828282;
+    text-align: center;
     font-size: 16px;
     line-height: normal;
     display: flex;
@@ -252,6 +272,7 @@ a.file-input-action, label.file-input-action {
 
 #footer-contact {
     font-size: 18px;
+    line-height: normal;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -272,4 +293,108 @@ a.file-input-action, label.file-input-action {
     align-items: center;
     gap: 10px;
     border-radius: 10px;
+}
+
+@media only screen and (max-width: 600px) {
+    #app-container:has( #files-form-container) {
+        padding-bottom: 40px;
+        gap: 25px;
+    }
+
+    #files-form-container {
+        width: 388px;
+        padding: 20px;
+        justify-content: unset;
+        align-items: center;
+        gap: 30px;
+    }
+
+    #files-plan {
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    #files-plan-status,
+    .requirements-container,
+    .requirements-list,
+    .file-input-container,
+    .file-input,
+    .file-input-label-container,
+    .file-input-action-container,
+    .file-input-action,
+    #footer {
+        align-self: stretch;
+    }
+
+    #files-plan-avatar {
+        width: 74px;
+        height: 74px;
+        padding: 10px;
+        align-self: unset;
+    }
+
+    #files-plan-info-data {
+        gap: 4px;
+    }
+
+    #files-plan-status {
+        justify-content: space-between;
+        align-self: stretch;
+        gap: unset;
+    }
+
+    .requirements-list {
+        width: unset;
+        gap: 30px;
+    }
+
+    .file-input-container {
+        width: unset;
+        height: unset;
+        display: unset;
+    }
+
+    .file-input {
+        flex-direction: column;
+        justify-content: unset;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .file-input-label-container {
+        width: unset;
+    }
+
+    .file-input-label {
+        font-size: 16px;
+    }
+
+    .file-input-action-container {
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 16px;
+    }
+
+    .file-input-action {
+        max-width: unset;
+        height: 45px;
+        justify-content: space-between;
+        gap: unset;
+    }
+
+    #footer {
+        padding: 0 20px;
+        font-size: 14px;
+    }
+
+    #footer-contact {
+        font-size: 14px;
+    }
+
+    #footer-whatsapp-button {
+        height: 46px;
+    }
 }

@@ -1,3 +1,4 @@
+import "@/styles/quotation/plans.css";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Button from "@mui/material/Button";
@@ -10,8 +11,6 @@ import PlanContent from "./PlanContent";
 
 import { useAppSelector } from "@/app/hooks";
 import { selectParams } from "@/features/params/paramsSlice";
-
-import "@/styles/quotation/plans.css";
 
 type PlanType = {
     months: number,
@@ -84,6 +83,11 @@ function Plans(props: PlansProps) {
         } else
             console.log("Client params not defined");
     }, [props.form, clientParams]);
+
+    useEffect(() => {
+        if (window.innerWidth <= 600 && selection)
+            handleSubmit();
+    }, [selection])
 
     return (
         <div id="plans-container">

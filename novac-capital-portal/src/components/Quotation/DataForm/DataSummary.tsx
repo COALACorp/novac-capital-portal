@@ -15,7 +15,9 @@ function DataSummary(props: DataSummaryProps) {
             {props.data.map((item, index) => (
                 <div key={index} className={"data-form-summary-item " + (item.strong && "strong")}>
                     <div className="data-form-summary-item-label">
-                        {item.startIcon}
+                        <div className="icon">
+                            {item.startIcon}
+                        </div>
                         <p>{item.label}</p>
                     </div>
                     <p>{item.value}</p>

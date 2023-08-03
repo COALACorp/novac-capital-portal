@@ -35,7 +35,7 @@ function AdminDashboard() {
     return user && (
         <div id="dashboard-container">
             <LateralMenu user={user} onSignOut={handleSignOut} hidden={menuHidden} />
-            <Content onLateralMenu={handleLateralMenu} />
+            <Content onLateralMenu={handleLateralMenu} onSignOut={handleSignOut} />
         </div>
     );
 }

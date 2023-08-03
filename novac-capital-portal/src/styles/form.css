@@ -27,3 +27,19 @@
     font-weight: 400;
     line-height: normal;
 }
+
+@media only screen and (max-width: 600px) {
+    #form-heading {
+        flex: 1 0 0;
+    }
+
+    #form-heading h1 {
+        text-align: center;
+        font-size: 24px;
+    }
+
+    #form-heading h2 {
+        text-align: center;
+        font-size: 14px;
+    }
+}

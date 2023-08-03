@@ -14,7 +14,7 @@ type FilesFormHeadProps = {
 function FilesFormHead(props: FilesFormHeadProps) {
     return (
         <div id="files-form-heading-container">
-            <FormHeading title={"Aplicación " + props.uid + " / " + props.applicationId} subtitle="This is a subtitle parsed to FormHeading" />
+            <FormHeading title={"Aplicación " + props.applicationId} subtitle={"USUARIO: " + props.uid} />
             <FilesPlan
                 months={props.months}
                 applicant={props.applicant}
