@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
+
+import type { Filter } from "../LateralMenu/LateralMenu";
 import SearchBar from "./SearchBar";
 import ContentTable from "./ContentTable";
 import ContentRow from "./ContentRow";
@@ -8,6 +10,7 @@ import PaginationControls from "./PaginationControls";
 import { GetAllApplications, ApplicationsPagination } from "@/utils/api";
 
 type ContentProps = {
+    activeFilter?: Filter
     onLateralMenu?: () => void,
     onSignOut?: () => void,
 };
@@ -15,12 +18,13 @@ type ContentProps = {
 function Content(props: ContentProps) {
     const [dropdown, setDropdown] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const [filter, setFilter] = useState<Filter>();
     const [applications, setApplications] = useState<ApplicationsPagination>()
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         setLoading(true);
-        GetAllApplications(6, currentPage)
+        GetAllApplications(6, currentPage, filter)
             .then(response => {
                 setApplications(response?.data);
                 setLoading(false);
@@ -29,7 +33,14 @@ function Content(props: ContentProps) {
                 console.log("Error on requesting page:", currentPage, error);
                 setLoading(false);
             });
-    }, [currentPage]);
+    }, [currentPage, filter]);
+
+    useEffect(() => {
+        if (props.activeFilter !== filter) {
+            setCurrentPage(1);
+            setFilter(props.activeFilter);
+        }
+    }, [props.activeFilter, filter])
 
     return (
         <div id="content-container">

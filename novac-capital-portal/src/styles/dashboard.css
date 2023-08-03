@@ -89,6 +89,7 @@
     align-self: stretch;
 }
 
+.nav-button.active,
 .nav-button:hover {
     background-color: #45494E;
     cursor: pointer;
