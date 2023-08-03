@@ -19,12 +19,18 @@ function Content(props: ContentProps) {
     const [dropdown, setDropdown] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [filter, setFilter] = useState<Filter>();
+    const [search, setSearch] = useState<string>();
     const [applications, setApplications] = useState<ApplicationsPagination>()
     const [loading, setLoading] = useState(false);
 
+    const handleSearch = (newSearch?: string) => {
+        setCurrentPage(1);
+        setSearch(newSearch);
+    };
+
     useEffect(() => {
         setLoading(true);
-        GetAllApplications(6, currentPage, filter)
+        GetAllApplications(6, currentPage, filter, search)
             .then(response => {
                 setApplications(response?.data);
                 setLoading(false);
@@ -33,14 +39,16 @@ function Content(props: ContentProps) {
                 console.log("Error on requesting page:", currentPage, error);
                 setLoading(false);
             });
-    }, [currentPage, filter]);
+    }, [currentPage, filter, search]);
 
     useEffect(() => {
-        if (props.activeFilter !== filter) {
-            setCurrentPage(1);
-            setFilter(props.activeFilter);
-        }
-    }, [props.activeFilter, filter])
+        setCurrentPage(1);
+        setFilter(props.activeFilter);
+    }, [props.activeFilter, filter]);
+
+    useEffect(() => {
+        console.log("Search state changed");
+    }, [search]);
 
     return (
         <div id="content-container">
@@ -63,9 +71,9 @@ function Content(props: ContentProps) {
             </div>
             <div id="content-header">
                 <p id="content-header-title" className="strong">Dashboard</p>
-                <SearchBar />
+                <SearchBar onSearch={handleSearch} />
             </div>
-            <ContentTable>
+            <ContentTable disabled={loading}>
                 {applications && applications.applications.map((application, index) => (
                     <ContentRow
                         key={index}
