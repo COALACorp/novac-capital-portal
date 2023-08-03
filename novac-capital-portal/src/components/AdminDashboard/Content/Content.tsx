@@ -9,9 +9,11 @@ import { GetAllApplications, ApplicationsPagination } from "@/utils/api";
 
 type ContentProps = {
     onLateralMenu?: () => void,
+    onSignOut?: () => void,
 };
 
 function Content(props: ContentProps) {
+    const [dropdown, setDropdown] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
     const [applications, setApplications] = useState<ApplicationsPagination>()
     const [loading, setLoading] = useState(false);
@@ -35,13 +37,18 @@ function Content(props: ContentProps) {
                 <a id="content-nav-menu" onClick={props.onLateralMenu}>
                     <Image src="/icons/HamburguerMenu.svg" width="26" height="17" alt="Menu" />
                 </a>
-                <a id="content-nav-profile" onClick={() => console.log("Content profile")}>
-                    <div id="content-nav-profile-info">
-                        <Image id="content-nav-profile-picture" src="/profile.png" width="38" height="38" alt="Imagen de perfil" />
-                        <p className="strong">NovacCapital</p>
+                <div id="content-nav-profile-container">
+                    <a id="content-nav-profile" onClick={() => setDropdown(!dropdown)}>
+                        <div id="content-nav-profile-info">
+                            <Image id="content-nav-profile-picture" src="/profile.png" width="38" height="38" alt="Imagen de perfil" />
+                            <p className="strong">NovacCapital</p>
+                        </div>
+                        <Image id="dropdown-arrow" className={dropdown ? "active" : ""} src="/icons/ArrowDown.svg" width="14" height="7" alt="" />
+                    </a>
+                    <div id="content-nav-profile-dropdown" hidden={!dropdown}>
+                        <a onClick={props.onSignOut}>Cerrar Sesión</a>
                     </div>
-                    <Image src="/icons/ArrowDown.svg" width="14" height="7" alt="" />
-                </a>
+                </div>
             </div>
             <div id="content-header">
                 <p id="content-header-title" className="strong">Dashboard</p>
