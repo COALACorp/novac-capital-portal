@@ -65,7 +65,7 @@ function SignIn() {
         console.log("Registered:", registered);
 
         if (registered)
-            if (origin === "quotation" && params && quotation?.formValues && quotation.selectedPlan) {
+            if (origin === "quotation" && params && quotation.formValues && quotation.selectedPlan) {
                 console.log("Redirect to files checklist", quotation);
                 const application = await CreateApplication(
                     userLogged.uid,

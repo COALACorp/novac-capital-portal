@@ -1,12 +1,13 @@
 import { ContentRowProps } from "./ContentRow";
 
 type ContentTableProps = {
+    disabled?: boolean,
     children: React.ReactElement<ContentRowProps>|React.ReactElement<ContentRowProps>[]|any,
 };
 
 function ContentTable(props: ContentTableProps) {
     return (
-        <table id="content-table">
+        <table id="content-table" className={props.disabled ? "disabled" : ""}>
             <thead>
                 <tr>
                     <th>PLAZO</th>

@@ -206,9 +206,9 @@ export async function GetLastApplication(guid: string): Promise<APIResponse<Appl
     return result;
 }
 
-export async function GetAllApplications(n: number, page: number): Promise<APIResponse<ApplicationsPagination>|null> {
-    console.log("API request get all applications:", n, page);
-    const response = await api.get<APIResponse<ApplicationsPagination>>("/application", { params: { n, page } });
+export async function GetAllApplications(n: number, page: number, status?: string, search?: string): Promise<APIResponse<ApplicationsPagination>|null> {
+    console.log("API request get all applications:", n, page, status, search);
+    const response = await api.get<APIResponse<ApplicationsPagination>>("/application", { params: { n, page, status, search } });
     console.log("API response get all applications:", response.data);
 
     return response.status === 200 ? response.data ?? null : null;

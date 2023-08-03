@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
+
+import type { Filter } from "../LateralMenu/LateralMenu";
 import SearchBar from "./SearchBar";
 import ContentTable from "./ContentTable";
 import ContentRow from "./ContentRow";
@@ -8,6 +10,7 @@ import PaginationControls from "./PaginationControls";
 import { GetAllApplications, ApplicationsPagination } from "@/utils/api";
 
 type ContentProps = {
+    activeFilter?: Filter
     onLateralMenu?: () => void,
     onSignOut?: () => void,
 };
@@ -15,12 +18,19 @@ type ContentProps = {
 function Content(props: ContentProps) {
     const [dropdown, setDropdown] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
+    const [filter, setFilter] = useState<Filter>();
+    const [search, setSearch] = useState<string>();
     const [applications, setApplications] = useState<ApplicationsPagination>()
     const [loading, setLoading] = useState(false);
 
+    const handleSearch = (newSearch?: string) => {
+        setCurrentPage(1);
+        setSearch(newSearch);
+    };
+
     useEffect(() => {
         setLoading(true);
-        GetAllApplications(6, currentPage)
+        GetAllApplications(6, currentPage, filter, search)
             .then(response => {
                 setApplications(response?.data);
                 setLoading(false);
@@ -29,7 +39,16 @@ function Content(props: ContentProps) {
                 console.log("Error on requesting page:", currentPage, error);
                 setLoading(false);
             });
-    }, [currentPage]);
+    }, [currentPage, filter, search]);
+
+    useEffect(() => {
+        setCurrentPage(1);
+        setFilter(props.activeFilter);
+    }, [props.activeFilter, filter]);
+
+    useEffect(() => {
+        console.log("Search state changed");
+    }, [search]);
 
     return (
         <div id="content-container">
@@ -52,9 +71,9 @@ function Content(props: ContentProps) {
             </div>
             <div id="content-header">
                 <p id="content-header-title" className="strong">Dashboard</p>
-                <SearchBar />
+                <SearchBar onSearch={handleSearch} />
             </div>
-            <ContentTable>
+            <ContentTable disabled={loading}>
                 {applications && applications.applications.map((application, index) => (
                     <ContentRow
                         key={index}
