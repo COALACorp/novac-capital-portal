@@ -244,6 +244,7 @@
     }
     
     .plan-card-container {
+        width: 100%;
         height: unset;
     }
 
