@@ -14,6 +14,7 @@ function ContentTable(props: ContentTableProps) {
                     <th>NOMBRE</th>
                     <th>EQUIPO</th>
                     <th>PROGRESO</th>
+                    <th>ANTICIPO</th>
                     <th>VALOR DEL EQUIPO</th>
                     <th>FECHA</th>
                 </tr>
