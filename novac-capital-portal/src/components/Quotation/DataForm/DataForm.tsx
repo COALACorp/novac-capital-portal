@@ -103,8 +103,8 @@ function DataForm(props: DataFormProps) {
             totalLease: amounts.totalLease,
         };
         console.log("Form values:", newFormValues);
-        // if (newFormValues.name && newFormValues.equipment && newFormValues.amount && newFormValues.advancePercentage)
-        //     props.onSubmit && props.onSubmit(newFormValues as ValidatedFormValuesType);
+        if (newFormValues.name && newFormValues.equipment && newFormValues.amount && newFormValues.advancePercentage)
+            props.onSubmit && props.onSubmit(newFormValues as ValidatedFormValuesType);
     };
 
     const handleFormChange = (event: React.FormEvent<HTMLFormElement>) => {
