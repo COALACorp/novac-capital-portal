@@ -248,7 +248,12 @@
         height: unset;
     }
 
-    .plan-card,
+    .plan-card {
+        width: 388px;
+        height: unset;
+        padding: 20px;
+    }
+
     .plan-heading,
     .plan-heading-info-item-container,
     .plan-heading-info-item,
@@ -258,14 +263,22 @@
         align-self: stretch;
     }
 
-    .plan-card {
-        width: unset;
-        height: unset;
-        padding: 20px;
+    .plan-heading {
+        justify-content: center;
+    }
+
+    .plan-avatar {
+        width: 94px;
+        height: 94px;
     }
 
     .plan-heading-info {
         flex: 1 0 0;
+    }
+
+    .plan-heading-info-item {
+        display: flex;
+        flex-direction: column;
     }
 
     .plan-heading-title {
@@ -274,6 +287,10 @@
 
     .plan-content {
         width: unset;
+    }
+
+    .plan-summary {
+        padding-top: unset;
     }
 
     #plans-submit {
