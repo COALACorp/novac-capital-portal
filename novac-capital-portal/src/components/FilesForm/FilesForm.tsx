@@ -10,7 +10,7 @@ import FileInput, { SelectedFile } from "./FileInput/FileInput";
 import Loading from "../Loading";
 import Error from "../Error";
 import { Upload, Delete } from "@/utils/docsApi";
-import defaultRequirements, { FileSpec } from "@/data/filesRequirements";
+import { FileSpec, RequirementsState, naturalPersonRequirements, legalPersonRequirements } from "@/data/filesRequirements";
 
 import { useAppSelector, useAppDispatch } from "@/app/hooks";
 import { setApplicationId } from "@/features/quotation/quotationSlice";
@@ -21,7 +21,7 @@ function FilesForm() {
     const dispatch = useAppDispatch();
     const user = useAppSelector(selectUser);
     const [application, setApplication] = useState<ApplicationFullData|null>();
-    const [requirements, setRequirements] = useState(defaultRequirements);
+    const [requirements, setRequirements] = useState<RequirementsState>();
 
     const refreshApplication = async () => {
         if (user) {
@@ -39,7 +39,7 @@ function FilesForm() {
 
     const requestUploadedDocuments = () => {
         console.log("Request uploaded requirements");
-        if (application) {
+        if (application && requirements) {
             const newState = { ...requirements };
             Object.keys(newState).forEach(category => {
                 const key = category as keyof (typeof newState);
@@ -136,26 +136,30 @@ function FilesForm() {
                     taxedPartialities={application.application.partiality}
                     status={application.application.status as Status}
                 />
-                <RequirementsSection title="Requisitos del solicitante">
-                    {requirements.applicantFiles.map((requirement, index) => (
-                        <FileInput
-                            key={index}
-                            requirement={requirement}
-                            onUpload={handleUpload}
-                            onRemove={handleRemove}
-                        />
-                    ))}
-                </RequirementsSection>
-                <RequirementsSection title="Requisitos del Aval">
-                    {requirements.endorsementFiles.map((requirement, index) => (
-                        <FileInput
-                            key={index}
-                            requirement={requirement}
-                            onUpload={handleUpload}
-                            onRemove={handleRemove}
-                        />
-                    ))}
-                </RequirementsSection>
+                {requirements && (
+                    <>
+                        <RequirementsSection title="Requisitos del solicitante">
+                            {requirements.applicantFiles.map((requirement, index) => (
+                                <FileInput
+                                    key={index}
+                                    requirement={requirement}
+                                    onUpload={handleUpload}
+                                    onRemove={handleRemove}
+                                />
+                            ))}
+                        </RequirementsSection>
+                        <RequirementsSection title="Requisitos del Aval">
+                            {requirements.endorsementFiles.map((requirement, index) => (
+                                <FileInput
+                                    key={index}
+                                    requirement={requirement}
+                                    onUpload={handleUpload}
+                                    onRemove={handleRemove}
+                                />
+                            ))}
+                        </RequirementsSection>
+                    </>
+                )}
             </div>
         )
         : application === undefined ? <Loading /> : <Error error={"No se pudo cargar la información relacionada a la aplicación"} />;

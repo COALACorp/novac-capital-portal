@@ -136,7 +136,8 @@ export async function CreateApplication(
     equipment: string,
     cost: number,
     iva: number,
-    planId: number
+    planId: number,
+    entityType: string
 ): Promise<APIResponse<APIApplicationCreateData>|null> {
     const payload = {
         userGuid,
@@ -152,6 +153,7 @@ export async function CreateApplication(
         cost,
         iva,
         planId,
+        entityType,
     };
     console.log("API request create application:", payload);
     const response = await api.post<APIResponse<APIApplicationCreateData>>("/application", payload);

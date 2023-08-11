@@ -78,7 +78,8 @@ function SignIn() {
                     quotation.formValues.equipment,
                     quotation.formValues.amount,
                     params.iva,
-                    quotation.selectedPlan.months
+                    quotation.selectedPlan.months,
+                    quotation.formValues.entity
                 );
                 if (application)
                     router.push("/files_form");

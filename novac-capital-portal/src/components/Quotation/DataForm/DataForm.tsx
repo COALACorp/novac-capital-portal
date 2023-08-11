@@ -1,3 +1,4 @@
+import "@/styles/quotation/dataform.css";
 import React, { useState, useEffect, useRef } from "react";
 import Button from "@mui/material/Button";
 
@@ -7,8 +8,6 @@ import DataSelectInput from "./DataSelectInput";
 import DataSliderInput from "./DataSliderInput";
 import DataSummary, { SummaryDataType } from "./DataSummary";
 import { formatAmount } from "@/utils/formats";
-
-import "@/styles/quotation/dataform.css";
 
 const initialSummary: SummaryDataType[] = [
     {
@@ -49,7 +48,7 @@ type CalculatedAmounts = {
 
 type ValidatedFormValuesType = {
     name: string,
-    type: string,
+    entity: string,
     equipment: string,
     amount: number,
     advancePercentage: number,
@@ -58,7 +57,7 @@ type ValidatedFormValuesType = {
 
 type FormValuesType = {
     name?: string,
-    type?: string,
+    entity?: string,
     equipment?: string,
     amount?: number,
     advancePercentage?: number,
@@ -89,7 +88,7 @@ function DataForm(props: DataFormProps) {
     const generateFormValues = (data: FormData): FormValuesType => ({
         ...formValues,
         name: (data.get("name")?.toString() ?? ""),
-        type: (data.get("type")?.toString() ?? ""),
+        entity: (data.get("entity")?.toString() ?? ""),
         equipment: (data.get("item")?.toString() ?? ""),
         amount: inputToNumber(data.get("amount")?.toString() ?? ""),
         advancePercentage: inputToNumber(data.get("advancePercentage")?.toString() ?? ""),
@@ -109,7 +108,7 @@ function DataForm(props: DataFormProps) {
 
     const handleFormChange = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log("Form:", generateForm(event).get("type"));
+        console.log("Form:", generateForm(event).get("entity"));
         const newFormValues = generateFormValues(generateForm(event));
         setFormValues(newFormValues);
     };
@@ -135,12 +134,12 @@ function DataForm(props: DataFormProps) {
     useEffect(() => {
         const newValid = (
             (formValues.name !== undefined && formValues.name.trim().length > 0)
-            && (formValues.type !== undefined && formValues.type.trim().length > 0)
+            && (formValues.entity !== undefined && formValues.entity.trim().length > 0)
             && (formValues.equipment !== undefined && formValues.equipment.trim().length > 0)
             && (formValues.amount !== undefined && formValues.amount > 0)
         );
         setValid(newValid);
-    }, [formValues.name, formValues.type, formValues.equipment, formValues.amount, formValues.advancePercentage]);
+    }, [formValues.name, formValues.entity, formValues.equipment, formValues.amount, formValues.advancePercentage]);
 
     return (
         <div id="data-form-container">
@@ -161,7 +160,7 @@ function DataForm(props: DataFormProps) {
                     <DataSelectInput
                         label="Tipo de persona"
                         placeholder="Tipo de persona"
-                        name="type"
+                        name="entity"
                         options={[
                             { value: "fisica", label: "Persona física" },
                             { value: "moral", label: "Persona moral" },
