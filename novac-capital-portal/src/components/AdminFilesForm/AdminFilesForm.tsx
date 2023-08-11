@@ -9,7 +9,7 @@ import RequirementsSection from "./RequirementsSection";
 import FileInput from "./FileInput/FileInput";
 import Loading from "../Loading";
 import Error from "../Error";
-import defaultRequirements, { FileSpec } from "@/data/filesRequirements";
+import RequiredDocs, { FileSpec, RequirementsState } from "@/data/filesRequirements";
 
 import { useAppSelector, useAppDispatch } from "@/app/hooks";
 import { setApplicationId } from "@/features/quotation/quotationSlice";
@@ -22,7 +22,7 @@ function AdminFilesForm() {
     const dispatch = useAppDispatch();
     const user = useAppSelector(selectUser);
     const [application, setApplication] = useState<ApplicationFullData|null>();
-    const [requirements, setRequirements] = useState(defaultRequirements);
+    const [requirements, setRequirements] = useState<RequirementsState>();
 
     const refreshApplication = async () => {
         if (applicationId) {
@@ -30,6 +30,7 @@ function AdminFilesForm() {
             if (applicationData) {
                 dispatch(setApplicationId(applicationData.data.application.id));
                 setApplication(applicationData.data);
+                setRequirements(RequiredDocs[applicationData.data.application.entityType]);
                 return true;
             } else
                 console.log("Failed to refresh application");
@@ -40,7 +41,7 @@ function AdminFilesForm() {
 
     const requestUploadedDocuments = () => {
         console.log("Request uploaded requirements");
-        if (application) {
+        if (application && requirements) {
             const newState = { ...requirements };
             Object.keys(newState).forEach(category => {
                 const key = category as keyof (typeof newState);
@@ -95,26 +96,30 @@ function AdminFilesForm() {
                     taxedPartialities={application.application.partiality}
                     status={application.application.status as Status}
                 />
-                <RequirementsSection title="Requisitos del solicitante">
-                    {requirements.applicantFiles.map((requirement, index) => (
-                        <FileInput
-                            key={index}
-                            uid={application.user.guid}
-                            applicationId={application.application.id.toString()}
-                            requirement={requirement}
-                        />
-                    ))}
-                </RequirementsSection>
-                <RequirementsSection title="Requisitos del Aval">
-                    {requirements.endorsementFiles.map((requirement, index) => (
-                        <FileInput
-                            key={index}
-                            uid={application.user.guid}
-                            applicationId={application.application.id.toString()}
-                            requirement={requirement}
-                        />
-                    ))}
-                </RequirementsSection>
+                {requirements && (
+                    <>
+                        <RequirementsSection title="Requisitos del solicitante">
+                            {requirements.applicantFiles.map((requirement, index) => (
+                                <FileInput
+                                    key={index}
+                                    uid={application.user.guid}
+                                    applicationId={application.application.id.toString()}
+                                    requirement={requirement}
+                                />
+                            ))}
+                        </RequirementsSection>
+                        <RequirementsSection title="Requisitos del Aval">
+                            {requirements.endorsementFiles.map((requirement, index) => (
+                                <FileInput
+                                    key={index}
+                                    uid={application.user.guid}
+                                    applicationId={application.application.id.toString()}
+                                    requirement={requirement}
+                                />
+                            ))}
+                        </RequirementsSection>
+                    </>
+                )}
             </div>
         )
         : application === undefined ? <Loading /> : <Error error={"No se pudo cargar la información relacionada a la aplicación"} />;
