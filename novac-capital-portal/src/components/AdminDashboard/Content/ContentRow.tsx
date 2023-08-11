@@ -8,6 +8,7 @@ type ContentRowProps = {
     name: string,
     equipment: string,
     progress: number,
+    advanceAmount: number,
     amount: number,
     date: string,
 };
@@ -36,6 +37,9 @@ function ContentRow(props: ContentRowProps) {
                     </div>
                     <p>{props.progress}%</p>
                 </div>
+            </td>
+            <td>
+                <p>${formatAmount(props.advanceAmount ?? 0)}</p>
             </td>
             <td>
                 <p>${formatAmount(props.amount)}</p>

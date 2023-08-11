@@ -1,13 +1,13 @@
+import "@/styles/quotation/dataform.css";
 import React, { useState, useEffect, useRef } from "react";
 import Button from "@mui/material/Button";
 
 import FormHeading from "@/components/FormHeading";
 import DataTextInput from "./DataTextInput";
+import DataSelectInput from "./DataSelectInput";
 import DataSliderInput from "./DataSliderInput";
 import DataSummary, { SummaryDataType } from "./DataSummary";
 import { formatAmount } from "@/utils/formats";
-
-import "@/styles/quotation/dataform.css";
 
 const initialSummary: SummaryDataType[] = [
     {
@@ -48,6 +48,7 @@ type CalculatedAmounts = {
 
 type ValidatedFormValuesType = {
     name: string,
+    entity: string,
     equipment: string,
     amount: number,
     advancePercentage: number,
@@ -56,6 +57,7 @@ type ValidatedFormValuesType = {
 
 type FormValuesType = {
     name?: string,
+    entity?: string,
     equipment?: string,
     amount?: number,
     advancePercentage?: number,
@@ -86,6 +88,7 @@ function DataForm(props: DataFormProps) {
     const generateFormValues = (data: FormData): FormValuesType => ({
         ...formValues,
         name: (data.get("name")?.toString() ?? ""),
+        entity: (data.get("entity")?.toString() ?? ""),
         equipment: (data.get("item")?.toString() ?? ""),
         amount: inputToNumber(data.get("amount")?.toString() ?? ""),
         advancePercentage: inputToNumber(data.get("advancePercentage")?.toString() ?? ""),
@@ -98,18 +101,20 @@ function DataForm(props: DataFormProps) {
             ...generateFormValues(generateForm(event)),
             totalLease: amounts.totalLease,
         };
+        console.log("Form values:", newFormValues);
         if (newFormValues.name && newFormValues.equipment && newFormValues.amount && newFormValues.advancePercentage)
             props.onSubmit && props.onSubmit(newFormValues as ValidatedFormValuesType);
     };
 
     const handleFormChange = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log("Form:", generateForm(event).get("amount"));
+        console.log("Form:", generateForm(event).get("entity"));
         const newFormValues = generateFormValues(generateForm(event));
         setFormValues(newFormValues);
     };
 
     const handleInputChange = (event: any) => {
+        console.log("Handle form input change");
         const newFormValues: FormValuesType = { ...formValues };
         newFormValues[event.target.name as keyof FormValuesType] = event.target.value,
         setFormValues(newFormValues);
@@ -129,11 +134,12 @@ function DataForm(props: DataFormProps) {
     useEffect(() => {
         const newValid = (
             (formValues.name !== undefined && formValues.name.trim().length > 0)
+            && (formValues.entity !== undefined && formValues.entity.trim().length > 0)
             && (formValues.equipment !== undefined && formValues.equipment.trim().length > 0)
             && (formValues.amount !== undefined && formValues.amount > 0)
         );
         setValid(newValid);
-    }, [formValues.name, formValues.equipment, formValues.amount, formValues.advancePercentage]);
+    }, [formValues.name, formValues.entity, formValues.equipment, formValues.amount, formValues.advancePercentage]);
 
     return (
         <div id="data-form-container">
@@ -145,10 +151,49 @@ function DataForm(props: DataFormProps) {
                 ref={formRef}
             >
                 <div id="data-form-content">
-                    <DataTextInput label="Nombre del cliente" placeholder="Nombre del cliente" name="name" required />
-                    <DataTextInput label="Nombre de equipo a cotizar" placeholder="Nombre de equipo a cotizar" name="item" required />
-                    <DataTextInput label="Monto de equipo a cotizar" labelSuffix="(IVA incluido)" placeholder="Monto de equipo a cotizar" preffix="$" name="amount" isNumber required />
-                    <DataSliderInput label="Anticipo" min={0} max={30} step={5} scale="%" defaultValue={5} showMarks name="advancePercentage" onChange={handleInputChange} />
+                    <DataTextInput
+                        label="Nombre del cliente"
+                        placeholder="Nombre del cliente"
+                        name="name"
+                        required
+                    />
+                    <DataSelectInput
+                        label="Tipo de persona"
+                        placeholder="Tipo de persona"
+                        name="entity"
+                        options={[
+                            { value: "fisica", label: "Persona física" },
+                            { value: "moral", label: "Persona moral" },
+                        ]}
+                        onChange={handleInputChange}
+                        required
+                    />
+                    <DataTextInput
+                        label="Nombre de equipo a cotizar"
+                        placeholder="Nombre de equipo a cotizar"
+                        name="item"
+                        required
+                    />
+                    <DataTextInput
+                        label="Monto de equipo a cotizar"
+                        labelSuffix="(IVA incluido)"
+                        placeholder="Monto de equipo a cotizar"
+                        preffix="$"
+                        name="amount"
+                        isNumber
+                        required
+                    />
+                    <DataSliderInput
+                        label="Anticipo"
+                        min={0}
+                        max={30}
+                        step={5}
+                        scale="%"
+                        defaultValue={5}
+                        showMarks
+                        name="advancePercentage"
+                        onChange={handleInputChange}
+                    />
                     <DataSummary data={summary} />
                 </div>
                 <Button id="data-form-submit" type="submit" disabled={!valid}>Cotizar</Button>

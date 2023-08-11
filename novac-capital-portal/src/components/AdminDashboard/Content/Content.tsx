@@ -82,6 +82,7 @@ function Content(props: ContentProps) {
                         name={application.name}
                         equipment={application.equipment}
                         progress={application.progress * 100}
+                        advanceAmount={application.advanceAmount}
                         amount={application.cost}
                         date={new Date(application.createdAt).toLocaleDateString()}
                     />

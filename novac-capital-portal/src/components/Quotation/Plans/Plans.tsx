@@ -85,8 +85,8 @@ function Plans(props: PlansProps) {
     }, [props.form, clientParams]);
 
     useEffect(() => {
-        if (window.innerWidth <= 600 && selection)
-            handleSubmit();
+        // if (window.innerWidth <= 600 && selection)
+        //     handleSubmit();
     }, [selection])
 
     return (
