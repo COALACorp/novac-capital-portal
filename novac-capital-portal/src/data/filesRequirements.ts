@@ -198,3 +198,10 @@ export const legalPersonRequirements: RequirementsState = {
         },
     ],
 };
+
+const requirements: { [key: string]: RequirementsState } = {
+    fisica: naturalPersonRequirements,
+    moral: legalPersonRequirements,
+};
+
+export default requirements;

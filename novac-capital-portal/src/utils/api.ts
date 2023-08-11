@@ -27,6 +27,8 @@ type APIApplicationCreateData = {
 type APIApplicationData = {
     id: number,
     userId: number,
+    name: string,
+    entityType: string,
     advanceFee: number,
     advanceAmount: number,
     loanAmount: number,
@@ -49,7 +51,6 @@ type APIApplicationData = {
         creditBureau: number,
         margin: number,
     },
-    name: string,
     createdAt: string,
 };
 

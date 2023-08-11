@@ -10,7 +10,7 @@ import FileInput, { SelectedFile } from "./FileInput/FileInput";
 import Loading from "../Loading";
 import Error from "../Error";
 import { Upload, Delete } from "@/utils/docsApi";
-import { FileSpec, RequirementsState, naturalPersonRequirements, legalPersonRequirements } from "@/data/filesRequirements";
+import RequiredDocs, { FileSpec, RequirementsState } from "@/data/filesRequirements";
 
 import { useAppSelector, useAppDispatch } from "@/app/hooks";
 import { setApplicationId } from "@/features/quotation/quotationSlice";
@@ -29,6 +29,7 @@ function FilesForm() {
             if (applicationData) {
                 dispatch(setApplicationId(applicationData.data.application.id));
                 setApplication(applicationData.data);
+                setRequirements(RequiredDocs[applicationData.data.application.entityType]);
                 return true;
             } else
                 console.log("Failed to refresh application");
