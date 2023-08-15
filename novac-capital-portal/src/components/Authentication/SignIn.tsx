@@ -16,7 +16,7 @@ import { signInWithEmailAndPassword, signInWithPopup, GoogleAuthProvider } from 
 
 import { auth, googleProvider, CheckAdmin } from "@/utils/firebase";
 import Copyright from "../Copyright";
-import { GetUser, CreateApplication } from "@/utils/api";
+import { CreateApplication } from "@/utils/api";
 
 import { useAppSelector } from "@/app/hooks";
 import { selectParams } from "@/features/params/paramsSlice";
@@ -101,7 +101,7 @@ function SignIn() {
                 if (admin)
                     router.push("/admin_portal");
                 else
-                router.push("/");
+                    router.push("/files_form");
             }
         else
             if (!userLogged.providerData.find(item => item.providerId === "password"))
