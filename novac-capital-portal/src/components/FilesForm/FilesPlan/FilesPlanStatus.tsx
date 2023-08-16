@@ -2,7 +2,7 @@ import WatchLaterIcon from "@mui/icons-material/WatchLater";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 
-type Status = "pending"|"approved"|"denied";
+type Status = "pending"|"accepted"|"denied";
 
 type StatusData = {
     [key in Status]: {
@@ -16,9 +16,9 @@ const statusData: StatusData = {
         label: "Pendiente",
         icon: <WatchLaterIcon className="pending"/>,
     },
-    approved: {
-        label: "Aprobado",
-        icon: <CheckCircleIcon className="approved" />,
+    accepted: {
+        label: "Aceptado",
+        icon: <CheckCircleIcon className="accepted" />,
     },
     denied: {
         label: "Rechazado",

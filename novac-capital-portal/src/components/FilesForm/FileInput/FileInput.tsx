@@ -9,7 +9,7 @@ import SendFileButton from "./FileInputAction/SendFileButton";
 import { Template } from "@/utils/docsApi";
 import { RequirementSpec } from "@/data/filesRequirements";
 
-type Status = "unknown"|"pending"|"approved"|"denied"|"error";
+type Status = "unknown"|"pending"|"accepted"|"denied"|"error";
 
 type StatusIcons = {
     [key in Status]: JSX.Element;
@@ -18,7 +18,7 @@ type StatusIcons = {
 const statusIcons: StatusIcons = {
     unknown: <div className="status-indicator unknown" />,
     pending: <WatchLaterIcon className="pending" />,
-    approved: <CheckCircleIcon className="approved" />,
+    accepted: <CheckCircleIcon className="accepted" />,
     denied: <CancelIcon className="denied" />,
     error: <ErrorIcon className="error" />,
 };
@@ -70,8 +70,8 @@ function FileInput(props: FileInputProps) {
             newStatus = statusIcons["error"];
         else if (t_files.find(file => file.status === "denied"))
             newStatus = statusIcons["denied"];
-        else if (t_files.find(file => file.status === "approved"))
-            newStatus = statusIcons["approved"];
+        else if (t_files.find(file => file.status === "accepted"))
+            newStatus = statusIcons["accepted"];
         else
             newStatus = statusIcons["unknown"];
         setStatus(newStatus);

@@ -115,7 +115,9 @@ function FilesForm() {
     useEffect(requestUploadedDocuments, [application]);
 
     useEffect(() => {
+        console.log("Use effect:", user);
         if (!user?.registered) {
+            console.log("User not registered:", user);
             // auth.signOut();
             router.push("/signin");
             return;
@@ -135,7 +137,7 @@ function FilesForm() {
                     months={application.application.plan.dues}
                     applicant={application.application.name}
                     taxedPartialities={application.application.partiality}
-                    status={application.application.status as Status}
+                    status={application.application.status.toLowerCase() as Status}
                 />
                 {requirements && (
                     <>

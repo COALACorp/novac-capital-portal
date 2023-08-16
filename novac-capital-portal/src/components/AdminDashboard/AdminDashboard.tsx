@@ -13,7 +13,7 @@ function AdminDashboard() {
     const router = useRouter();
     const user = useAppSelector(selectUser);
     const [menuHidden, setMenuHidden] = useState(false);
-    const [filter, setFilter] = useState<Filter>();
+    const [filter, setFilter] = useState<Filter>("pending");
 
     const handleLateralMenu = () => {
         console.log("Handle lateral");

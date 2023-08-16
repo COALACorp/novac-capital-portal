@@ -7,18 +7,18 @@ import ErrorIcon from "@mui/icons-material/Error";
 import DownloadFileAction from "./DownloadFileAction";
 import { RequirementSpec } from "@/data/filesRequirements";
 
-type Status = "unknown"|"pending"|"approved"|"denied"|"error";
+type Status = "unknown"|"pending"|"accepted"|"denied"|"error";
 
 type StatusIcons = {
     [key in Status]: JSX.Element;
 };
 
 const statusIcons: StatusIcons = {
-    unknown: <div className="status-indicator unknown" />,
-    pending: <WatchLaterIcon className="status-indicator pending" />,
-    approved: <CheckCircleIcon className="status-indicator approved" />,
-    denied: <CancelIcon className="status-indicator denied" />,
-    error: <ErrorIcon className="status-indicator error" />,
+    unknown: <div className="unknown" />,
+    pending: <WatchLaterIcon className="pending" />,
+    accepted: <CheckCircleIcon className="accepted" />,
+    denied: <CancelIcon className="denied" />,
+    error: <ErrorIcon className="error" />,
 };
 
 type SelectedFile = {
@@ -43,8 +43,8 @@ function FileInput(props: FileInputProps) {
             newStatus = statusIcons["error"];
         else if (t_files.find(file => file.status === "denied"))
             newStatus = statusIcons["denied"];
-        else if (t_files.find(file => file.status === "approved"))
-            newStatus = statusIcons["approved"];
+        else if (t_files.find(file => file.status === "accepted"))
+            newStatus = statusIcons["accepted"];
         else
             newStatus = statusIcons["unknown"];
         setStatus(newStatus);
