@@ -1,7 +1,9 @@
 import "@/styles/quotation/plans.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
 import Button from "@mui/material/Button";
+import PrintIcon from '@mui/icons-material/Print';
+import ReactToPrint from "react-to-print";
 
 import calcs from "@/utils/calculations";
 import type { ValidatedFormValuesType } from "../DataForm/DataForm";
@@ -31,6 +33,7 @@ type PlansProps = {
 function Plans(props: PlansProps) {
     const clientParams = useAppSelector(selectParams);
     const router = useRouter();
+    const printRef = useRef(null);
     const [plans, setPlans] = useState<PlanType[]>([]);
     const [selection, setSelection] = useState<number>();
 
@@ -85,8 +88,8 @@ function Plans(props: PlansProps) {
     }, [props.form, clientParams]);
 
     useEffect(() => {
-        // if (window.innerWidth <= 600 && selection)
-        //     handleSubmit();
+        if (window.innerWidth <= 600 && selection)
+            handleSubmit();
     }, [selection])
 
     return (
@@ -99,7 +102,7 @@ function Plans(props: PlansProps) {
                         <p><span className="strong">Fecha:</span> {new Date().toLocaleDateString("es-MX")}</p>
                     </div>
                 </div>
-                <div id="plans-collection">
+                <div id="plans-collection" ref={printRef}>
                     {plans.map((plan, index) => (
                         <a key={index} className="plan-card-container" onClick={() => setSelection(plan.months)}>
                             <div className={"plan-card" + (selection === plan.months ? " selected" : "")}>
@@ -121,6 +124,17 @@ function Plans(props: PlansProps) {
                 </div>
             </div>
             <Button id="plans-submit" disabled={!selection} onClick={handleSubmit}>Continuar</Button>
+            <ReactToPrint
+                bodyClass="printable"
+                documentTitle="Available_Plans"
+                content={() => printRef.current}
+                trigger={() => (
+                    <div id="print-button">
+                        <PrintIcon className="print-icon" />
+                    </div>
+                )}
+                pageStyle="@page { size: auto; margin: 0mm; } @media print { body { -webkit-print-color-adjust: exact; } }"
+            />
         </div>
     );
 }
