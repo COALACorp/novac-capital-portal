@@ -4,7 +4,7 @@ import Image from "next/image";
 import NavButton from "./NavButton";
 import { UserValue } from "@/features/user/userSlice";
 
-type Filter = "pending"|"approved"|"denied"
+type Filter = "pending"|"accepted"|"denied"
 
 type LateralMenuProps = {
     user: UserValue,
@@ -49,8 +49,8 @@ function LateralMenu(props: LateralMenuProps) {
                             <NavButton
                                 name="Aprobadas"
                                 icon="/icons/Approved.svg"
-                                active={props.activeFilter === "approved"}
-                                onClick={() => handleFilterSelection("approved")}
+                                active={props.activeFilter === "accepted"}
+                                onClick={() => handleFilterSelection("accepted")}
                             />
                             <NavButton
                                 name="Denegadas"
