@@ -18,6 +18,7 @@ function Content(props: ContentProps) {
     const [filter, setFilter] = useState<Filter>();
     const [search, setSearch] = useState<string>();
     const [applications, setApplications] = useState<ApplicationsPagination>()
+    const [selectedApplication, setSelectedApplication] = useState<number>();
     const [loading, setLoading] = useState(false);
 
     const handleSearch = (newSearch?: string) => {
@@ -66,16 +67,22 @@ function Content(props: ContentProps) {
                     </div>
                 </div>
             </div>
-            <ApplicationsTable
-                applications={applications}
-                currentPage={currentPage}
-                loading={loading}
-                onSearch={handleSearch}
-                onNext={() => setCurrentPage(currentPage + 1)}
-                onPrevious={() => setCurrentPage(currentPage - 1)}
-                onPage={page => setCurrentPage(page)}
-            />
-            {/* <ApplicationContent /> */}
+            {selectedApplication ? (
+                <ApplicationContent
+                    onReturn={() => setSelectedApplication(undefined)}
+                />
+            ) : (
+                <ApplicationsTable
+                    applications={applications}
+                    currentPage={currentPage}
+                    loading={loading}
+                    onSearch={handleSearch}
+                    onApplication={setSelectedApplication}
+                    onNext={() => setCurrentPage(currentPage + 1)}
+                    onPrevious={() => setCurrentPage(currentPage - 1)}
+                    onPage={page => setCurrentPage(page)}
+                />
+            )}
         </div>
     );
 }

@@ -27,7 +27,7 @@ function ApplicationContent(props: ApplicationContentProps) {
         <>
             <div id="content-header">
                 <div id="application-header-container">
-                    <a onClick={props.onReturn}>
+                    <a className="action" onClick={props.onReturn}>
                         <div id="return-icon">
                             <svg width="27" height="14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path d="M28 8H1" stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>

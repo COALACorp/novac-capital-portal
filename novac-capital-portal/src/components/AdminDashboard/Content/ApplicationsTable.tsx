@@ -9,12 +9,17 @@ type ApplicationsTableProps = {
     currentPage: number,
     loading?: boolean,
     onSearch?: (search?: string) => void,
+    onApplication?: (applicationId: number) => void,
     onNext?: () => void,
     onPrevious?: () => void,
     onPage?: (page: number) => void,
 };
 
 function ApplicationsTable(props: ApplicationsTableProps) {
+    const handleClick = (applicationId: number) => {
+        props.onApplication && props.onApplication(applicationId);
+    };
+
     return (
         <>
             <div id="content-header">
@@ -33,6 +38,7 @@ function ApplicationsTable(props: ApplicationsTableProps) {
                         advanceAmount={application.advanceAmount}
                         amount={application.cost}
                         date={new Date(application.createdAt).toLocaleDateString()}
+                        onClick={handleClick}
                     />
                 ))}
             </ContentTable>

@@ -1,5 +1,3 @@
-import { useRouter } from "next/router";
-
 import { formatAmount } from "@/utils/formats";
 
 type ContentRowProps = {
@@ -11,13 +9,16 @@ type ContentRowProps = {
     advanceAmount: number,
     amount: number,
     date: string,
+    onClick?: (applicationId: number) => void,
 };
 
 function ContentRow(props: ContentRowProps) {
-    const router = useRouter();
+    const handleClick = () => {
+        props.onClick && props.onClick(props.applicationId);
+    };
 
     return (
-        <tr className="selectable" onClick={() => router.push("/user_application?id=" + props.applicationId)}>
+        <tr className="selectable" onClick={handleClick}>
             <td>
                 <div className="term">
                     <p className="months">{props.months}</p>
