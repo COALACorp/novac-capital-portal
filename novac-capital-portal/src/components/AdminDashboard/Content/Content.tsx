@@ -1,12 +1,8 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-
 import type { Filter } from "../LateralMenu/LateralMenu";
-import SearchBar from "./SearchBar";
-import ContentTable from "./ContentTable";
-import ContentRow from "./ContentRow";
-import PaginationControls from "./PaginationControls";
+import ApplicationsTable from "./ApplicationsTable";
 import { GetAllApplications, ApplicationsPagination } from "@/utils/api";
 
 type ContentProps = {
@@ -69,32 +65,11 @@ function Content(props: ContentProps) {
                     </div>
                 </div>
             </div>
-            <div id="content-header">
-                <p id="content-header-title" className="strong">Dashboard</p>
-                <SearchBar onSearch={handleSearch} />
-            </div>
-            <ContentTable disabled={loading}>
-                {applications && applications.applications.map((application, index) => (
-                    <ContentRow
-                        key={index}
-                        applicationId={application.id}
-                        months={application.planId}
-                        name={application.name}
-                        equipment={application.equipment}
-                        progress={Math.round(application.progress * 100)}
-                        advanceAmount={application.advanceAmount}
-                        amount={application.cost}
-                        date={new Date(application.createdAt).toLocaleDateString()}
-                    />
-                ))}
-            </ContentTable>
-            <PaginationControls
-                min={applications ? 1 : 0}
-                max={applications?.pagination.last ?? 0}
+            <ApplicationsTable
+                applications={applications}
                 currentPage={currentPage}
-                pageResults={6}
-                totalResults={applications?.pagination.count ?? 0}
-                disabled={loading}
+                loading={loading}
+                onSearch={handleSearch}
                 onNext={() => setCurrentPage(currentPage + 1)}
                 onPrevious={() => setCurrentPage(currentPage - 1)}
                 onPage={page => setCurrentPage(page)}
