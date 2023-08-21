@@ -7,7 +7,7 @@ type ContentTableProps = {
 
 function ContentTable(props: ContentTableProps) {
     return (
-        <table id="content-table" className={props.disabled ? "disabled" : ""}>
+        <table className={props.disabled ? "disabled" : ""}>
             <thead>
                 <tr>
                     <th>PLAZO</th>

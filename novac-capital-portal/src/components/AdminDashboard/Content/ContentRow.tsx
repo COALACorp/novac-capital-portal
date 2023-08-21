@@ -17,7 +17,7 @@ function ContentRow(props: ContentRowProps) {
     const router = useRouter();
 
     return (
-        <tr onClick={() => router.push("/user_application?id=" + props.applicationId)}>
+        <tr className="selectable" onClick={() => router.push("/user_application?id=" + props.applicationId)}>
             <td>
                 <div className="term">
                     <p className="months">{props.months}</p>

@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import type { Filter } from "../LateralMenu/LateralMenu";
 import ApplicationsTable from "./ApplicationsTable";
+import ApplicationContent from "./ApplicationContent/ApplicationContent";
 import { GetAllApplications, ApplicationsPagination } from "@/utils/api";
 
 type ContentProps = {
@@ -74,6 +75,7 @@ function Content(props: ContentProps) {
                 onPrevious={() => setCurrentPage(currentPage - 1)}
                 onPage={page => setCurrentPage(page)}
             />
+            {/* <ApplicationContent /> */}
         </div>
     );
 }
