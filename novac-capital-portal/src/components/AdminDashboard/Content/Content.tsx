@@ -15,7 +15,7 @@ type ContentProps = {
 function Content(props: ContentProps) {
     const [dropdown, setDropdown] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [filter, setFilter] = useState<Filter>();
+    const [filter, setFilter] = useState<Filter|undefined>(props.activeFilter);
     const [search, setSearch] = useState<string>();
     const [applications, setApplications] = useState<ApplicationsPagination>()
     const [selectedApplication, setSelectedApplication] = useState<number>();
@@ -42,7 +42,7 @@ function Content(props: ContentProps) {
     useEffect(() => {
         setCurrentPage(1);
         setFilter(props.activeFilter);
-    }, [props.activeFilter, filter]);
+    }, [props.activeFilter]);
 
     useEffect(() => {
         console.log("Search state changed");
@@ -69,6 +69,7 @@ function Content(props: ContentProps) {
             </div>
             {selectedApplication ? (
                 <ApplicationContent
+                    applicationId={selectedApplication}
                     onReturn={() => setSelectedApplication(undefined)}
                 />
             ) : (
