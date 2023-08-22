@@ -89,6 +89,10 @@ type ApplicationFullData = {
     documents: APIUserApplicationDocs[],
 };
 
+type APIFeedbackCreateData = {
+    feedbackId: number,
+};
+
 type APIResponse<T> = null|{
     statusCode: number,
     data: T,
@@ -217,7 +221,7 @@ export async function GetAllApplications(n: number, page: number, status?: strin
     return response.status === 200 ? response.data ?? null : null;
 }
 
-export async function GetApplication(applicationId: string): Promise<APIResponse<ApplicationFullData>|null> {
+export async function GetApplication(applicationId: number): Promise<APIResponse<ApplicationFullData>|null> {
     console.log("API request get application:", applicationId);
     const response = await api.get<APIResponse<ApplicationData>>("/application/" + applicationId);
     console.log("API response get application:", response.data);
@@ -253,6 +257,42 @@ export async function GetApplication(applicationId: string): Promise<APIResponse
     console.log("Get application result:", result);
 
     return result;
+}
+
+export async function CreateApplicationFeedback(applicationId: number, approval: boolean, comments?: string): Promise<APIResponse<APIFeedbackCreateData>> {
+    try {
+        const payload = {
+            applicationId,
+            comments,
+            approval,
+        };
+        console.log("API request create application feedback:", payload);
+        const response = await api.post("/feedback", payload);
+        console.log("API response create application feedback:", response.data);
+    
+        return response.status === 200 ? response.data ?? null : null;   
+    } catch (error) {
+        console.log("Error while creating application feedback:", error);
+    }
+    return null;
+}
+
+export async function CreateDocumentFeedback(documentId: number, approval: boolean, comments?: string): Promise<APIResponse<APIFeedbackCreateData>> {
+    try {
+        const payload = {
+            documentId,
+            comments,
+            approval,
+        };
+        console.log("API request create document feedback:", payload);
+        const response = await api.post("/feedback", payload);
+        console.log("API response create document feedback:", response.data);
+    
+        return response.status === 200 ? response.data ?? null : null;   
+    } catch (error) {
+        console.log("Error while creating document feedback:", error);
+    }
+    return null;
 }
 
 export type { ApplicationFullData, ApplicationsPagination, ApplicationData };

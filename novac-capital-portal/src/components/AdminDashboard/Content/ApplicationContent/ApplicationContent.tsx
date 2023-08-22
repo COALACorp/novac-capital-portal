@@ -5,7 +5,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 
 import SearchBar from "../SearchBar";
 import ApplicationFile from "./ApplicationFile";
-import { ApplicationFullData, GetApplication } from "@/utils/api";
+import { ApplicationFullData, GetApplication, CreateDocumentFeedback } from "@/utils/api";
 import RequiredDocs, { RequirementsState, RequirementSpec, FileSpec } from "@/data/filesRequirements";
 
 type Status = "pending"|"accepted"|"denied";
@@ -42,26 +42,8 @@ function ApplicationContent(props: ApplicationContentProps) {
     const [application, setApplication] = useState<ApplicationFullData>();
     const [requirements, setRequirements] = useState<RequirementsState>();
 
-    const getValidFiles = (reqs: RequirementSpec[]): RequirementSpec[] => {
-        return reqs.filter(req => (
-            req.files.find(file => file.uploaded === true) !== undefined
-        ));
-    };
-
-    const getStatus = ({ files }: RequirementSpec): Status => {
-        const t_files = files;
-        if (t_files.find(file => file.status === "pending"))
-            return "pending";
-        else if (t_files.find(file => file.status === "denied"))
-            return "denied";
-        else if (t_files.every(file => file.status === "accepted"))
-            return "accepted";
-        else
-            return "pending";
-    };
-
-    useEffect(() => {
-        GetApplication(props.applicationId.toString())
+    const refreshApplication = () => {
+        GetApplication(props.applicationId)
             .then(appData => {
                 if (appData) {
                     const newApplication = appData.data;
@@ -92,7 +74,48 @@ function ApplicationContent(props: ApplicationContentProps) {
                     setApplication(newApplication);
                     setRequirements(newRequirements);
                 }
-            });
+            })
+            .catch(error => console.error("Error while refreshing application:", error));
+    };
+
+    const handleFileApproval = async (name: string) => {
+        const file = application?.documents.find(doc => doc.name === name);
+        if (file)
+            await CreateDocumentFeedback(file.id, true);
+        else
+            console.log("Feedback not sent: Could not find document with name:", name);
+        refreshApplication();
+    };
+
+    const handleFileDenial = async (name: string, comments: string) => {
+        const file = application?.documents.find(doc => doc.name === name);
+        if (file)
+            await CreateDocumentFeedback(file.id, false, comments);
+        else
+            console.log("Feedback not sent: Could not find document with name:", name);
+        refreshApplication();
+    };
+
+    const getValidFiles = (reqs: RequirementSpec[]): RequirementSpec[] => {
+        return reqs.filter(req => (
+            req.files.find(file => file.uploaded === true) !== undefined
+        ));
+    };
+
+    const getStatus = ({ files }: RequirementSpec): Status => {
+        const t_files = files;
+        if (t_files.find(file => file.status === "pending"))
+            return "pending";
+        else if (t_files.find(file => file.status === "denied"))
+            return "denied";
+        else if (t_files.every(file => file.status === "accepted"))
+            return "accepted";
+        else
+            return "pending";
+    };
+
+    useEffect(() => {
+        refreshApplication();
     }, [props.applicationId]);
 
     return application ? (
@@ -132,11 +155,12 @@ function ApplicationContent(props: ApplicationContentProps) {
                     {requirements && getValidFiles(requirements.applicantFiles).map((requirement, index) => (
                         <ApplicationFile
                             key={index}
+                            application={application}
                             name={requirement.label}
                             files={requirement.files}
                             status={getStatus(requirement)}
-                            onAccept={() => console.log("Accept doc 1")}
-                            onDeny={() => console.log("Deny doc 1")}
+                            onAccept={handleFileApproval}
+                            onDeny={handleFileDenial}
                         />
                     ))}
                     <tr>
@@ -147,11 +171,12 @@ function ApplicationContent(props: ApplicationContentProps) {
                     {requirements && getValidFiles(requirements.endorsementFiles).map((requirement, index) => (
                         <ApplicationFile
                             key={index}
+                            application={application}
                             name={requirement.label}
                             files={requirement.files}
                             status={getStatus(requirement)}
-                            onAccept={() => console.log("Accept doc 1")}
-                            onDeny={() => console.log("Deny doc 1")}
+                            onAccept={handleFileApproval}
+                            onDeny={handleFileDenial}
                         />
                     ))}
                 </tbody>
