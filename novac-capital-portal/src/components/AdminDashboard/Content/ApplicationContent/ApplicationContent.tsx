@@ -49,8 +49,8 @@ function ApplicationContent(props: ApplicationContentProps) {
         refreshApplication();
     };
 
-    const handleApplicationDenial = async () => {
-        await CreateApplicationFeedback(props.applicationId, false);
+    const handleApplicationDenial = async (comments: string) => {
+        await CreateApplicationFeedback(props.applicationId, false, comments);
         refreshApplication();
     };
 

@@ -68,7 +68,6 @@ type DataFormProps = {
 };
 
 function DataForm(props: DataFormProps) {
-    const formRef = useRef<HTMLFormElement>(null);
     const [formValues, setFormValues] = useState<FormValuesType>({});
     const [summary, setSummary] = useState<SummaryDataType[]>(initialSummary);
     const [valid, setValid] = useState<boolean>(false);
@@ -148,7 +147,6 @@ function DataForm(props: DataFormProps) {
                 id="data-form"
                 onSubmit={handleSubmit}
                 onChange={handleFormChange}
-                ref={formRef}
             >
                 <div id="data-form-content">
                     <DataTextInput

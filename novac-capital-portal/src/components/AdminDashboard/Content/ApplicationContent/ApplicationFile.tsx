@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+import CommentsDialog from "./CommentsDialog";
 import { Status, statusData } from "./ApplicationContent";
 import { FileSpec } from "@/data/filesRequirements";
 import { ApplicationFullData } from "@/utils/api";
@@ -16,6 +17,7 @@ type ApplicationFileProps = {
 
 function ApplicationFile(props: ApplicationFileProps) {
     const [disabled, setDisabled] = useState(false);
+    const [dialog, setDialog] = useState(false);
 
     const handleDownload = async (fileName: string, downloadName: string) => {
         const download = await Download(
@@ -35,12 +37,21 @@ function ApplicationFile(props: ApplicationFileProps) {
         }
     };
 
-    const handleDeny = () => {
+    const handleDeny = (comments: string) => {
         if (props.status !== "denied") {
             setDisabled(true);
-            props.files.forEach(file => props.onDeny && file.fileName && props.onDeny(file.fileName, "Test comment"));
+            props.files.forEach(file => props.onDeny && file.fileName && props.onDeny(file.fileName, comments));
         }
     };
+
+    const handleOpenDialog = () => {
+        if (props.status !== "denied")
+            setDialog(true);
+    }
+
+    const handleCloseDialog = () => {
+        setDialog(false);
+    }
 
     useEffect(() => setDisabled(false), [props.status]);
 
@@ -75,7 +86,7 @@ function ApplicationFile(props: ApplicationFileProps) {
                         </a>
                         <a
                             className={"feedback-action action denied" + (props.status === "denied" ? " selected" : (props.status === "accepted" ? " disabled" : ""))}
-                            onClick={handleDeny}
+                            onClick={handleOpenDialog}
                         >
                             <div className="feedback-action-icon">
                                 {statusData.denied.icon}
@@ -84,6 +95,12 @@ function ApplicationFile(props: ApplicationFileProps) {
                         </a>
                     </div>
                 </div>
+                <CommentsDialog
+                    targetLabel="el documento"
+                    open={dialog}
+                    onSubmit={handleDeny}
+                    onClose={handleCloseDialog}
+                />
             </td>
         </tr>
     );
