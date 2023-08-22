@@ -4,9 +4,10 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 
 import SearchBar from "../SearchBar";
-import ApplicationFile from "./ApplicationFile";
-import { ApplicationFullData, GetApplication, CreateDocumentFeedback } from "@/utils/api";
-import RequiredDocs, { RequirementsState, RequirementSpec, FileSpec } from "@/data/filesRequirements";
+import ApplicationData from "./ApplicationData";
+import ApplicationFilesSection from "./ApplicationFilesSection";
+import { ApplicationFullData, GetApplication } from "@/utils/api";
+import RequiredDocs, { RequirementsState, FileSpec } from "@/data/filesRequirements";
 
 type Status = "pending"|"accepted"|"denied";
 
@@ -78,109 +79,40 @@ function ApplicationContent(props: ApplicationContentProps) {
             .catch(error => console.error("Error while refreshing application:", error));
     };
 
-    const handleFileApproval = async (name: string) => {
-        const file = application?.documents.find(doc => doc.name === name);
-        if (file)
-            await CreateDocumentFeedback(file.id, true);
-        else
-            console.log("Feedback not sent: Could not find document with name:", name);
-        refreshApplication();
-    };
-
-    const handleFileDenial = async (name: string, comments: string) => {
-        const file = application?.documents.find(doc => doc.name === name);
-        if (file)
-            await CreateDocumentFeedback(file.id, false, comments);
-        else
-            console.log("Feedback not sent: Could not find document with name:", name);
-        refreshApplication();
-    };
-
-    const getValidFiles = (reqs: RequirementSpec[]): RequirementSpec[] => {
-        return reqs.filter(req => (
-            req.files.find(file => file.uploaded === true) !== undefined
-        ));
-    };
-
-    const getStatus = ({ files }: RequirementSpec): Status => {
-        const t_files = files;
-        if (t_files.find(file => file.status === "pending"))
-            return "pending";
-        else if (t_files.find(file => file.status === "denied"))
-            return "denied";
-        else if (t_files.every(file => file.status === "accepted"))
-            return "accepted";
-        else
-            return "pending";
-    };
-
     useEffect(() => {
         refreshApplication();
     }, [props.applicationId]);
 
     return application ? (
         <>
-            <div id="content-header">
-                <div id="application-header-container">
-                    <a className="action" onClick={props.onReturn}>
-                        <div id="return-icon">
-                            <svg width="27" height="14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <path d="M28 8H1" stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                <path d="M8 15L1 8L8 1" stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        </div>
-                    </a>
-                    <p id="content-header-title" className="strong">{application.application.name}</p>
-                    <div id="status-indicator" className={"strong " + application.application.status.toLowerCase()}>
-                        <p>Estado: {statusData[application.application.status.toLowerCase() as Status].label}</p>
-                        <div id="status-indicator-icon">
-                            {statusData[application.application.status.toLowerCase() as Status].icon}
+            <div id="application-header-container">
+                <div id="content-header">
+                    <div id="application-header">
+                        <a className="action" onClick={props.onReturn}>
+                            <div id="return-icon">
+                                <svg width="27" height="14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M28 8H1" stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <path d="M8 15L1 8L8 1" stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </div>
+                        </a>
+                        <p id="content-header-title" className="strong">{application.application.name}</p>
+                        <div id="status-indicator" className={"strong " + application.application.status.toLowerCase()}>
+                            <p>Estado: {statusData[application.application.status.toLowerCase() as Status].label}</p>
+                            <div id="status-indicator-icon">
+                                {statusData[application.application.status.toLowerCase() as Status].icon}
+                            </div>
                         </div>
                     </div>
+                    <SearchBar onSearch={props.onSearch} />
                 </div>
-                <SearchBar onSearch={props.onSearch} />
+                <ApplicationData application={application} />
             </div>
-            <table>
-                <thead>
-                    <tr>
-                        <th>DOCUMENTOS CARGADOS</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <p className="strong">Requisitos del solicitante</p>
-                        </td>
-                    </tr>
-                    {requirements && getValidFiles(requirements.applicantFiles).map((requirement, index) => (
-                        <ApplicationFile
-                            key={index}
-                            application={application}
-                            name={requirement.label}
-                            files={requirement.files}
-                            status={getStatus(requirement)}
-                            onAccept={handleFileApproval}
-                            onDeny={handleFileDenial}
-                        />
-                    ))}
-                    <tr>
-                        <td>
-                            <p className="strong">Requisitos del Aval</p>
-                        </td>
-                    </tr>
-                    {requirements && getValidFiles(requirements.endorsementFiles).map((requirement, index) => (
-                        <ApplicationFile
-                            key={index}
-                            application={application}
-                            name={requirement.label}
-                            files={requirement.files}
-                            status={getStatus(requirement)}
-                            onAccept={handleFileApproval}
-                            onDeny={handleFileDenial}
-                        />
-                    ))}
-                </tbody>
-            </table>
+            <ApplicationFilesSection
+                application={application}
+                requirements={requirements}
+                onUpdate={refreshApplication}
+            />
         </>
     ) : (
         <></>

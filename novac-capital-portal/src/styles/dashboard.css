@@ -433,6 +433,15 @@ td > .progress > .bar > .indicator {
 /* --------------------------------------- APPLICATION CONTENT --------------------------------------- */
 
 #application-header-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 50px;
+}
+
+#application-header {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -482,6 +491,38 @@ td > .progress > .bar > .indicator {
 #status-indicator.denied {
     color: #EB5757;
     border: 1px solid #EB5757;
+}
+
+#application-data {
+    padding: 20px 30px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+}
+
+.application-data-section {
+    /* width: 100px; */
+    color: #4F4F4F;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 14px;
+}
+
+.application-data-section > p:first-child {
+    font-size: 12px;
+    font-weight: 700;
+    align-self: stretch;
+}
+
+.application-data-section > p:not(:first-child) {
+    font-size: 14px;
+    font-weight: 400;
+    align-self: stretch;
+    line-height: normal;
 }
 
 .doc-container {

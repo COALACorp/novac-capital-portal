@@ -29,13 +29,17 @@ function ApplicationFile(props: ApplicationFileProps) {
     };
 
     const handleAccept = () => {
-        setDisabled(true);
-        props.files.forEach(file => props.onAccept && file.fileName && props.onAccept(file.fileName));
+        if (props.status !== "accepted") {
+            setDisabled(true);
+            props.files.forEach(file => props.onAccept && file.fileName && props.onAccept(file.fileName));
+        }
     };
 
     const handleDeny = () => {
-        setDisabled(true);
-        props.files.forEach(file => props.onDeny && file.fileName && props.onDeny(file.fileName, "Test comment"));
+        if (props.status !== "denied") {
+            setDisabled(true);
+            props.files.forEach(file => props.onDeny && file.fileName && props.onDeny(file.fileName, "Test comment"));
+        }
     };
 
     useEffect(() => setDisabled(false), [props.status]);
