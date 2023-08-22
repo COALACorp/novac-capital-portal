@@ -6,7 +6,8 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import SearchBar from "../SearchBar";
 import ApplicationData from "./ApplicationData";
 import ApplicationFilesSection from "./ApplicationFilesSection";
-import { ApplicationFullData, GetApplication } from "@/utils/api";
+import FeedbackButtons from "./FeedbackButtons";
+import { ApplicationFullData, CreateApplicationFeedback, GetApplication } from "@/utils/api";
 import RequiredDocs, { RequirementsState, FileSpec } from "@/data/filesRequirements";
 
 type Status = "pending"|"accepted"|"denied";
@@ -42,6 +43,16 @@ type ApplicationContentProps = {
 function ApplicationContent(props: ApplicationContentProps) {
     const [application, setApplication] = useState<ApplicationFullData>();
     const [requirements, setRequirements] = useState<RequirementsState>();
+
+    const handleApplicationApproval = async () => {
+        await CreateApplicationFeedback(props.applicationId, true);
+        refreshApplication();
+    };
+
+    const handleApplicationDenial = async () => {
+        await CreateApplicationFeedback(props.applicationId, false);
+        refreshApplication();
+    };
 
     const refreshApplication = () => {
         GetApplication(props.applicationId)
@@ -112,6 +123,11 @@ function ApplicationContent(props: ApplicationContentProps) {
                 application={application}
                 requirements={requirements}
                 onUpdate={refreshApplication}
+            />
+            <FeedbackButtons
+                status={application.application.status.toLowerCase() as Status}
+                onApprove={handleApplicationApproval}
+                onDeny={handleApplicationDenial}
             />
         </>
     ) : (

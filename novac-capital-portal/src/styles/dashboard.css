@@ -583,7 +583,7 @@ td > .progress > .bar > .indicator {
     align-items: center;
 }
 
-.doc-feedback-action {
+.feedback-action {
     padding: 16px 30px;
     background-color: #FFF;
     color: #828282;
@@ -598,19 +598,19 @@ td > .progress > .bar > .indicator {
     gap: 20px;
 }
 
-.doc-feedback-action.accepted.selected {
+.feedback-action.accepted.selected {
     background-color: #D3EFDF;
     color: #27AE60;
     border: 1px solid #27AE60;
 }
 
-.doc-feedback-action.denied.selected {
+.feedback-action.denied.selected {
     background-color: #FFE6E6;
     color: #EB5757;
     border: 1px solid #EB5757;
 }
 
-.doc-feedback-action-icon {
+.feedback-action-icon {
     width: 24px;
     height: 24px;
     display: flex;
@@ -619,10 +619,30 @@ td > .progress > .bar > .indicator {
     align-items: center;
 }
 
-.accepted .doc-feedback-action-icon {
+.accepted .feedback-action-icon {
     color: #27AE60;
 }
 
-.denied .doc-feedback-action-icon {
+.denied .feedback-action-icon {
     color: #EB5757;
+}
+
+#application-feedback-container {
+    margin-top: 30px;
+    font-size: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    align-self: flex-start;
+    gap: 20px;
+}
+
+#application-feedback-container .feedback-action {
+    height: 62px;
+}
+
+#application-feedback-container .feedback-action-icon,
+#application-feedback-container .feedback-action-icon > * {
+    width: 30px;
+    height: 30px;
 }

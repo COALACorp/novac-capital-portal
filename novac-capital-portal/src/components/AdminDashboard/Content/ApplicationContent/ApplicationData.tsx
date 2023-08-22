@@ -54,7 +54,7 @@ function ApplicationData(props: ApplicationDataProps) {
                             <p>${formatAmount(props.application.application.initialPayment)}</p>
                         </td>
                         <td>
-                            <p>N/A</p>
+                            <p>${formatAmount(props.application.application.cost - (props.application.application.cost * props.application.application.iva))}</p>
                         </td>
                         <td>
                             <p>${formatAmount(props.application.application.cost)}</p>
