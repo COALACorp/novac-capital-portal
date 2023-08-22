@@ -65,7 +65,7 @@ function ApplicationFile(props: ApplicationFileProps) {
                             </a>
                         ))}
                         <a
-                            className={"feedback-action action accepted" + (props.status === "accepted" ? " selected" : "")}
+                            className={"feedback-action action accepted" + (props.status === "accepted" ? " selected" : (props.status === "denied" ? " disabled" : ""))}
                             onClick={handleAccept}
                         >
                             <div className="feedback-action-icon">
@@ -74,7 +74,7 @@ function ApplicationFile(props: ApplicationFileProps) {
                             <p className="strong">Aprobar</p>
                         </a>
                         <a
-                            className={"feedback-action action denied" + (props.status === "denied" ? " selected" : "")}
+                            className={"feedback-action action denied" + (props.status === "denied" ? " selected" : (props.status === "accepted" ? " disabled" : ""))}
                             onClick={handleDeny}
                         >
                             <div className="feedback-action-icon">
