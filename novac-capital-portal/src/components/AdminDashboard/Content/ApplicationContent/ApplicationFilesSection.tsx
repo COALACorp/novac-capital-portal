@@ -6,7 +6,9 @@ import { Status } from "./ApplicationContent";
 type ApplicationFilesSectionProps = {
     application: ApplicationFullData,
     requirements?: RequirementsState,
-    onUpdate?: () => void,
+    totalFiles: number,
+    uploadedFiles: number,
+    onRefresh?: () => void,
 };
 
 function ApplicationFilesSection(props: ApplicationFilesSectionProps) {
@@ -16,7 +18,7 @@ function ApplicationFilesSection(props: ApplicationFilesSectionProps) {
             await CreateDocumentFeedback(file.id, true);
         else
             console.log("Feedback not sent: Could not find document with name:", name);
-        props.onUpdate && props.onUpdate();
+        props.onRefresh && props.onRefresh();
     };
 
     const handleFileDenial = async (name: string, comments: string) => {
@@ -25,23 +27,7 @@ function ApplicationFilesSection(props: ApplicationFilesSectionProps) {
             await CreateDocumentFeedback(file.id, false, comments);
         else
             console.log("Feedback not sent: Could not find document with name:", name);
-            props.onUpdate && props.onUpdate();
-    };
-
-    const getRequirementsCount = (): number => {
-        let count = 0;
-        if (props.requirements)
-            Object.values(props.requirements).forEach(reqs => reqs.forEach(req => count += req.files.length));
-        return count;
-    };
-
-    const getUploadedFilesCount = (): number => {
-        let count = 0;
-        if (props.requirements)
-            Object.values(props.requirements).forEach(reqs => count += reqs.filter(req => (
-                req.files.find(file => file.uploaded === true) !== undefined
-            )).length);
-        return count;
+            props.onRefresh && props.onRefresh();
     };
 
     const getUploadedFiles = (reqs: RequirementSpec[]): RequirementSpec[] => {
@@ -66,7 +52,7 @@ function ApplicationFilesSection(props: ApplicationFilesSectionProps) {
         <table>
             <thead>
                 <tr>
-                    <th>DOCUMENTOS CARGADOS ({getUploadedFilesCount()} DE {getRequirementsCount()})</th>
+                    <th>DOCUMENTOS CARGADOS ({props.uploadedFiles} DE {props.totalFiles})</th>
                 </tr>
             </thead>
             <tbody>

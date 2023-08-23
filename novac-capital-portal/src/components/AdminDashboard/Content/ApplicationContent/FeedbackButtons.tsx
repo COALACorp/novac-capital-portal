@@ -5,6 +5,7 @@ import { Status, statusData } from "./ApplicationContent";
 
 type FeedbackButtonsProps = {
     status: Status,
+    disabled?: boolean,
     onApprove?: () => void,
     onDeny?: (coments: string) => void,
 };
@@ -40,7 +41,7 @@ function FeedbackButtons(props: FeedbackButtonsProps) {
 
     return (
         <>
-            <div id="application-feedback-container" className={(disabled ? " disabled" : "")}>
+            <div id="application-feedback-container" className={((props.disabled || disabled) ? " disabled" : "")}>
                 <a
                     className={"feedback-action action accepted" + (props.status === "accepted" ? " selected" : "")}
                     onClick={handleAccept}
