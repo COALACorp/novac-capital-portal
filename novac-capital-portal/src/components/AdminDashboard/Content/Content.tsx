@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 
 import type { Filter } from "../LateralMenu/LateralMenu";
-import ApplicationsTable from "./ApplicationsTable";
+import ApplicationsTable from "./ApplicationsTable/ApplicationsTable";
 import ApplicationContent from "./ApplicationContent/ApplicationContent";
 import { GetAllApplications, ApplicationsPagination } from "@/utils/api";
 

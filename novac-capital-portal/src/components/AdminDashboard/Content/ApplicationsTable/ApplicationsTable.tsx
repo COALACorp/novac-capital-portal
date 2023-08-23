@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import SyncIcon from '@mui/icons-material/Sync';
 
-import SearchBar from "./SearchBar";
+import SearchBar from "../SearchBar";
 import ContentTable from "./ContentTable";
 import ContentRow from "./ContentRow";
 import PaginationControls from "./PaginationControls";
