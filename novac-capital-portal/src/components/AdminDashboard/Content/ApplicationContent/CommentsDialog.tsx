@@ -31,12 +31,12 @@ function CommentsDialog(props: CommentsDialogProps) {
                         <Image src="icons/Close.svg" width={14} height={14} alt="" />
                     </div>
                 </a>
-                <div id="dialog-input">
+                <div id="dialog-content">
                     <p>Por favor, deja un comentario sobre porqué rechazas {props.targetLabel}:</p>
-                    <textarea rows={5} placeholder="Escribe un comentario" autoComplete="off" value={value} onChange={handleChange}></textarea>
+                    <textarea id="dialog-input" rows={5} placeholder="Escribe un comentario" autoComplete="off" value={value} onChange={handleChange}></textarea>
                 </div>
                 <a className="action" onClick={handleSubmit}>
-                    <div id="dialog-submit">
+                    <div id="dialog-submit" className="cancel">
                         <p className="strong">Rechazar</p>
                     </div>
                 </a>

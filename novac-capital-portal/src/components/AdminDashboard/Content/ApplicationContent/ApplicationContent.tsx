@@ -12,6 +12,7 @@ import ApplicationFilesSection from "./ApplicationFilesSection";
 import FeedbackButtons from "./FeedbackButtons";
 import { ApplicationFullData, CreateApplicationFeedback, GetApplication } from "@/utils/api";
 import RequiredDocs, { RequirementsState, FileSpec } from "@/data/filesRequirements";
+import { getApp } from "firebase/app";
 
 type Status = "pending"|"accepted"|"denied";
 
@@ -47,6 +48,25 @@ function ApplicationContent(props: ApplicationContentProps) {
     const [loading, setLoading] = useState(false);
     const [application, setApplication] = useState<ApplicationFullData>();
     const [requirements, setRequirements] = useState<RequirementsState>();
+    const [count, setCount] = useState({ total: 0, uploaded: 0, approved: 0 });
+
+    const getRequirementsCount = (filesReqs: RequirementsState): number => {
+        let count = 0;
+        Object.values(filesReqs).forEach(reqs => reqs.forEach(req => count += req.files.length));
+        return count;
+    };
+
+    const getUploadedFilesCount = (filesReqs: RequirementsState): number => {
+        let count = 0;
+        Object.values(filesReqs).forEach(reqs => reqs.forEach(req => count += req.files.filter(file => file.uploaded).length));
+        return count;
+    };
+
+    const getApprovedFilesCount = (filesReqs: RequirementsState): number => {
+        let count = 0;
+        Object.values(filesReqs).forEach(reqs => reqs.forEach(req => count += req.files.filter(file => file.status === "accepted").length));
+        return count;
+    };
 
     const refreshApplication = () => {
         GetApplication(props.applicationId)
@@ -77,8 +97,16 @@ function ApplicationContent(props: ApplicationContentProps) {
                         });
                     }
 
+                    const newCount = {
+                        total: getRequirementsCount(newRequirements),
+                        uploaded: getUploadedFilesCount(newRequirements),
+                        approved: getApprovedFilesCount(newRequirements),
+                    };
+                    console.log("Feedback:", newCount);
+
                     setApplication(newApplication);
                     setRequirements(newRequirements);
+                    setCount(newCount);
                 }
             })
             .catch(error => console.error("Error while refreshing application:", error));
@@ -133,10 +161,13 @@ function ApplicationContent(props: ApplicationContentProps) {
             <ApplicationFilesSection
                 application={application}
                 requirements={requirements}
-                onUpdate={refreshApplication}
+                totalFiles={count.total}
+                uploadedFiles={count.uploaded}
+                onRefresh={handleRefresh}
             />
             <FeedbackButtons
                 status={application.application.status.toLowerCase() as Status}
+                disabled={count.total !== count.approved}
                 onApprove={handleApplicationApproval}
                 onDeny={handleApplicationDenial}
             />

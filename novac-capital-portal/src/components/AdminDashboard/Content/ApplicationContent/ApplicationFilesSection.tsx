@@ -6,7 +6,9 @@ import { Status } from "./ApplicationContent";
 type ApplicationFilesSectionProps = {
     application: ApplicationFullData,
     requirements?: RequirementsState,
-    onUpdate?: () => void,
+    totalFiles: number,
+    uploadedFiles: number,
+    onRefresh?: () => void,
 };
 
 function ApplicationFilesSection(props: ApplicationFilesSectionProps) {
@@ -16,7 +18,7 @@ function ApplicationFilesSection(props: ApplicationFilesSectionProps) {
             await CreateDocumentFeedback(file.id, true);
         else
             console.log("Feedback not sent: Could not find document with name:", name);
-        props.onUpdate && props.onUpdate();
+        props.onRefresh && props.onRefresh();
     };
 
     const handleFileDenial = async (name: string, comments: string) => {
@@ -25,10 +27,10 @@ function ApplicationFilesSection(props: ApplicationFilesSectionProps) {
             await CreateDocumentFeedback(file.id, false, comments);
         else
             console.log("Feedback not sent: Could not find document with name:", name);
-            props.onUpdate && props.onUpdate();
+            props.onRefresh && props.onRefresh();
     };
 
-    const getValidFiles = (reqs: RequirementSpec[]): RequirementSpec[] => {
+    const getUploadedFiles = (reqs: RequirementSpec[]): RequirementSpec[] => {
         return reqs.filter(req => (
             req.files.find(file => file.uploaded === true) !== undefined
         ));
@@ -50,7 +52,7 @@ function ApplicationFilesSection(props: ApplicationFilesSectionProps) {
         <table>
             <thead>
                 <tr>
-                    <th>DOCUMENTOS CARGADOS</th>
+                    <th>DOCUMENTOS CARGADOS ({props.uploadedFiles} DE {props.totalFiles})</th>
                 </tr>
             </thead>
             <tbody>
@@ -59,7 +61,7 @@ function ApplicationFilesSection(props: ApplicationFilesSectionProps) {
                         <p className="strong">Requisitos del solicitante:</p>
                     </td>
                 </tr>
-                {props.requirements && getValidFiles(props.requirements.applicantFiles).map((requirement, index) => (
+                {props.requirements && getUploadedFiles(props.requirements.applicantFiles).map((requirement, index) => (
                     <ApplicationFile
                         key={index}
                         application={props.application}
@@ -75,7 +77,7 @@ function ApplicationFilesSection(props: ApplicationFilesSectionProps) {
                         <p className="strong">Requisitos del Aval:</p>
                     </td>
                 </tr>
-                {props.requirements && getValidFiles(props.requirements.endorsementFiles).map((requirement, index) => (
+                {props.requirements && getUploadedFiles(props.requirements.endorsementFiles).map((requirement, index) => (
                     <ApplicationFile
                         key={index}
                         application={props.application}
