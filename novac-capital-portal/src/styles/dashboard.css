@@ -227,8 +227,38 @@
     align-self: stretch;
 }
 
+#applications-header {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
+}
+
 #content-header-title {
     font-size: 20px;
+}
+
+#refresh-button {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#refresh-button > * {
+    color: #828282;
+    font-size: 32px;
+}
+
+#refresh-button.loading {
+    animation: loading 0.5s linear infinite forwards;
+}
+
+@keyframes loading {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(-360deg); }
 }
 
 #search-bar {
@@ -432,6 +462,15 @@ td > .progress > .bar > .indicator {
 
 /* --------------------------------------- APPLICATION CONTENT --------------------------------------- */
 
+#application-loading {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
 #application-header-container {
     width: 100%;
     display: flex;
@@ -446,15 +485,6 @@ td > .progress > .bar > .indicator {
     flex-direction: row;
     align-items: center;
     gap: 20px;
-}
-
-#return-icon {
-    width: 27px;
-    height: 14px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
 }
 
 #status-indicator {
@@ -572,15 +602,6 @@ td > .progress > .bar > .indicator {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-}
-
-.doc-download-action-icon {
-    width: 15px;
-    height: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 }
 
 .feedback-action {

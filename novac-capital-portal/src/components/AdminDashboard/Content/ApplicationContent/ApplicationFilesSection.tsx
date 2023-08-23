@@ -56,7 +56,7 @@ function ApplicationFilesSection(props: ApplicationFilesSectionProps) {
             <tbody>
                 <tr>
                     <td>
-                        <p className="strong">Requisitos del solicitante</p>
+                        <p className="strong">Requisitos del solicitante:</p>
                     </td>
                 </tr>
                 {props.requirements && getValidFiles(props.requirements.applicantFiles).map((requirement, index) => (
@@ -72,7 +72,7 @@ function ApplicationFilesSection(props: ApplicationFilesSectionProps) {
                 ))}
                 <tr>
                     <td>
-                        <p className="strong">Requisitos del Aval</p>
+                        <p className="strong">Requisitos del Aval:</p>
                     </td>
                 </tr>
                 {props.requirements && getValidFiles(props.requirements.endorsementFiles).map((requirement, index) => (

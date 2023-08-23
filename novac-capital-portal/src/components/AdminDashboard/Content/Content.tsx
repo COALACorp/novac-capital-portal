@@ -21,12 +21,7 @@ function Content(props: ContentProps) {
     const [selectedApplication, setSelectedApplication] = useState<number>();
     const [loading, setLoading] = useState(false);
 
-    const handleSearch = (newSearch?: string) => {
-        setCurrentPage(1);
-        setSearch(newSearch);
-    };
-
-    useEffect(() => {
+    const refreshApplications = () => {
         setLoading(true);
         GetAllApplications(6, currentPage, filter, search)
             .then(response => {
@@ -37,6 +32,15 @@ function Content(props: ContentProps) {
                 console.log("Error on requesting page:", currentPage, error);
                 setLoading(false);
             });
+    };
+
+    const handleSearch = (newSearch?: string) => {
+        setCurrentPage(1);
+        setSearch(newSearch);
+    };
+
+    useEffect(() => {
+        refreshApplications();
     }, [currentPage, filter, search]);
 
     useEffect(() => {
@@ -77,6 +81,7 @@ function Content(props: ContentProps) {
                     applications={applications}
                     currentPage={currentPage}
                     loading={loading}
+                    onRefresh={refreshApplications}
                     onSearch={handleSearch}
                     onApplication={setSelectedApplication}
                     onNext={() => setCurrentPage(currentPage + 1)}

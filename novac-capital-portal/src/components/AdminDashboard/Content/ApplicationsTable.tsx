@@ -1,3 +1,6 @@
+import { useState, useEffect } from "react";
+import SyncIcon from '@mui/icons-material/Sync';
+
 import SearchBar from "./SearchBar";
 import ContentTable from "./ContentTable";
 import ContentRow from "./ContentRow";
@@ -8,6 +11,7 @@ type ApplicationsTableProps = {
     applications?: ApplicationsPagination,
     currentPage: number,
     loading?: boolean,
+    onRefresh?: () => void,
     onSearch?: (search?: string) => void,
     onApplication?: (applicationId: number) => void,
     onNext?: () => void,
@@ -16,14 +20,32 @@ type ApplicationsTableProps = {
 };
 
 function ApplicationsTable(props: ApplicationsTableProps) {
+    const [loading, setLoading] = useState(false);
+
     const handleClick = (applicationId: number) => {
         props.onApplication && props.onApplication(applicationId);
     };
 
+    const handleRefresh = () => {
+        setLoading(true);
+        props.onRefresh && props.onRefresh();
+    };
+
+    useEffect(() => {
+        setLoading(false);
+    }, [props.applications]);
+
     return (
         <>
             <div id="content-header">
-                <p id="content-header-title" className="strong">Dashboard</p>
+                <div id="applications-header">
+                    <p id="content-header-title" className="strong">Dashboard</p>
+                    {props.onRefresh && (
+                        <a id="refresh-button" className={"action" + (loading ? " loading" : "")} onClick={handleRefresh}>
+                            <SyncIcon />
+                        </a>
+                    )}
+                </div>
                 <SearchBar onSearch={props.onSearch} />
             </div>
             <ContentTable disabled={props.loading}>

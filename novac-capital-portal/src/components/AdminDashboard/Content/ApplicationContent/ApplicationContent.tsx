@@ -1,7 +1,10 @@
 import { useState, useEffect } from "react";
+import Image from "next/image";
+import CircularProgress from '@mui/material/CircularProgress';
 import WatchLaterIcon from "@mui/icons-material/WatchLater";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
+import SyncIcon from '@mui/icons-material/Sync';
 
 import SearchBar from "../SearchBar";
 import ApplicationData from "./ApplicationData";
@@ -41,18 +44,9 @@ type ApplicationContentProps = {
 };
 
 function ApplicationContent(props: ApplicationContentProps) {
+    const [loading, setLoading] = useState(false);
     const [application, setApplication] = useState<ApplicationFullData>();
     const [requirements, setRequirements] = useState<RequirementsState>();
-
-    const handleApplicationApproval = async () => {
-        await CreateApplicationFeedback(props.applicationId, true);
-        refreshApplication();
-    };
-
-    const handleApplicationDenial = async (comments: string) => {
-        await CreateApplicationFeedback(props.applicationId, false, comments);
-        refreshApplication();
-    };
 
     const refreshApplication = () => {
         GetApplication(props.applicationId)
@@ -90,9 +84,28 @@ function ApplicationContent(props: ApplicationContentProps) {
             .catch(error => console.error("Error while refreshing application:", error));
     };
 
+    const handleApplicationApproval = async () => {
+        await CreateApplicationFeedback(props.applicationId, true);
+        refreshApplication();
+    };
+
+    const handleApplicationDenial = async (comments: string) => {
+        await CreateApplicationFeedback(props.applicationId, false, comments);
+        refreshApplication();
+    };
+
+    const handleRefresh = () => {
+        setLoading(true);
+        refreshApplication();
+    };
+
     useEffect(() => {
         refreshApplication();
     }, [props.applicationId]);
+
+    useEffect(() => {
+        setLoading(false);
+    }, [application]);
 
     return application ? (
         <>
@@ -100,12 +113,7 @@ function ApplicationContent(props: ApplicationContentProps) {
                 <div id="content-header">
                     <div id="application-header">
                         <a className="action" onClick={props.onReturn}>
-                            <div id="return-icon">
-                                <svg width="27" height="14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M28 8H1" stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                    <path d="M8 15L1 8L8 1" stroke="#333333" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                                </svg>
-                            </div>
+                            <Image src="icons/ReturnArrow.svg" width={27} height={14} alt="" />
                         </a>
                         <p id="content-header-title" className="strong">{application.application.name}</p>
                         <div id="status-indicator" className={"strong " + application.application.status.toLowerCase()}>
@@ -114,6 +122,9 @@ function ApplicationContent(props: ApplicationContentProps) {
                                 {statusData[application.application.status.toLowerCase() as Status].icon}
                             </div>
                         </div>
+                        <a id="refresh-button" className={"action" + (loading ? " loading" : "")} onClick={handleRefresh}>
+                            <SyncIcon />
+                        </a>
                     </div>
                     <SearchBar onSearch={props.onSearch} />
                 </div>
@@ -131,7 +142,14 @@ function ApplicationContent(props: ApplicationContentProps) {
             />
         </>
     ) : (
-        <></>
+        <div id="application-loading">
+            <CircularProgress
+                size="8rem"
+                sx={{
+                    color: "#52617A",
+                }}
+            />
+        </div>
     );
 }
 
