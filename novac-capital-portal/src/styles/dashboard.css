@@ -698,7 +698,7 @@ td > .progress > .bar > .indicator {
     font-size: 14px;
 }
 
-#dialog-input {
+#dialog-content {
     color: #717171;
     font-size: 14px;
     font-weight: 400;
@@ -711,13 +711,14 @@ td > .progress > .bar > .indicator {
     gap: 20px;
 }
 
-#dialog-input > textarea {
+#dialog-input {
     width: 100%;
     min-width: 100%;
     max-width: 100%;
     min-height: 103px;
     max-height: 103px;
     padding: 14px 20px;
+    font-size: 14px;
     font-family: 'Poppins';
     border: 1px solid #CBCBCB;
     outline: none;
