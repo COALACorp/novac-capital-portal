@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
+import ApproveDialog from "./ApproveDialog";
 import CommentsDialog from "./CommentsDialog";
 import { Status, statusData } from "./ApplicationContent";
 import { FileSpec } from "@/data/filesRequirements";
@@ -18,7 +19,8 @@ type ApplicationFileProps = {
 
 function ApplicationFile(props: ApplicationFileProps) {
     const [disabled, setDisabled] = useState(false);
-    const [dialog, setDialog] = useState(false);
+    const [approveDialog, setApproveDialog] = useState(false);
+    const [commentsDialog, setCommentsDialog] = useState(false);
 
     const handleDownload = async (fileName: string, downloadName: string) => {
         const download = await Download(
@@ -45,13 +47,22 @@ function ApplicationFile(props: ApplicationFileProps) {
         }
     };
 
-    const handleOpenDialog = () => {
-        if (props.status !== "denied")
-            setDialog(true);
+    const handleOpenApproveDialog = () => {
+        if (props.status !== "accepted")
+            setApproveDialog(true);
     }
 
-    const handleCloseDialog = () => {
-        setDialog(false);
+    const handleCloseApproveDialog = () => {
+        setApproveDialog(false);
+    }
+    
+    const handleOpenCommentsDialog = () => {
+        if (props.status !== "denied")
+            setCommentsDialog(true);
+    }
+
+    const handleCloseCommentsDialog = () => {
+        setCommentsDialog(false);
     }
 
     useEffect(() => setDisabled(false), [props.status]);
@@ -74,7 +85,7 @@ function ApplicationFile(props: ApplicationFileProps) {
                         ))}
                         <a
                             className={"feedback-action action accepted" + (props.status === "accepted" ? " selected" : (props.status === "denied" ? " disabled" : ""))}
-                            onClick={handleAccept}
+                            onClick={handleOpenApproveDialog}
                         >
                             <div className="feedback-action-icon">
                                 {statusData.accepted.icon}
@@ -83,7 +94,7 @@ function ApplicationFile(props: ApplicationFileProps) {
                         </a>
                         <a
                             className={"feedback-action action denied" + (props.status === "denied" ? " selected" : (props.status === "accepted" ? " disabled" : ""))}
-                            onClick={handleOpenDialog}
+                            onClick={handleOpenCommentsDialog}
                         >
                             <div className="feedback-action-icon">
                                 {statusData.denied.icon}
@@ -92,11 +103,17 @@ function ApplicationFile(props: ApplicationFileProps) {
                         </a>
                     </div>
                 </div>
+                <ApproveDialog
+                    targetLabel="este documento"
+                    open={approveDialog}
+                    onSubmit={handleAccept}
+                    onClose={handleCloseApproveDialog}
+                />
                 <CommentsDialog
                     targetLabel="el documento"
-                    open={dialog}
+                    open={commentsDialog}
                     onSubmit={handleDeny}
-                    onClose={handleCloseDialog}
+                    onClose={handleCloseCommentsDialog}
                 />
             </td>
         </tr>

@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+import ApproveDialog from "./ApproveDialog";
 import CommentsDialog from "./CommentsDialog";
 import { Status, statusData } from "./ApplicationContent";
 
@@ -12,7 +13,8 @@ type FeedbackButtonsProps = {
 
 function FeedbackButtons(props: FeedbackButtonsProps) {
     const [disabled, setDisabled] = useState(false);
-    const [dialog, setDialog] = useState(false);
+    const [approveDialog, setApproveDialog] = useState(false);
+    const [commentsDialog, setCommentsDialog] = useState(false);
 
     const handleAccept = () => {
         if (props.status !== "accepted") {
@@ -28,13 +30,22 @@ function FeedbackButtons(props: FeedbackButtonsProps) {
         }
     };
 
-    const handleOpenDialog = () => {
-        if (props.status !== "denied")
-            setDialog(true);
+    const handleOpenApproveDialog = () => {
+        if (props.status !== "accepted")
+            setApproveDialog(true);
     }
 
-    const handleCloseDialog = () => {
-        setDialog(false);
+    const handleCloseApproveDialog = () => {
+        setApproveDialog(false);
+    }
+
+    const handleOpenCommentsDialog = () => {
+        if (props.status !== "denied")
+            setCommentsDialog(true);
+    }
+
+    const handleCloseCommentsDialog = () => {
+        setCommentsDialog(false);
     }
 
     useEffect(() => setDisabled(false), [props.status]);
@@ -44,7 +55,7 @@ function FeedbackButtons(props: FeedbackButtonsProps) {
             <div id="application-feedback-container" className={((props.disabled || disabled) ? " disabled" : "")}>
                 <a
                     className={"feedback-action action accepted" + (props.status === "accepted" ? " selected" : "")}
-                    onClick={handleAccept}
+                    onClick={handleOpenApproveDialog}
                 >
                     <div className="feedback-action-icon">
                         {statusData.accepted.icon}
@@ -53,7 +64,7 @@ function FeedbackButtons(props: FeedbackButtonsProps) {
                 </a>
                 <a
                     className={"feedback-action action denied" + (props.status === "denied" ? " selected" : "")}
-                    onClick={handleOpenDialog}
+                    onClick={handleOpenCommentsDialog}
                 >
                     <div className="feedback-action-icon">
                         {statusData.denied.icon}
@@ -61,11 +72,17 @@ function FeedbackButtons(props: FeedbackButtonsProps) {
                     <p className="strong">Denegar</p>
                 </a>
             </div>
+            <ApproveDialog
+                targetLabel="esta solicitud"
+                open={approveDialog}
+                onSubmit={handleAccept}
+                onClose={handleCloseApproveDialog}
+            />
             <CommentsDialog
                 targetLabel="la solicitud"
-                open={dialog}
+                open={commentsDialog}
                 onSubmit={handleDeny}
-                onClose={handleCloseDialog}
+                onClose={handleCloseCommentsDialog}
             />
         </>
     );

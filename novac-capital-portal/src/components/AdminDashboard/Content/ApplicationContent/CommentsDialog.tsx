@@ -36,7 +36,7 @@ function CommentsDialog(props: CommentsDialogProps) {
                     <textarea id="dialog-input" rows={5} placeholder="Escribe un comentario" autoComplete="off" value={value} onChange={handleChange}></textarea>
                 </div>
                 <a className="action" onClick={handleSubmit}>
-                    <div id="dialog-submit">
+                    <div id="dialog-submit" className="cancel">
                         <p className="strong">Rechazar</p>
                     </div>
                 </a>

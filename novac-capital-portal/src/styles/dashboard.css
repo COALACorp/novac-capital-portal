@@ -724,9 +724,16 @@ td > .progress > .bar > .indicator {
     outline: none;
 }
 
+#dialog-actions-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
 #dialog-submit {
     padding: 16px 30px;
-    background-color: #EB5757;
     color: #FFF;
     font-size: 14px;
     border-radius: 10px;
@@ -734,4 +741,12 @@ td > .progress > .bar > .indicator {
     justify-content: center;
     align-items: center;
     gap: 20px
+}
+
+#dialog-submit.accept {
+    background-color: #27AE60;
+}
+
+#dialog-submit.cancel {
+    background-color: #EB5757;
 }
