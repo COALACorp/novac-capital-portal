@@ -1,12 +1,9 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-
 import type { Filter } from "../LateralMenu/LateralMenu";
-import SearchBar from "./SearchBar";
-import ContentTable from "./ContentTable";
-import ContentRow from "./ContentRow";
-import PaginationControls from "./PaginationControls";
+import ApplicationsTable from "./ApplicationsTable";
+import ApplicationContent from "./ApplicationContent/ApplicationContent";
 import { GetAllApplications, ApplicationsPagination } from "@/utils/api";
 
 type ContentProps = {
@@ -18,17 +15,13 @@ type ContentProps = {
 function Content(props: ContentProps) {
     const [dropdown, setDropdown] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
-    const [filter, setFilter] = useState<Filter>();
+    const [filter, setFilter] = useState<Filter|undefined>(props.activeFilter);
     const [search, setSearch] = useState<string>();
     const [applications, setApplications] = useState<ApplicationsPagination>()
+    const [selectedApplication, setSelectedApplication] = useState<number>();
     const [loading, setLoading] = useState(false);
 
-    const handleSearch = (newSearch?: string) => {
-        setCurrentPage(1);
-        setSearch(newSearch);
-    };
-
-    useEffect(() => {
+    const refreshApplications = () => {
         setLoading(true);
         GetAllApplications(6, currentPage, filter, search)
             .then(response => {
@@ -39,12 +32,21 @@ function Content(props: ContentProps) {
                 console.log("Error on requesting page:", currentPage, error);
                 setLoading(false);
             });
+    };
+
+    const handleSearch = (newSearch?: string) => {
+        setCurrentPage(1);
+        setSearch(newSearch);
+    };
+
+    useEffect(() => {
+        refreshApplications();
     }, [currentPage, filter, search]);
 
     useEffect(() => {
         setCurrentPage(1);
         setFilter(props.activeFilter);
-    }, [props.activeFilter, filter]);
+    }, [props.activeFilter]);
 
     useEffect(() => {
         console.log("Search state changed");
@@ -69,36 +71,24 @@ function Content(props: ContentProps) {
                     </div>
                 </div>
             </div>
-            <div id="content-header">
-                <p id="content-header-title" className="strong">Dashboard</p>
-                <SearchBar onSearch={handleSearch} />
-            </div>
-            <ContentTable disabled={loading}>
-                {applications && applications.applications.map((application, index) => (
-                    <ContentRow
-                        key={index}
-                        applicationId={application.id}
-                        months={application.planId}
-                        name={application.name}
-                        equipment={application.equipment}
-                        progress={Math.round(application.progress * 100)}
-                        advanceAmount={application.advanceAmount}
-                        amount={application.cost}
-                        date={new Date(application.createdAt).toLocaleDateString()}
-                    />
-                ))}
-            </ContentTable>
-            <PaginationControls
-                min={applications ? 1 : 0}
-                max={applications?.pagination.last ?? 0}
-                currentPage={currentPage}
-                pageResults={6}
-                totalResults={applications?.pagination.count ?? 0}
-                disabled={loading}
-                onNext={() => setCurrentPage(currentPage + 1)}
-                onPrevious={() => setCurrentPage(currentPage - 1)}
-                onPage={page => setCurrentPage(page)}
-            />
+            {selectedApplication ? (
+                <ApplicationContent
+                    applicationId={selectedApplication}
+                    onReturn={() => setSelectedApplication(undefined)}
+                />
+            ) : (
+                <ApplicationsTable
+                    applications={applications}
+                    currentPage={currentPage}
+                    loading={loading}
+                    onRefresh={refreshApplications}
+                    onSearch={handleSearch}
+                    onApplication={setSelectedApplication}
+                    onNext={() => setCurrentPage(currentPage + 1)}
+                    onPrevious={() => setCurrentPage(currentPage - 1)}
+                    onPage={page => setCurrentPage(page)}
+                />
+            )}
         </div>
     );
 }
