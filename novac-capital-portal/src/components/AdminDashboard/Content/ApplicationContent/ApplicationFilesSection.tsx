@@ -28,7 +28,23 @@ function ApplicationFilesSection(props: ApplicationFilesSectionProps) {
             props.onUpdate && props.onUpdate();
     };
 
-    const getValidFiles = (reqs: RequirementSpec[]): RequirementSpec[] => {
+    const getRequirementsCount = (): number => {
+        let count = 0;
+        if (props.requirements)
+            Object.values(props.requirements).forEach(reqs => reqs.forEach(req => count += req.files.length));
+        return count;
+    };
+
+    const getUploadedFilesCount = (): number => {
+        let count = 0;
+        if (props.requirements)
+            Object.values(props.requirements).forEach(reqs => count += reqs.filter(req => (
+                req.files.find(file => file.uploaded === true) !== undefined
+            )).length);
+        return count;
+    };
+
+    const getUploadedFiles = (reqs: RequirementSpec[]): RequirementSpec[] => {
         return reqs.filter(req => (
             req.files.find(file => file.uploaded === true) !== undefined
         ));
@@ -50,7 +66,7 @@ function ApplicationFilesSection(props: ApplicationFilesSectionProps) {
         <table>
             <thead>
                 <tr>
-                    <th>DOCUMENTOS CARGADOS</th>
+                    <th>DOCUMENTOS CARGADOS ({getUploadedFilesCount()} DE {getRequirementsCount()})</th>
                 </tr>
             </thead>
             <tbody>
@@ -59,7 +75,7 @@ function ApplicationFilesSection(props: ApplicationFilesSectionProps) {
                         <p className="strong">Requisitos del solicitante:</p>
                     </td>
                 </tr>
-                {props.requirements && getValidFiles(props.requirements.applicantFiles).map((requirement, index) => (
+                {props.requirements && getUploadedFiles(props.requirements.applicantFiles).map((requirement, index) => (
                     <ApplicationFile
                         key={index}
                         application={props.application}
@@ -75,7 +91,7 @@ function ApplicationFilesSection(props: ApplicationFilesSectionProps) {
                         <p className="strong">Requisitos del Aval:</p>
                     </td>
                 </tr>
-                {props.requirements && getValidFiles(props.requirements.endorsementFiles).map((requirement, index) => (
+                {props.requirements && getUploadedFiles(props.requirements.endorsementFiles).map((requirement, index) => (
                     <ApplicationFile
                         key={index}
                         application={props.application}
