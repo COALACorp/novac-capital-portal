@@ -10,6 +10,7 @@ import { ApplicationsPagination } from "@/utils/api";
 type ApplicationsTableProps = {
     applications?: ApplicationsPagination,
     currentPage: number,
+    searchValue?: string,
     loading?: boolean,
     onRefresh?: () => void,
     onSearch?: (search?: string) => void,
@@ -46,7 +47,7 @@ function ApplicationsTable(props: ApplicationsTableProps) {
                         </a>
                     )}
                 </div>
-                <SearchBar onSearch={props.onSearch} />
+                <SearchBar value={props.searchValue} onSearch={props.onSearch} />
             </div>
             <ContentTable disabled={props.loading}>
                 {props.applications && props.applications.applications.map((application, index) => (

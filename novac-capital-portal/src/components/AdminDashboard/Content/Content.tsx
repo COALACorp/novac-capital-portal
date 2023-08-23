@@ -83,6 +83,7 @@ function Content(props: ContentProps) {
                 <ApplicationsTable
                     applications={applications}
                     currentPage={currentPage}
+                    searchValue={search}
                     loading={loading}
                     onRefresh={refreshApplications}
                     onSearch={handleSearch}
