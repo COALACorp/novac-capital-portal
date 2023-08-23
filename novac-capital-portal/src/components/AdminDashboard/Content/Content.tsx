@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 
 import type { Filter } from "../LateralMenu/LateralMenu";
-import ApplicationsTable from "./ApplicationsTable";
+import ApplicationsTable from "./ApplicationsTable/ApplicationsTable";
 import ApplicationContent from "./ApplicationContent/ApplicationContent";
 import { GetAllApplications, ApplicationsPagination } from "@/utils/api";
 
@@ -83,6 +83,7 @@ function Content(props: ContentProps) {
                 <ApplicationsTable
                     applications={applications}
                     currentPage={currentPage}
+                    searchValue={search}
                     loading={loading}
                     onRefresh={refreshApplications}
                     onSearch={handleSearch}

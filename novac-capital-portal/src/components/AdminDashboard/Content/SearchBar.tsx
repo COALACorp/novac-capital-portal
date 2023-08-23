@@ -2,11 +2,12 @@ import { useState } from "react";
 import Image from "next/image";
 
 type SearchBarProps = {
+    value?: string,
     onSearch?: (search?: string) => void,
 };
 
 function SearchBar(props: SearchBarProps) {
-    const [value, setValue] = useState("");
+    const [value, setValue] = useState(props.value ?? "");
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
