@@ -35,6 +35,7 @@ function Content(props: ContentProps) {
     };
 
     const handleSearch = (newSearch?: string) => {
+        setSelectedApplication(undefined);
         setCurrentPage(1);
         setSearch(newSearch);
     };
@@ -44,6 +45,7 @@ function Content(props: ContentProps) {
     }, [currentPage, filter, search]);
 
     useEffect(() => {
+        setSelectedApplication(undefined);
         setCurrentPage(1);
         setFilter(props.activeFilter);
     }, [props.activeFilter]);
@@ -74,6 +76,7 @@ function Content(props: ContentProps) {
             {selectedApplication ? (
                 <ApplicationContent
                     applicationId={selectedApplication}
+                    onSearch={handleSearch}
                     onReturn={() => setSelectedApplication(undefined)}
                 />
             ) : (
