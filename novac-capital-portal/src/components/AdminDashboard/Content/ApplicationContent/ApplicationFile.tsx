@@ -36,14 +36,18 @@ function ApplicationFile(props: ApplicationFileProps) {
     const handleAccept = () => {
         if (props.status !== "accepted") {
             setDisabled(true);
-            props.files.forEach(file => props.onAccept && file.fileName && props.onAccept(file.fileName));
+            // props.files.forEach(file => props.onAccept && file.fileName && props.onAccept(file.fileName));
+            const t_file = props.files[0];
+            props.onAccept && t_file.fileName && props.onAccept(t_file.fileName);
         }
     };
 
     const handleDeny = (comments: string) => {
         if (props.status !== "denied") {
             setDisabled(true);
-            props.files.forEach(file => props.onDeny && file.fileName && props.onDeny(file.fileName, comments));
+            // props.files.forEach(file => props.onDeny && file.fileName && props.onDeny(file.fileName, comments));
+            const t_file = props.files[0];
+            props.onDeny && t_file.fileName && props.onDeny(t_file.fileName, comments);
         }
     };
 
