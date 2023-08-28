@@ -37,9 +37,7 @@ function ApplicationFile(props: ApplicationFileProps) {
     const handleAccept = () => {
         if (props.status !== "accepted") {
             setDisabled(true);
-            // props.files.forEach(file => props.onAccept && file.fileName && props.onAccept(file.fileName));
-            const t_file = props.files[0];
-            props.onAccept && t_file.fileName && props.onAccept(t_file.fileName);
+            props.files.forEach(file => props.onAccept && file.fileName && props.onAccept(file.fileName));
         }
     };
 

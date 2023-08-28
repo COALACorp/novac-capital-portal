@@ -69,7 +69,7 @@ function MultiFileCommentsDialog(props: MultiFileCommentsDialogProps) {
                     </div>
                 </a>
                 <div id="dialog-content">
-                    <p>Por favor, selecciona los archivos a los que desees agregarles comentatios:</p>
+                    <p>Por favor, selecciona los archivos que deseas denegar:</p>
                 </div>
                 <div className="dialog-files-feedback-container">
                     {props.files.map((file, index) => file.fileName && (
