@@ -758,9 +758,9 @@ td > .progress > .bar > .indicator {
     width: 100%;
     min-width: 100%;
     max-width: 100%;
-    min-height: 103px;
-    max-height: 103px;
-    padding: 14px 20px;
+    min-height: 100px;
+    max-height: 100px;
+    padding: 5px 5px;
     font-size: 14px;
     font-family: 'Poppins';
     border: 1px solid #CBCBCB;
