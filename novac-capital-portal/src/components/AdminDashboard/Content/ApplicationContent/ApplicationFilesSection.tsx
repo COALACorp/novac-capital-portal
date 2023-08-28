@@ -38,10 +38,10 @@ function ApplicationFilesSection(props: ApplicationFilesSectionProps) {
 
     const getStatus = ({ files }: RequirementSpec): Status => {
         const t_files = files;
-        if (t_files.find(file => file.status === "pending"))
-            return "pending";
-        else if (t_files.find(file => file.status === "denied"))
+        if (t_files.find(file => file.status === "denied"))
             return "denied";
+        else if (t_files.find(file => file.status === "pending"))
+            return "pending";
         else if (t_files.every(file => file.status === "accepted"))
             return "accepted";
         else
