@@ -72,7 +72,7 @@ function SignIn() {
                     quotation.formValues.name,
                     (quotation.formValues.advancePercentage / 100),
                     quotation.selectedPlan.advancePayment,
-                    quotation.formValues.totalLease,
+                    quotation.selectedPlan.totalRent, // Cambiar a total amount
                     quotation.selectedPlan.taxedPartialities,
                     quotation.selectedPlan.totalExpenses,
                     quotation.formValues.equipment,

@@ -1,6 +1,6 @@
-import { useState } from 'react';
-import Image from 'next/image';
-import Dialog from '@mui/material/Dialog';
+import { useState } from "react";
+import Image from "next/image";
+import Dialog from "@mui/material/Dialog";
 
 type CommentsDialogProps = {
     targetLabel: string,
@@ -16,17 +16,22 @@ function CommentsDialog(props: CommentsDialogProps) {
         setValue(event.currentTarget.value);
     };
 
-    const handleSubmit = () => {
+    const handleClose = () => {
+        setValue("");
         props.onClose && props.onClose();
+    };
+
+    const handleSubmit = () => {
+        handleClose && handleClose();
         props.onSubmit && props.onSubmit(value);
         setValue("");
     };
 
     return (
-        <Dialog open={!!props.open} onClose={props.onClose}>
+        <Dialog open={!!props.open} onClose={handleClose}>
             <div id="dialog-container">
-                <a id="dialog-header" className="action" onClick={props.onClose}>
-                    <p>Rechazar</p>
+                <a id="dialog-header" className="action" onClick={handleClose}>
+                    <p>Denegar</p>
                     <div id="dialog-close-icon">
                         <Image src="icons/Close.svg" width={14} height={14} alt="" />
                     </div>
@@ -37,7 +42,7 @@ function CommentsDialog(props: CommentsDialogProps) {
                 </div>
                 <a className="action" onClick={handleSubmit}>
                     <div id="dialog-submit" className="cancel">
-                        <p className="strong">Rechazar</p>
+                        <p className="strong">Denegar</p>
                     </div>
                 </a>
             </div>

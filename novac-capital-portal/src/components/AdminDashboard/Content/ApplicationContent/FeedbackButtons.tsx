@@ -52,9 +52,9 @@ function FeedbackButtons(props: FeedbackButtonsProps) {
 
     return (
         <>
-            <div id="application-feedback-container" className={((props.disabled || disabled) ? " disabled" : "")}>
+            <div id="application-feedback-container">
                 <a
-                    className={"feedback-action action accepted" + (props.status === "accepted" ? " selected" : "")}
+                    className={"feedback-action action accepted" + (props.status === "accepted" ? " selected" : "") + ((props.disabled || disabled) ? " disabled" : "")}
                     onClick={handleOpenApproveDialog}
                 >
                     <div className="feedback-action-icon">

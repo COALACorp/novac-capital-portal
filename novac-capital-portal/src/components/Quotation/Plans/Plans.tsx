@@ -17,6 +17,7 @@ import { selectParams } from "@/features/params/paramsSlice";
 type PlanType = {
     months: number,
     taxedEquipment: number,
+    totalRent: number
     taxedPartialities: number,
     administrativeExpenses: number,
     firstLastPartiality: number,
@@ -70,6 +71,7 @@ function Plans(props: PlansProps) {
                 const planData = {
                     months,
                     taxedEquipment,
+                    totalRent,
                     taxedPartialities,
                     firstLastPartiality,
                     administrativeExpenses,

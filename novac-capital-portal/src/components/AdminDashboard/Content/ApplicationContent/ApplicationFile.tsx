@@ -3,6 +3,7 @@ import Image from "next/image";
 
 import ApproveDialog from "./ApproveDialog";
 import CommentsDialog from "./CommentsDialog";
+import MultiFileCommentsDialog, { FileComment } from "./MultiFileCommentsDialog";
 import { Status, statusData } from "./ApplicationContent";
 import { FileSpec } from "@/data/filesRequirements";
 import { ApplicationFullData } from "@/utils/api";
@@ -36,9 +37,7 @@ function ApplicationFile(props: ApplicationFileProps) {
     const handleAccept = () => {
         if (props.status !== "accepted") {
             setDisabled(true);
-            // props.files.forEach(file => props.onAccept && file.fileName && props.onAccept(file.fileName));
-            const t_file = props.files[0];
-            props.onAccept && t_file.fileName && props.onAccept(t_file.fileName);
+            props.files.forEach(file => props.onAccept && file.fileName && props.onAccept(file.fileName));
         }
     };
 
@@ -48,6 +47,13 @@ function ApplicationFile(props: ApplicationFileProps) {
             // props.files.forEach(file => props.onDeny && file.fileName && props.onDeny(file.fileName, comments));
             const t_file = props.files[0];
             props.onDeny && t_file.fileName && props.onDeny(t_file.fileName, comments);
+        }
+    };
+
+    const handleDenyMultiple = (comments: FileComment[]) => {
+        if (props.status !== "denied") {
+            setDisabled(true);
+            comments.forEach(comment => props.onDeny && props.onDeny(comment.fileName, comment.comment));
         }
     };
 
@@ -113,12 +119,22 @@ function ApplicationFile(props: ApplicationFileProps) {
                     onSubmit={handleAccept}
                     onClose={handleCloseApproveDialog}
                 />
-                <CommentsDialog
-                    targetLabel="el documento"
-                    open={commentsDialog}
-                    onSubmit={handleDeny}
-                    onClose={handleCloseCommentsDialog}
-                />
+                {props.files.length === 1 ? (
+                    <CommentsDialog
+                        targetLabel="el documento"
+                        open={commentsDialog}
+                        onSubmit={handleDeny}
+                        onClose={handleCloseCommentsDialog}
+                    />
+                ) : (
+                    <MultiFileCommentsDialog
+                        files={props.files}
+                        targetLabel="el documento"
+                        open={commentsDialog}
+                        onSubmit={handleDenyMultiple}
+                        onClose={handleCloseCommentsDialog}
+                    />
+                )}
             </td>
         </tr>
     );

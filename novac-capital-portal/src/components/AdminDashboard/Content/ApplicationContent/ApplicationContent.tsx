@@ -33,7 +33,7 @@ const statusData: StatusIcons = {
         icon: <CheckCircleIcon />,
     },
     denied: {
-        label: "Rechazada",
+        label: "Denegada",
         icon: <CancelIcon />,
     },
 };

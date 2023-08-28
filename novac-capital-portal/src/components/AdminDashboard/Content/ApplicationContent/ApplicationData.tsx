@@ -35,11 +35,11 @@ function ApplicationData(props: ApplicationDataProps) {
                 <thead>
                     <tr>
                         <th>ANTICIPO</th>
-                        <th>PARCIALIDADES</th>
+                        <th>PARCIALIDADES CON IVA</th>
                         <th>PAGO INICIAL</th>
                         <th>COSTO EQUIPO</th>
-                        <th>EQUIPO MAS IVA</th>
-                        <th>MONTO TOTAL</th>
+                        <th>EQUIPO CON IVA</th>
+                        <th>TOTAL DE LA RENTA</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -54,7 +54,7 @@ function ApplicationData(props: ApplicationDataProps) {
                             <p>${formatAmount(props.application.application.initialPayment)}</p>
                         </td>
                         <td>
-                            <p>${formatAmount(props.application.application.cost - (props.application.application.cost * props.application.application.iva))}</p>
+                            <p>${formatAmount(props.application.application.cost / props.application.application.iva)}</p>
                         </td>
                         <td>
                             <p>${formatAmount(props.application.application.cost)}</p>
