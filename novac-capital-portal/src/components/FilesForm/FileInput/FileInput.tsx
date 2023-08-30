@@ -64,12 +64,12 @@ function FileInput(props: FileInputProps) {
     useEffect(() => {
         const t_files = props.requirement.files;
         let newStatus = status;
-        if (t_files.find(file => file.status === "pending"))
-            newStatus = statusIcons["pending"];
-        else if (t_files.find(file => file.status === "error"))
+        if (t_files.find(file => file.status === "error"))
             newStatus = statusIcons["error"];
         else if (t_files.find(file => file.status === "denied"))
             newStatus = statusIcons["denied"];
+        else if (t_files.find(file => file.status === "pending"))
+            newStatus = statusIcons["pending"];
         else if (t_files.find(file => file.status === "accepted"))
             newStatus = statusIcons["accepted"];
         else
