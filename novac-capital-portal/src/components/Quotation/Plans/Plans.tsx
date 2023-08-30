@@ -98,7 +98,7 @@ function Plans(props: PlansProps) {
         <div id="plans-container">
             <div id="plans">
                 <div id="plans-heading-container">
-                    <FormHeading title="Cotiza tu arrendamiento" subtitle="This is a subtitle parsed to FormHeading" />
+                    <FormHeading title="Cotiza tu arrendamiento" />
                     <div id="plans-collection-heading">
                         <p><span className="strong">Nombre del cliente:</span> {props.form.name}</p>
                         <p><span className="strong">Fecha:</span> {new Date().toLocaleDateString("es-MX")}</p>

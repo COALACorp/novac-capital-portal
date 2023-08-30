@@ -142,7 +142,7 @@ function DataForm(props: DataFormProps) {
 
     return (
         <div id="data-form-container">
-            <FormHeading title="Cotiza tu arrendamiento" subtitle="This is a subtitle parsed to FormHeading" />
+            <FormHeading title="Cotiza tu arrendamiento" />
             <form
                 id="data-form"
                 onSubmit={handleSubmit}
