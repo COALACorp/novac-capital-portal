@@ -16,7 +16,7 @@ type LateralMenuProps = {
 
 function LateralMenu(props: LateralMenuProps) {
     const handleFilterSelection = (filter: Filter) => {
-        console.log("Filter", filter);
+        // console.log("Filter", filter);
         props.onFilterChange && props.onFilterChange(filter);
     };
 

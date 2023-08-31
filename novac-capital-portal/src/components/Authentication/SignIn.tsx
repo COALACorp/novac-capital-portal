@@ -51,7 +51,7 @@ function SignIn() {
 
     const handleSignedIn = async (userLogged: UserValue) => {
         if (!userLogged?.emailVerified) {
-            console.log("Cuenta no verificada");
+            // console.log("Cuenta no verificada");
             setError({
                 code: "Cuenta no verificada",
                 message: "Verifica tu cuenta mediante el link enviado a tu e-mail y vuelve a intentar."
@@ -62,11 +62,11 @@ function SignIn() {
         }
 
         const registered = userLogged.registered;
-        console.log("Registered:", registered);
+        // console.log("Registered:", registered);
 
         if (registered)
             if (origin === "quotation" && params && quotation.formValues && quotation.selectedPlan) {
-                console.log("Redirect to files checklist", quotation);
+                // console.log("Redirect to files checklist", quotation);
                 const application = await CreateApplication(
                     userLogged.uid,
                     quotation.formValues.name,
@@ -127,9 +127,9 @@ function SignIn() {
                 const token = credential?.accessToken;
                 // The signed-in user info.
                 const googleUser = result.user;
-                console.log("Credential:", credential);
-                console.log("Token:", token);
-                console.log("User:", googleUser);
+                // console.log("Credential:", credential);
+                // console.log("Token:", token);
+                // console.log("User:", googleUser);
                 // handleSignedIn();
             })
             .catch(e => {
@@ -150,7 +150,8 @@ function SignIn() {
         signInWithEmailAndPassword(auth, authData.email, authData.password)
             .then(userCredential => {
                 // Signed In
-                console.log("User:", userCredential.user);
+                // console.log("User:", userCredential.user);
+                console.log("User: logged");
                 // handleSignedIn();
             })
             .catch(e => {

@@ -44,7 +44,7 @@ function SignUp() {
         await sendEmailVerification(signedUser)
             .then(() => {
                 // Email verification sent!
-                console.log("Verification email sent");
+                // console.log("Verification email sent");
                 router.push("/signin?new=true" + (origin ? ("&origin=" + origin) : ""));
             })
             .catch(e => {
@@ -63,10 +63,10 @@ function SignUp() {
             .then(async userCredential => {
                 // Signed In
                 const signedUser = userCredential.user;
-                console.log("User:", signedUser);
+                // console.log("User:", signedUser);
 
                 const createResult = await CreateUser(signedUser.uid, signedUser.email ?? authData.email, authData.phone);
-                console.log("Create user result:", !!createResult, createResult);
+                // console.log("Create user result:", !!createResult, createResult);
                 if (createResult)
                     sendVerification(signedUser);
                 else {
@@ -105,7 +105,7 @@ function SignUp() {
             phone: data.get("phone")?.toString() ?? "",
         };
 
-        console.log("Auth data:", authData);
+        // console.log("Auth data:", authData);
 
         if (authData.email.length > 0 && authData.password.length > 0 && authData.phone.length > 0) 
             signUp(authData);

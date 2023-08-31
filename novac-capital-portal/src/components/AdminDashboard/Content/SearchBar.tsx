@@ -13,7 +13,7 @@ function SearchBar(props: SearchBarProps) {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         const search = data.get("search")?.toString().trim();
-        console.log("Search for:", search);
+        // console.log("Search for:", search);
         props.onSearch && props.onSearch(search);
     };
 

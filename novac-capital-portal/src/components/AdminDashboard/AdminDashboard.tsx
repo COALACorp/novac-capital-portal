@@ -16,7 +16,7 @@ function AdminDashboard() {
     const [filter, setFilter] = useState<Filter>("pending");
 
     const handleLateralMenu = () => {
-        console.log("Handle lateral");
+        // console.log("Handle lateral");
         setMenuHidden(!menuHidden);
     }
 

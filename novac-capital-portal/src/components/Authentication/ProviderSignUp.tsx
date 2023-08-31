@@ -41,13 +41,13 @@ function ProviderSignUp() {
     const [error, setError] = useState<Error>();
 
     const signUp = async (authData: ProviderSignUpData) => {
-        console.log("User:", user);
+        // console.log("User:", user);
 
         if (!user)
             return;
 
         const createResult = await CreateUser(user.uid, user.email ?? authData.email, authData.phone);
-        console.log("Create user result:", !!createResult, createResult);
+        // console.log("Create user result:", !!createResult, createResult);
         if (createResult) {
             dispatch(setRegistered(true));
             router.push("/signin" + (origin ? ("?origin=" + origin) : ""));
@@ -77,7 +77,7 @@ function ProviderSignUp() {
             phone: data.get("phone")?.toString() ?? "",
         };
 
-        console.log("Auth data:", authData);
+        // console.log("Auth data:", authData);
 
         if (authData.email.length > 0 && authData.phone.length > 0) 
             signUp(authData);

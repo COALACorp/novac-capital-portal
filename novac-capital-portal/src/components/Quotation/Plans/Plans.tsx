@@ -47,8 +47,8 @@ function Plans(props: PlansProps) {
     };
 
     useEffect(() => {
-        console.log("Form data:", props.form);
-        console.log("Loading plans");
+        // console.log("Form data:", props.form);
+        // console.log("Loading plans");
         if (clientParams) {
             const newPlans = clientParams.plans.map((months): PlanType => {
                 const taxedEquipment = props.form.amount;
@@ -80,7 +80,7 @@ function Plans(props: PlansProps) {
                     insurance,
                 };
     
-                console.log("Plan data:", planData);
+                // console.log("Plan data:", planData);
     
                 return planData;
             });

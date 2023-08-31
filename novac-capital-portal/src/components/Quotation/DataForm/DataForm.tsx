@@ -100,20 +100,20 @@ function DataForm(props: DataFormProps) {
             ...generateFormValues(generateForm(event)),
             totalLease: amounts.totalLease,
         };
-        console.log("Form values:", newFormValues);
+        // console.log("Form values:", newFormValues);
         if (newFormValues.name && newFormValues.equipment && newFormValues.amount && newFormValues.advancePercentage)
             props.onSubmit && props.onSubmit(newFormValues as ValidatedFormValuesType);
     };
 
     const handleFormChange = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        console.log("Form:", generateForm(event).get("entity"));
+        // console.log("Form:", generateForm(event).get("entity"));
         const newFormValues = generateFormValues(generateForm(event));
         setFormValues(newFormValues);
     };
 
     const handleInputChange = (event: any) => {
-        console.log("Handle form input change");
+        // console.log("Handle form input change");
         const newFormValues: FormValuesType = { ...formValues };
         newFormValues[event.target.name as keyof FormValuesType] = event.target.value,
         setFormValues(newFormValues);
