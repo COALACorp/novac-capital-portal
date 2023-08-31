@@ -39,7 +39,7 @@ function FilesForm() {
     };
 
     const requestUploadedDocuments = () => {
-        console.log("Request uploaded requirements");
+        // console.log("Request uploaded requirements");
         if (application && requirements) {
             const newState = { ...requirements };
             Object.keys(newState).forEach(category => {
@@ -61,20 +61,20 @@ function FilesForm() {
                 });
                 newState[key] = newReqs;
             });
-            console.log("Updated requirements:", newState);
+            // console.log("Updated requirements:", newState);
             setRequirements(newState);
         }
     };
 
     const handleUpload = async (filesToSend: SelectedFile) => {
         let result = false;
-        console.log("Send clicked");
+        // console.log("Send clicked");
         if (user && application) {
-            console.log("Files:", filesToSend);
+            // console.log("Files:", filesToSend);
             const results = []
             for (const name in filesToSend) {
                 const file = filesToSend[name];
-                console.log("File:", name, file);
+                // console.log("File:", name, file);
                 if (file) {
                     const fileName = `${name}|${file.name}`;
                     const result = await Upload(user.uid, application.application.id.toString(), fileName, file);
@@ -85,7 +85,7 @@ function FilesForm() {
                 }
                 results.push(false);
             };
-            console.log("Upload result:", results);
+            // console.log("Upload result:", results);
             result = !results.includes(false);
         }
 
@@ -97,12 +97,12 @@ function FilesForm() {
     };
 
     const handleRemove = async (name: string) => {
-        console.log("Remove clicked");
+        // console.log("Remove clicked");
         let result = false;
         if (user && application) {
-            console.log("File:", name);
+            // console.log("File:", name);
             const deleteResult = await Delete(user.uid, application.application.id.toString(), name);
-            console.log("Delete result:", deleteResult);
+            // console.log("Delete result:", deleteResult);
             if (deleteResult)
                 result = true;
         }
@@ -110,14 +110,14 @@ function FilesForm() {
         return result;
     };
 
-    useEffect(() => console.log("Requirements updated:", requirements), [requirements]);
+    // useEffect(() => console.log("Requirements updated:", requirements), [requirements]);
 
     useEffect(requestUploadedDocuments, [application]);
 
     useEffect(() => {
-        console.log("Use effect:", user);
+        // console.log("Use effect:", user);
         if (!user?.registered) {
-            console.log("User not registered:", user);
+            // console.log("User not registered:", user);
             // auth.signOut();
             router.push("/signin");
             return;

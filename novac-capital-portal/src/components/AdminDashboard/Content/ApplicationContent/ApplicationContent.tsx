@@ -102,7 +102,7 @@ function ApplicationContent(props: ApplicationContentProps) {
                         uploaded: getUploadedFilesCount(newRequirements),
                         approved: getApprovedFilesCount(newRequirements),
                     };
-                    console.log("Feedback:", newCount);
+                    // console.log("Feedback:", newCount);
 
                     setApplication(newApplication);
                     setRequirements(newRequirements);

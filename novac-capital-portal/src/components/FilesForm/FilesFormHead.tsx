@@ -12,7 +12,7 @@ type FilesFormHeadProps = {
 function FilesFormHead(props: FilesFormHeadProps) {
     return (
         <div id="files-form-heading-container">
-            <FormHeading title="Checklist" subtitle="This is a subtitle parsed to FormHeading" />
+            <FormHeading title="Checklist" />
             <FilesPlan
                 months={props.months}
                 applicant={props.applicant}

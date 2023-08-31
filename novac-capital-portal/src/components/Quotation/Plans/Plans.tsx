@@ -47,8 +47,8 @@ function Plans(props: PlansProps) {
     };
 
     useEffect(() => {
-        console.log("Form data:", props.form);
-        console.log("Loading plans");
+        // console.log("Form data:", props.form);
+        // console.log("Loading plans");
         if (clientParams) {
             const newPlans = clientParams.plans.map((months): PlanType => {
                 const taxedEquipment = props.form.amount;
@@ -80,7 +80,7 @@ function Plans(props: PlansProps) {
                     insurance,
                 };
     
-                console.log("Plan data:", planData);
+                // console.log("Plan data:", planData);
     
                 return planData;
             });
@@ -98,7 +98,7 @@ function Plans(props: PlansProps) {
         <div id="plans-container">
             <div id="plans">
                 <div id="plans-heading-container">
-                    <FormHeading title="Cotiza tu arrendamiento" subtitle="This is a subtitle parsed to FormHeading" />
+                    <FormHeading title="Cotiza tu arrendamiento" />
                     <div id="plans-collection-heading">
                         <p><span className="strong">Nombre del cliente:</span> {props.form.name}</p>
                         <p><span className="strong">Fecha:</span> {new Date().toLocaleDateString("es-MX")}</p>

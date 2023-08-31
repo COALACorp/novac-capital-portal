@@ -13,7 +13,7 @@ const client = new S3Client({
 });
 
 const GenerateFileUrl = async () => {
-    console.log("Download file");
+    // console.log("Download file");
     const command = new GetObjectCommand({
         Bucket: "",
         Key: "",
@@ -39,7 +39,7 @@ const GenerateFileUrl = async () => {
 
         // The Body object also has 'transformToByteArray' and 'transformToWebStream' methods.
         const str = await response.Body?.transformToString();
-        console.log("File content:", str);
+        // console.log("File content:", str);
     } catch (err) {
         console.error("Error while downlaoding file:", err);
     }

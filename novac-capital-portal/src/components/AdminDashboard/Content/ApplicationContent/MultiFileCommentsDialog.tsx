@@ -55,7 +55,7 @@ function MultiFileCommentsDialog(props: MultiFileCommentsDialogProps) {
     const handleSubmit = () => {
         const toSend: FileComment[] = Object.keys(comments).filter(fileName => comments[fileName].selected).map(fileName => ({ fileName, comment: comments[fileName].value}));
         handleClose && handleClose();
-        console.log("Submitted value:", toSend);
+        // console.log("Submitted value:", toSend);
         props.onSubmit && props.onSubmit(toSend);
     };
 

@@ -106,9 +106,9 @@ export async function CreateUser(guid: string, email: string, phone: string): Pr
             email,
             phone,
         };
-        console.log("API request create user:", payload);
+        // console.log("API request create user:", payload);
         const response = await api.post("/user", payload);
-        console.log("API response create user:", response.data);
+        // console.log("API response create user:", response.data);
     
         return response.status === 200 ? response.data ?? null : null;   
     } catch (error) {
@@ -119,9 +119,9 @@ export async function CreateUser(guid: string, email: string, phone: string): Pr
 
 export async function GetUser(guid: string): Promise<APIResponse<APIUserData>> {
     try {
-        console.log("API request get user:", guid);
+        // console.log("API request get user:", guid);
         const response = await api.get("/user/" + guid);
-        console.log("API response get user:", response.data);
+        // console.log("API response get user:", response.data);
 
         return response.status === 200 ? response.data ?? null : null;
     } catch (error) {
@@ -160,25 +160,25 @@ export async function CreateApplication(
         planId,
         entityType,
     };
-    console.log("API request create application:", payload);
+    // console.log("API request create application:", payload);
     const response = await api.post<APIResponse<APIApplicationCreateData>>("/application", payload);
-    console.log("API response create application:", response.data);
+    // console.log("API response create application:", response.data);
 
     return response.status === 200 ? response.data ?? null : null;
 }
 
 export async function GetApplicationDocs(guid: string, applicationId: number): Promise<APIResponse<APIUserApplicationDocs[]>|null> {
-    console.log("API request get documents:", guid);
+    // console.log("API request get documents:", guid);
     const response = await api.get<APIResponse<APIUserApplicationDocs[]>>(`/document/${guid}/${applicationId}`);
-    console.log("API response get documents:", response.data);
+    // console.log("API response get documents:", response.data);
 
     return response.status === 200 ? response.data ?? null : null;
 }
 
 export async function GetLastApplication(guid: string): Promise<APIResponse<ApplicationFullData>|null> {
-    console.log("API request get user applications:", guid);
+    // console.log("API request get user applications:", guid);
     const response = await api.get<APIResponse<APIUserApplicationsData>>(`/application/user/${guid}`);
-    console.log("API response get user applications:", response.data);
+    // console.log("API response get user applications:", response.data);
 
     let result: APIResponse<ApplicationFullData>|null = null;
     if (response.status === 200 && response.data) {
@@ -208,23 +208,23 @@ export async function GetLastApplication(guid: string): Promise<APIResponse<Appl
         }
     }
 
-    console.log("Get last application result:", result);
+    // console.log("Get last application result:", result);
 
     return result;
 }
 
 export async function GetAllApplications(n: number, page: number, status?: string, search?: string): Promise<APIResponse<ApplicationsPagination>|null> {
-    console.log("API request get all applications:", n, page, status, search);
+    // console.log("API request get all applications:", n, page, status, search);
     const response = await api.get<APIResponse<ApplicationsPagination>>("/application", { params: { n, page, status, search } });
-    console.log("API response get all applications:", response.data);
+    // console.log("API response get all applications:", response.data);
 
     return response.status === 200 ? response.data ?? null : null;
 }
 
 export async function GetApplication(applicationId: number): Promise<APIResponse<ApplicationFullData>|null> {
-    console.log("API request get application:", applicationId);
+    // console.log("API request get application:", applicationId);
     const response = await api.get<APIResponse<ApplicationData>>("/application/" + applicationId);
-    console.log("API response get application:", response.data);
+    // console.log("API response get application:", response.data);
 
     let result: APIResponse<ApplicationFullData>|null = null;
     if (response.status === 200 && response.data) {
@@ -254,7 +254,7 @@ export async function GetApplication(applicationId: number): Promise<APIResponse
         }
     }
 
-    console.log("Get application result:", result);
+    // console.log("Get application result:", result);
 
     return result;
 }
@@ -266,9 +266,9 @@ export async function CreateApplicationFeedback(applicationId: number, approval:
             comments,
             approval,
         };
-        console.log("API request create application feedback:", payload);
+        // console.log("API request create application feedback:", payload);
         const response = await api.post("/feedback", payload);
-        console.log("API response create application feedback:", response.data);
+        // console.log("API response create application feedback:", response.data);
     
         return response.status === 200 ? response.data ?? null : null;   
     } catch (error) {
@@ -284,9 +284,9 @@ export async function CreateDocumentFeedback(documentId: number, approval: boole
             comments,
             approval,
         };
-        console.log("API request create document feedback:", payload);
+        // console.log("API request create document feedback:", payload);
         const response = await api.post("/feedback", payload);
-        console.log("API response create document feedback:", response.data);
+        // console.log("API response create document feedback:", response.data);
     
         return response.status === 200 ? response.data ?? null : null;   
     } catch (error) {

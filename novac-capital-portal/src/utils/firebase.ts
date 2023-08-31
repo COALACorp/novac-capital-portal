@@ -40,7 +40,7 @@ const SignOut = (callback?: () => void) => {
     signOut(auth)
         .then(() => {
             // Sign Out successfully
-            console.log("Signed out successfully");
+            // console.log("Signed out successfully");
             callback && callback();
         })
         .catch(error => {

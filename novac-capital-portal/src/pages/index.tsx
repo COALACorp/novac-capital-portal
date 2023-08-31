@@ -13,17 +13,16 @@ export default function QuotationWindow() {
     const dispatch = useAppDispatch();
 
     const getClientConfig = () => {
-        console.log("Get client params");
+        // console.log("Get client params");
         const dbRef = ref(database);
         get(child(dbRef, "clientConfig"))
             .then((snapshot) => {
                 if (snapshot.exists()) {
                     const params = snapshot.val() as ClientParams;
-                    console.log("Client params:", params);
+                    // console.log("Client params:", params);
                     dispatch(setParams(params));
-                } else {
+                } else
                     console.log("No client params available");
-                }
             })
             .catch((error) => {
                 console.error(error);

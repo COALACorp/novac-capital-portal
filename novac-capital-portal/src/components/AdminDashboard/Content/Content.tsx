@@ -50,10 +50,6 @@ function Content(props: ContentProps) {
         setFilter(props.activeFilter);
     }, [props.activeFilter]);
 
-    useEffect(() => {
-        console.log("Search state changed");
-    }, [search]);
-
     return (
         <div id="content-container">
             <div id="content-nav">

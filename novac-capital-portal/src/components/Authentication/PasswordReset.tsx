@@ -34,7 +34,7 @@ function PasswordReset() {
         sendPasswordResetEmail(auth, authData.email)
             .then(() => {
                 // Password reset email sent!
-                console.log("Reset email sent");
+                // console.log("Reset email sent");
                 router.push("/signin");
             })
             .catch(e => {
