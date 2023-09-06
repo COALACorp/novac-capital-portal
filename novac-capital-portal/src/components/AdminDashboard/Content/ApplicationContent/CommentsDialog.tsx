@@ -40,7 +40,7 @@ function CommentsDialog(props: CommentsDialogProps) {
                     <p>Por favor, deja un comentario sobre porqué rechazas {props.targetLabel}:</p>
                     <textarea id="dialog-input" rows={5} placeholder="Escribe un comentario" autoComplete="off" value={value} onChange={handleChange}></textarea>
                 </div>
-                <a className="action" onClick={handleSubmit}>
+                <a className={"action" + (value.trim().length === 0 ? " disabled" : "")} onClick={handleSubmit}>
                     <div id="dialog-submit" className="cancel">
                         <p className="strong">Denegar</p>
                     </div>
