@@ -3,6 +3,7 @@ import { onAuthStateChanged, User } from "firebase/auth";
 
 import { auth, CheckAdmin } from "@/utils/firebase";
 import { InitAPI, GetUser } from "@/utils/api";
+import { InitDocsAPI } from "@/utils/docsApi";
 
 import { useAppDispatch } from "@/app/hooks";
 import { UserValue, setUser, resetUser } from "@/features/user/userSlice";
@@ -27,6 +28,7 @@ function AppContainer(props: PageContainerProps) {
 
                 // Initialize API
                 InitAPI(idToken.token);
+                // InitDocsAPI(idToken.token);
 
                 const authedUser: UserValue = {
                     ...(user.toJSON() as User),
