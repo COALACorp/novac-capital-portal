@@ -1,13 +1,6 @@
 import axios from "axios";
-import { Status } from "@/components/FilesForm/FileInput/FileInput";
 
-const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_ENDPOINT,
-    headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
-    },
-});
+import { Status } from "@/components/FilesForm/FileInput/FileInput";
 
 type APIUserCreateData = {
     userId: number,
@@ -98,6 +91,18 @@ type APIResponse<T> = null|{
     data: T,
     message: string,
 };
+
+const api = axios.create({
+    baseURL: process.env.NEXT_PUBLIC_API_ENDPOINT,
+    headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept",
+    },
+});
+
+export function InitAPI(token: string) {
+    api.defaults.headers.common["session-token"] = token;
+}
 
 export async function CreateUser(guid: string, email: string, phone: string): Promise<APIResponse<APIUserCreateData>> {
     try {

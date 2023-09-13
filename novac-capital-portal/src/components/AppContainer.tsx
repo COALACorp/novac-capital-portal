@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { onAuthStateChanged, User } from "firebase/auth";
 
 import { auth, CheckAdmin } from "@/utils/firebase";
-import { GetUser } from "@/utils/api";
+import { InitAPI, GetUser } from "@/utils/api";
+import { InitDocsAPI } from "@/utils/docsApi";
 
 import { useAppDispatch } from "@/app/hooks";
 import { UserValue, setUser, resetUser } from "@/features/user/userSlice";
@@ -22,10 +23,18 @@ function AppContainer(props: PageContainerProps) {
                 // https://firebase.google.com/docs/reference/js/firebase.User
                 // console.log("User authenticated with UID:", user.uid);
 
+                const idToken = await user.getIdTokenResult();
+                // console.log("User ID token:", idToken.token, idToken.expirationTime);
+
+                // Initialize API
+                InitAPI(idToken.token);
+                InitDocsAPI(idToken.token);
+
                 const authedUser: UserValue = {
                     ...(user.toJSON() as User),
                     registered: false,
                     admin: false,
+                    token: idToken.token,
                 };
                 // Check if user is registered
                 if (await GetUser(user.uid)) {

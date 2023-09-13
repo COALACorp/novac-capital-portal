@@ -5,6 +5,7 @@ import { User } from "firebase/auth";
 interface UserValue extends User {
     registered: boolean,
     admin: boolean,
+    token: string,
 };
 
 type UserState = {

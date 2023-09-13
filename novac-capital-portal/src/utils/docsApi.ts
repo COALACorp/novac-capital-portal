@@ -1,5 +1,13 @@
 import axios from "axios";
 
+type APIResponse = {
+    message: string,
+};
+
+type APIDownloadResponse = {
+    url: string,
+};
+
 const docsApi = axios.create({
     baseURL: process.env.NEXT_PUBLIC_DOCS_API_ENDPOINT,
     headers: {
@@ -8,13 +16,9 @@ const docsApi = axios.create({
     },
 });
 
-type APIResponse = {
-    message: string,
-};
-
-type APIDownloadResponse = {
-    url: string,
-};
+export function InitDocsAPI(token: string) {
+    docsApi.defaults.headers.common["session-token"] = token;
+}
 
 export async function Template(fileName: string): Promise<APIDownloadResponse|null> {
     try {

@@ -97,6 +97,10 @@
     color: #F2C94C;
 }
 
+.sent {
+    color: #2F80ED;
+}
+
 .accepted {
     color: #27AE60;
 }

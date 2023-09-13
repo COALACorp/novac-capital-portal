@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import WatchLaterIcon from "@mui/icons-material/WatchLater";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ErrorIcon from "@mui/icons-material/Error";
@@ -17,7 +16,7 @@ type StatusIcons = {
 
 const statusIcons: StatusIcons = {
     unknown: <div className="status-indicator unknown" />,
-    pending: <WatchLaterIcon className="pending" />,
+    pending: <CheckCircleIcon className="sent" />,
     accepted: <CheckCircleIcon className="accepted" />,
     denied: <CancelIcon className="denied" />,
     error: <ErrorIcon className="error" />,
