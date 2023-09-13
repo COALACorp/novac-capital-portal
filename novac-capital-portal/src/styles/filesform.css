@@ -98,14 +98,7 @@
 }
 
 .sent {
-    padding: 2px;
-    background-color: #2F80ED;
-    color: #FFF;
-    border-radius: 50%;
-}
-
-.sent * {
-    font-size: 13px;
+    color: #2F80ED;
 }
 
 .accepted {
