@@ -15,15 +15,15 @@ type UploadFileActionProps = {
 };
 
 function UploadFileAction(props: UploadFileActionProps) {
-    const MAX_FILE_SIZE = Number(process.env.NEXT_PUBLIC_MAX_FILE_SIZE_MB) * 1048576;
+    // const MAX_FILE_SIZE = Number(process.env.NEXT_PUBLIC_MAX_FILE_SIZE_MB) * 1048576;
     const [file, setFile] = useState<File>();
     const [uploaded, setUploaded] = useState<string|undefined>();
     const [loading, setLoading] = useState(false);
 
     const handleChange = (newFile: File|undefined) => {
-        if (newFile && newFile.size > MAX_FILE_SIZE) {
-            console.log(`File too large: ${newFile.size / 1048576}MB`);
-        }
+        // if (newFile && newFile.size > MAX_FILE_SIZE) {
+        //     console.log(`File too large: ${newFile.size / 1048576}MB`);
+        // }
         setFile(newFile);
     };
 
