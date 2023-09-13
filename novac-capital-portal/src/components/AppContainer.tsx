@@ -28,7 +28,7 @@ function AppContainer(props: PageContainerProps) {
 
                 // Initialize API
                 InitAPI(idToken.token);
-                // InitDocsAPI(idToken.token);
+                InitDocsAPI(idToken.token);
 
                 const authedUser: UserValue = {
                     ...(user.toJSON() as User),
