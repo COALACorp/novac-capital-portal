@@ -24,7 +24,7 @@ function AppContainer(props: PageContainerProps) {
                 // console.log("User authenticated with UID:", user.uid);
 
                 const idToken = await user.getIdTokenResult();
-                console.log("User ID token:", idToken.token, idToken.expirationTime);
+                // console.log("User ID token:", idToken.token, idToken.expirationTime);
 
                 // Initialize API
                 InitAPI(idToken.token);
