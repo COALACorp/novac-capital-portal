@@ -100,7 +100,7 @@ function ApplicationFile(props: ApplicationFileProps) {
                             <div className="feedback-action-icon">
                                 {statusData.accepted.icon}
                             </div>
-                            <p className="strong">Aprobar</p>
+                            <p className="strong">{props.status === "accepted" ? "Aprobado" : "Aprobar"}</p>
                         </a>
                         <a
                             className={"feedback-action action denied" + (props.status === "denied" ? " selected" : (props.status === "accepted" ? " disabled" : ""))}
@@ -109,7 +109,7 @@ function ApplicationFile(props: ApplicationFileProps) {
                             <div className="feedback-action-icon">
                                 {statusData.denied.icon}
                             </div>
-                            <p className="strong">Denegar</p>
+                            <p className="strong">{props.status === "denied" ? "Denegado" : "Denegar"}</p>
                         </a>
                     </div>
                 </div>
