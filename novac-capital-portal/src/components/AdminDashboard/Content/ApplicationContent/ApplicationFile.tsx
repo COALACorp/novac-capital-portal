@@ -94,7 +94,7 @@ function ApplicationFile(props: ApplicationFileProps) {
                             </a>
                         ))}
                         <a
-                            className={"feedback-action action accepted" + (props.status === "accepted" ? " selected" : (props.status === "denied" ? " disabled" : ""))}
+                            className={"feedback-action action accepted" + (props.status === "accepted" ? " selected" : (props.status === "denied" || props.files.find(file => !file.uploaded) ? " disabled" : ""))}
                             onClick={handleOpenApproveDialog}
                         >
                             <div className="feedback-action-icon">
