@@ -402,3 +402,74 @@ a.file-input-action, label.file-input-action {
         height: 46px;
     }
 }
+
+/* --------------------------------------- COMMENTS DIALOG --------------------------------------- */
+
+#dialog-container {
+    max-width: 1000px;
+    padding: 30px;
+    background-color: #FFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 40px;
+}
+
+#dialog-header {
+    color: #000;
+    font-size: 24px;
+    line-height: 22px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    align-self: stretch;
+}
+
+#dialog-close-icon {
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+}
+
+#dialog-content {
+    color: #717171;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 21px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    align-self: stretch;
+    gap: 20px;
+}
+
+
+#dialog-actions-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+}
+
+#dialog-submit {
+    padding: 16px 30px;
+    color: #FFF;
+    font-size: 14px;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px
+}
+
+#dialog-submit.accept {
+    background-color: #27AE60;
+}
+
+#dialog-submit.cancel {
+    background-color: #EB5757;
+}
