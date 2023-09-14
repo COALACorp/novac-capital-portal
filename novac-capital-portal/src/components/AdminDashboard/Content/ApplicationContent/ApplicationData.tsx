@@ -39,7 +39,7 @@ function ApplicationData(props: ApplicationDataProps) {
                         <th>PAGO INICIAL</th>
                         <th>COSTO EQUIPO</th>
                         <th>EQUIPO CON IVA</th>
-                        <th>TOTAL DE LA RENTA</th>
+                        <th>TOTAL A FINANCIAR</th>
                     </tr>
                 </thead>
                 <tbody>
