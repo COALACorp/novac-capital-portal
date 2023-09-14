@@ -39,6 +39,7 @@ function ApplicationData(props: ApplicationDataProps) {
                         <th>PAGO INICIAL</th>
                         <th>COSTO EQUIPO</th>
                         <th>EQUIPO CON IVA</th>
+                        <th>GASTOS ADMINISTRATIVOS</th>
                         <th>TOTAL A FINANCIAR</th>
                     </tr>
                 </thead>
@@ -58,6 +59,9 @@ function ApplicationData(props: ApplicationDataProps) {
                         </td>
                         <td>
                             <p>${formatAmount(props.application.application.cost)}</p>
+                        </td>
+                        <td>
+                            <p>${formatAmount(props.application.application.plan.administrative)}</p>
                         </td>
                         <td>
                             <p>${formatAmount(props.application.application.loanAmount)}</p>
