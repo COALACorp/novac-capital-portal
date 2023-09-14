@@ -23,9 +23,6 @@ function UploadFileAction(props: UploadFileActionProps) {
     const [dialog, setDialog] = useState(false);
 
     const handleChange = (newFile: File|undefined) => {
-        // if (newFile && newFile.size > MAX_FILE_SIZE) {
-        //     console.log(`File too large: ${newFile.size / 1048576}MB`);
-        // }
         setFile(newFile);
     };
 
@@ -55,9 +52,10 @@ function UploadFileAction(props: UploadFileActionProps) {
     }, [props.file, file]);
 
     useEffect(() => {
-        if (file && file.size > MAX_FILE_SIZE)
+        if (file && file.size > MAX_FILE_SIZE) {
+            handleRemove();
             setDialog(true);
-        else
+        } else
             props.onChange && props.onChange(props.file.name, file);
     }, [file]);
 
