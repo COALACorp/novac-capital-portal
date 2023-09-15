@@ -50,7 +50,7 @@ function Plans(props: PlansProps) {
         // console.log("Form data:", props.form);
         // console.log("Loading plans");
         if (clientParams) {
-            const newPlans = clientParams.plans.map((months): PlanType => {
+            const newPlans = clientParams.plans.map((months: number): PlanType => {
                 const taxedEquipment = props.form.amount;
                 const totalRent = calcs.totalRent(taxedEquipment, props.form.advancePercentage, clientParams.planMargins[months.toString() as keyof (typeof clientParams.planMargins)])
                 const taxedPartialities = calcs.taxedPartialities(totalRent, months)
