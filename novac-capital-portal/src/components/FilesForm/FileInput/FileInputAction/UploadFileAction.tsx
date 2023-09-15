@@ -79,7 +79,7 @@ function UploadFileAction(props: UploadFileActionProps) {
                 2. Comprima en mac: Selecciona el archivo que deseas comprimir, Haz clic derecho, selecciona “Comprimir”, Sube el archivo .zip.<br />
                 3. Utilice servicios en línea: Hay varios sitios web gratuitos que ofrecen servicios de compresión de archivos en formato .zip en línea. Uno de los más populares es <a href="https://www.compress2go.com/" target="_blank">compress2go</a> para comprimir archivos en formato .zip.<br />
                 <br />
-                Por favor, comprima el archivo en formato .zip y luego intente subirlo nuevamente. Si tiene alguna pregunta o necesita ayuda adicional, no dude en ponerse en contacto con nuestro equipo de soporte.<br />
+                Por favor, comprima el archivo en formato .zip y luego intente subirlo nuevamente. Si tiene alguna pregunta o necesita ayuda adicional, no dude en ponerse en contacto con nuestro equipo de soporte mediante el número de teléfono <a href="tel:5562373086">(55) 62-37-30-86</a> o la dirección de correo electrónico <a href="mailto:admin@novaccapital.com">admin@novaccapital.com</a>.<br />
             </FileAlertDialog>
         </>
     );
