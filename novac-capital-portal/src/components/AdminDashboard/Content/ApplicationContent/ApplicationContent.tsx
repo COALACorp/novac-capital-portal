@@ -12,7 +12,6 @@ import ApplicationFilesSection from "./ApplicationFilesSection";
 import FeedbackButtons from "./FeedbackButtons";
 import { ApplicationFullData, CreateApplicationFeedback, GetApplication } from "@/utils/api";
 import RequiredDocs, { RequirementsState, FileSpec } from "@/data/filesRequirements";
-import { getApp } from "firebase/app";
 
 type Status = "pending"|"accepted"|"denied";
 
@@ -74,6 +73,8 @@ function ApplicationContent(props: ApplicationContentProps) {
                 if (appData) {
                     const newApplication = appData.data;
                     const newRequirements = RequiredDocs[newApplication.application.entityType];
+
+                    console.log("Application:", newApplication);
 
                     if (newApplication && newRequirements) {
                         Object.keys(newRequirements).forEach(category => {

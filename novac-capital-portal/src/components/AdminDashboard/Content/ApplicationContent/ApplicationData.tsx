@@ -1,12 +1,16 @@
-import { ApplicationFullData } from "@/utils/api";
+import { useEffect } from "react";
 
+import { ApplicationFullData } from "@/utils/api";
 import { formatAmount } from "@/utils/formats";
+import calcs from "@/utils/calculations";
 
 type ApplicationDataProps = {
     application: ApplicationFullData,
 };
 
 function ApplicationData(props: ApplicationDataProps) {
+    const administrativeExpenses = calcs.addIVA(props.application.application.plan.administrative + props.application.application.plan.credit_bureau + props.application.application.plan.folio_verification, props.application.application.plan.iva);
+
     return (
         <>
             <div id="application-data">
@@ -36,10 +40,11 @@ function ApplicationData(props: ApplicationDataProps) {
                     <tr>
                         <th>ANTICIPO</th>
                         <th>PARCIALIDADES CON IVA</th>
+                        <th>GASTOS ADMINISTRATIVOS</th>
                         <th>PAGO INICIAL</th>
                         <th>COSTO EQUIPO</th>
                         <th>EQUIPO CON IVA</th>
-                        <th>TOTAL DE LA RENTA</th>
+                        <th>TOTAL A FINANCIAR</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,7 +56,10 @@ function ApplicationData(props: ApplicationDataProps) {
                             <p>${formatAmount(props.application.application.partiality)}</p>
                         </td>
                         <td>
-                            <p>${formatAmount(props.application.application.initialPayment)}</p>
+                            <p>${formatAmount(administrativeExpenses)}</p>
+                        </td>
+                        <td>
+                            <p>${formatAmount(props.application.application.initialPayment - administrativeExpenses)}</p>
                         </td>
                         <td>
                             <p>${formatAmount(props.application.application.cost / props.application.application.iva)}</p>
