@@ -128,7 +128,7 @@ function Plans(props: PlansProps) {
             <Button id="plans-submit" disabled={!selection} onClick={handleSubmit}>Continuar</Button>
             <ReactToPrint
                 bodyClass="printable"
-                documentTitle="Available_Plans"
+                documentTitle={props.form.name.replaceAll(" ", "_")}
                 content={() => printRef.current}
                 trigger={() => (
                     <div id="print-button">
