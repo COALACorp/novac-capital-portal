@@ -1,6 +1,8 @@
 import "@/styles/quotation/plans.css";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/router";
+import Image from "next/image";
+import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import PrintIcon from '@mui/icons-material/Print';
 import ReactToPrint from "react-to-print";
@@ -96,15 +98,27 @@ function Plans(props: PlansProps) {
 
     return (
         <div id="plans-container">
-            <div id="plans">
-                <div id="plans-heading-container">
-                    <FormHeading title="Cotiza tu arrendamiento" />
-                    <div id="plans-collection-heading">
-                        <p><span className="strong">Nombre del cliente:</span> {props.form.name}</p>
-                        <p><span className="strong">Fecha:</span> {new Date().toLocaleDateString("es-MX")}</p>
+            <div id="plans" ref={printRef}>
+                <Stack alignSelf='stretch' gap='30px'>
+                    <div className="hide-on-print">
+                        <FormHeading title="Cotiza tu arrendamiento" />
                     </div>
-                </div>
-                <div id="plans-collection" ref={printRef}>
+                    <Stack direction="row" gap='30px'>
+                        <Image
+                            id="quotation-logo"
+                            src="/logo.png"
+                            alt="novac capital logo"
+                            width={75}
+                            height={75}
+                            onClick={() => router.push("/")}
+                        />
+                        <div id="plans-collection-heading">
+                            <p><span className="strong">Nombre del cliente:</span> {props.form.name}</p>
+                            <p><span className="strong">Fecha:</span> {new Date().toLocaleDateString("es-MX")}</p>
+                        </div>
+                    </Stack>
+                </Stack>
+                <Stack id="plans-collection" maxWidth='846px' direction='row' alignItems='flex-start' flexWrap='wrap' gap='30px'>
                     {plans.map((plan, index) => (
                         <a key={index} className="plan-card-container" onClick={() => setSelection(plan.months)}>
                             <div className={"plan-card" + (selection === plan.months ? " selected" : "")}>
@@ -123,19 +137,19 @@ function Plans(props: PlansProps) {
                             </div>
                         </a>
                     ))}
-                </div>
+                </Stack>
             </div>
             <Button id="plans-submit" disabled={!selection} onClick={handleSubmit}>Continuar</Button>
             <ReactToPrint
                 bodyClass="printable"
-                documentTitle="Available_Plans"
+                documentTitle={props.form.name.replaceAll(" ", "_")}
                 content={() => printRef.current}
                 trigger={() => (
                     <div id="print-button">
                         <PrintIcon className="print-icon" />
                     </div>
                 )}
-                pageStyle="@page { size: auto; margin: 0mm; } @media print { body { -webkit-print-color-adjust: exact; } }"
+                pageStyle="@page { size: auto; margin: 0mm; } @media print { body { -webkit-print-color-adjust: exact; } } #form-heading-container { display: none }"
             />
         </div>
     );

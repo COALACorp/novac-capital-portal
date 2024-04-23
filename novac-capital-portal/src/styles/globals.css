@@ -10,3 +10,9 @@ body {
   overflow-x: hidden;
   background-color: #F2F2F2;
 }
+
+@media print {
+  .hide-on-print {
+    display: none;
+  }
+}
