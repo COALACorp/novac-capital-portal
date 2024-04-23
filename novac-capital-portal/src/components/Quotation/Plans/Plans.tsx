@@ -149,7 +149,7 @@ function Plans(props: PlansProps) {
                         <PrintIcon className="print-icon" />
                     </div>
                 )}
-                pageStyle="@page { size: auto; margin: 0mm; } @media print { body { -webkit-print-color-adjust: exact; } } #form-heading-container { display: none }"
+                pageStyle="@page { size: auto; margin: 0mm; } @media print { body { -webkit-print-color-adjust: exact; } }"
             />
         </div>
     );
