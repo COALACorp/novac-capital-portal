@@ -17,15 +17,6 @@
     gap: 30px;
 }
 
-#plans-heading-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    align-self: stretch;
-    gap: 30px;
-}
-
 #plans-collection-heading {
     color: #4F4F4F;
     font-size: 18px;
@@ -36,13 +27,8 @@
     gap: 10px;
 }
 
-#plans-collection {
-    max-width: 846px;
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    gap: 30px;
-    flex-wrap: wrap;
+#quotation-logo {
+    display: none;
 }
 
 .plan-card {
@@ -242,6 +228,19 @@
 }
 
 @media print {
+    #plans {
+        gap: 20px;
+    }
+
+    #quotation-logo {
+        display: block;
+    }
+
+    #plans-collection {
+        padding: 0;
+        gap: 10px;
+    }
+
     .plan-card-container {
         width: calc(408px * 0.75);
         height: calc(408px * 0.75);
